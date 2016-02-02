@@ -80,7 +80,7 @@ Types primitifs
 
 - void 
 - boolean
-- char (8-bit, Unicode)
+- char (16-bit, Unicode)
 - byte (8-bit)
 - short (16-bit)
 - int (32-bit)
@@ -97,7 +97,7 @@ Opérateurs
 - incréments: ``++`` ``--``
 - opérateurs sur les bits: ``&`` ``|`` ``^`` ``~`` ``>>`` ``<<``  
 - affectation: ``=`` ``-=`` ``+=`` ``*=`` ``/=`` 
-- conditionnel: ``?`` et ``\`` 
+- conditionnel: ``?:`` 
 
 Instructions et blocs
 ---------------------------------
@@ -202,7 +202,7 @@ Copiez et compilez.
    :lines: 1-9
 
 Attention, cette classe n'est pas exécutable, car 
- elle ne contient pas de ``main``, point d'entrée
+elle ne contient pas de ``main``, point d'entrée 
 obligatoire de toute classe exécutable.  
 
 
