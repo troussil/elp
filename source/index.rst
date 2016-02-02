@@ -10,4 +10,5 @@ ELP-JAVA
 
    TDCodeClient
    TDClasse
+   TDHeritage
 
