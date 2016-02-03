@@ -57,7 +57,7 @@ Conception à la C
 
 .. code-block:: java 
 
-        class TestPoint {
+        class DemoPoint {
 	  public static void main(String[] args) {
 	    Point p = new Point(); 
 	    p.x = 2.0; 
@@ -87,11 +87,11 @@ Conception typiquement objet
 
 .. code-block:: java 
 
-        class TestPoint {
+        class DemoPoint {
 	  public static void main(String[] args) {
 	    Point p = new Point(2.0,5.0); 
-	    System.out.println(p.toString());
-	    //equivalent: System.out.println(p);
+	    System.out.println(p); //on lui demande de s'afficher
+	    //equivalent à: System.out.println(p.toString());
           }
 	}
 
@@ -293,9 +293,9 @@ Ex.4. suite: compilation/éxécution
 ----------------------------------------
 
 - Dans ``ExempleNommage``, créez un répertoire ``build``, puis
-  compilez avec ``tc/elp/java/geometry/*.java DemoArcCercle.java -d build``. 
+  compilez avec ``javac tc/elp/java/geometry/*.java DemoArcCercle.java -d build``. 
   Que se passe-t-il ? La classe ArcCercle est-elle publique ? Sinon, 
-  déclarez là comme publique. 
+  précédez la déclaration de la classe par le mot-clé ``public``.  
 
 - Exécutez avec ``java -cp build/ DemoArcCercle``. 
   
