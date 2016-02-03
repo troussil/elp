@@ -67,18 +67,32 @@ et :download:`Vecteur.java <download/Vecteur.java>`.
   méthodes de partager le même *nom*, à condition que leur *signature* 
   (nombre et type des paramètres) soit différente ?
   
-Ex.2. Complexe (15 min)
+Ex.2. Complexe (10 min)
 ----------------------------
 
 Faites une classe ``Complexe``, qui étend ``Vecteur``, par les méthodes: 
  - ``double obtenirNorme()``
  - ``Complexe obtenirConjugue()``
  - ``void multiplier(Complexe c)``
- - ``void diviser(Complexe c)``
+
+NB: pour :math:`z = x + iy, z' = x' +iy'`,
+ - :math:`Nz := x^2 + y^2` (norme),
+ - :math:`\bar{z} = x - iy` (conjugué),
+ - :math:`z * z' = (xx' - yy') + i(xy' + yx')`. 
 
 Ce qu'il faut retenir
 ----------------------------------
 
+- Les classes sont organisées en une hiérarchie. Le mot-clé ``extends`` 
+  indique qu'une classe descent d'une autre. 
+
+- L'état et le comportement associés aux instances d'une classe 
+  sont automatiquement partagés à toute classe d'un descendant  
+  (propriété d'extension de code).
+
+- Dans une classe, le mot-clé ``this`` permet d'adresser des requêtes 
+  à soi-même, tandis que le mot-clé ``super`` permet d'adresser des 
+  requêtes à son parent. 
 
 Polymorphisme
 ============================
@@ -97,72 +111,71 @@ un mécanisme complexe.
 
 .. code-block:: java 
 
-        A objet = new B(); //transtypage ascendant implicite
+        B objetB = new B(); 
+        A objetA = new B(); //transtypage ascendant implicite
 
 Un objet de la classe B *est un* objet de la classe A et peut
 être utilisé comme tel. 
 
-NB. Cette relation n'est pas *symétrique*. 
+Attention: cette relation n'est pas *symétrique*. 
 
-Appel de méthode
+Requêtes
 ----------------------------
 
 - Si une méthode ``methodeA`` est définie dans la classe ``A``, 
-  on peut l'appeler à partir de la variable ``objet``: 
+  on peut l'appeler à partir de la variable ``objetA``: 
 
 .. code-block:: java 
 
-        objet.methodeA(); //compile
+        objetA.methodeA(); //compile
+        objetB.methodeA(); //compile (extension de code)
 
 - Si une méthode ``methodeB`` n'est définie que dans la classe ``B``, 
-  on ne peut l'appeler: 
+  on ne peut l'appeler à partir de la variable ``objetA``:  
 
 .. code-block:: java 
 
-        objet.methodeB(); //ne compile pas
+        objetA.methodeB(); //ne compile pas (objetA est de type A)
+        objetB.methodeB(); //compile (objetB est de type B)
 
-- Et si une même méthode est définie à la fois dans la classe ``A`` 
-  et dans la classe ``B`` ?
-
-Redéfinition
-----------------------------
-
-La classe dérivée peut aussi redéfinir certaines méthodes dont elle hérite, 
-c'est-à-dire les implémenter d'une autre manière. 
-
-Ne pas confondre **redéfinition** (= *overriding*), même signature, mais corps différent entre 
-la classe de base et la classe dérivée, et **surcharge** (= *overloading*), même nom, 
-mais liste de paramètres différente, au sein d'une même classe.  
-
-NB. Depuis Java 5, en utilisant l'annotation ``@Override``, le compilateur vérifie que 
-vous redéfinissez une méthode d'une classe de base et n'en créez pas une nouvelle 
-(cf. `annotations prédéfinies <http://docs.oracle.com/javase/tutorial/java/annotations/predefined.html>`_). 
-
-
-Appel de méthode redéfinie
-----------------------------------
-
-.. literalinclude:: code/TD3/Base.java
-   :language: java
-
-.. literalinclude:: code/TD3/Derivee.java
-   :language: java
-
-.. literalinclude:: code/TD3/Demo.java
-   :language: java
-   :lines: 3-4
-
-Quelle méthode est appelée ?
 
 Liaison dynamique
 ----------------------------
 
-A l'exécution, la machine virtuelle regarde quel est l'objet référencé par la variable 
-à partir de laquelle l'appel est effectué. C'est toujours la méthode de cet objet qui 
-est appelée : c'est le principe de la **liaison dynamique**. 
+A l'exécution, la machine virtuelle choisit la méthode à appeler en réponse à une requête, 
+c'est le principe de la **liaison dynamique**. 
 
-Dans l'exemple précédent, la variable ``unObjet`` référence un objet de type ``Derivee``. 
-C'est donc la méthode implémentée dans la classe ``Derivee`` qui est exécutée. 
+La recherche de cette méthode commence avec la classe de l'objet auquel la requête est adressée. 
+Si aucune méthode appropriée n'est trouvée, la recherche se poursuit dans la classe parente et 
+ainsi de suite jusqu'à ce qu'une méthode soit trouvée (le compilateur a préalablement vérifié
+qu'il y aura toujours ultimement une méthode appropriée).  
+
+
+Ex.3. TestComplexe (5 min)
+---------------------------------
+
+Ecrivez une classe ``TestComplexe``, dans laquelle vous testez 
+ - la cohérence de l'addition et de la soustraction des nombres complexes en appelant directement 
+   la méthode ``testsUnitaires`` de la classe :download:`TestVecteur.java <download/TestVecteur.java>`. 
+ - la cohérence de la multiplication avec la norme et la conjugaison (la partie réelle de 
+   :math:`z\bar{z}` doit être égale à la norme :math:`Nz`).  
+
+
+Redéfinition
+----------------------------
+
+Et si une même méthode ``methodeAB`` est définie à la fois dans ``A`` et ``B`` ?
+
+Dans une classe fille, il est possible de redéfinir certaines méthodes 
+dont elle hérite pour les implémenter d'une autre manière. 
+En réponse à un appel à ``methodeAB`` adressé à ``objetB``, 
+ce sera la code de la classe ``B`` qui sera exécuté (et non celui de la 
+classe ``A``). 
+
+
+Ne pas confondre **redéfinition** (= *overriding*), même signature, mais corps différent entre 
+la classe de base et la classe dérivée, et **surcharge** (= *overloading*), même nom, 
+mais liste de paramètres différente, au sein d'une même classe.  
 
 
 Hiérarchie de classes 
@@ -179,9 +192,27 @@ Cette classe possède quelques méthodes pouvant être redéfinies comme
 ``toString`` qui retourne une représentation textuelle de type ``String`` de l'objet
 (nom de la classe, arobase, hash code par défaut). 
 
+Ex.4. Notation complexe (5 min)
+---------------------------------
+
+Redéfinissez la méthode ``toString`` dans votre classe ``Complexe`` de façon à 
+afficher les nombres en notation complexe (sous la forme :math:`x+iy`), plutôt qu'en notation 
+vectorielle (sous la forme :math:`(x,y)`). 
+
+
 
 Ce qu'il faut retenir
 ----------------------------------
+
+- ce que c'est qu'une **surcharge** (dans une classe, plusieurs méthodes
+  ayant le même nom, mais une signature différente) et une **redéfinition**
+  (une classe et ses descendantes ont chacune une méthode identique), 
+
+- ce que c'est que le **polymorphisme** (toutes les instances d'une classe 
+  peuvent être vus comme des instances d'une classe parente),
+
+- le mécanisme de **liaison dynamique** (comment la machine virtuelle recherche
+  à l'exécution la méthode à appeler en réponse à une requête).
 
 
 Exceptions 
@@ -191,86 +222,19 @@ Exceptions
 Erreurs et exceptions
 ------------------------------------
 
-Contrairement aux erreurs qui causent un dysfonctionnement irréversible menant à l'arrêt du programme
-(``java.lang.OutOfMemoryError``), les exceptions désignent les situations où l'exécution peut se poursuivre, 
-généralement de façon différente (``java.lang.ArithmeticException``). 
+Les **exceptions** désignent les situations où l'exécution peut se poursuivre, 
+généralement de façon différente. Elles sont matérialisées en Java  par des instances
+de classes dérivant de ``java.lang.Exception``, elle-même dérivant de ``java.lang.Throwable``. 
 
-En Java, erreurs et exceptions sont matérialisées par des instances de classes dérivant de 
-``java.lang.Error`` et ``java.lang.Exception``, toutes deux dérivant de ``java.lang.Throwable``. 
+C'est donc aussi l'occasion d'avoir un aperçu de la hiérarchie des classes de 
+`l'API standard <http://docs.oracle.com/javase/7/docs/api/>`_: 
 
-Pensez à consulter `l'API standard <http://docs.oracle.com/javase/7/docs/api/>`_
-ou les `tutoriaux <http://docs.oracle.com/javase/tutorial/essential/exceptions/index.html>`_
+     java.lang.Object
+        java.lang.Throwable
+            java.lang.Exception
+
+N'hésitez pas à lire les `tutoriaux <http://docs.oracle.com/javase/tutorial/essential/exceptions/index.html>`_
 qui traitent le sujet.  
-
-
-
-Le client qui traite les exceptions
-------------------------------------
-
-Le bloc d'instructions principal est mis dans un bloc ``try``, 
-tandis que la gestion des exceptions est répartie, selon la 
-nature de l'exception, dans des blocs ``catch`` successifs. 
-
-.. code-block:: java 
-
-        try {
-            /* code */
-        } catch(ExceptionDeTypeA e) {
-	    /* gestion des exceptions de type A */
-	} catch(ExceptionDeTypeB e) {
-	    /* gestion des exceptions de type B */
- 	} finally {
-	    /* tout fermer et nettoyer */
-	}
-
-Le bloc optionnel ``finally`` s'exécute toujours. 
-
-Celui qui n'en fait pas assez
-------------------------------
-
-Ne jamais écrire un code qui masque les exceptions. 
-
-.. code-block:: java 
-
-        try {
-          unCodeQuiLeveUneException();
-        } catch(Exception e) {
-          /* Aucune action, ce qui masque les erreurs */
-        }
-
-Préférez au moins: 
-
-.. code-block:: java 
-
-        try {
-          unCodeQuiLeveUneException();
-        } catch(Exception e) {
-          /* affiche l'empilement des appels qui ont mené à l'erreur */
-	  e.printStackTrace();
-        }
-
-
-Celui qui en fait trop 
------------------------------
-
-N'entourez pas chaque instruction d'un bloc ``try``/``catch``:  
-ça ne sert à rien et va à l'encontre de l'objectif qui est de 
-**séparer** le bloc d'instructions principal, des instructions 
-relevant de la gestion des exceptions pouvant survenir dans ce bloc, 
-afin d'obtenir un code plus lisible et plus facile à réutiliser.    
-
-.. code-block:: java 
-
-        try {
-          unCodeQuiLeveUneExceptionA();
-        } catch(ExceptionA e) {
-	  e.printStackTrace();
-        }
-        try {
-          unCodeQuiLeveUneExceptionB();
-        } catch(ExceptionB e) {
-	  e.printStackTrace();
-        }
 
 
 Le développeur
@@ -338,9 +302,90 @@ Plutôt que d'attraper et lever la même exception, il est possible de la **prop
 	    src.pop();
         }
 
-Ex.3. Exceptions (10 min)
+
+Le client qui traite les exceptions
+------------------------------------
+
+Le bloc d'instructions principal est mis dans un bloc ``try``, 
+tandis que la gestion des exceptions est répartie, selon la 
+nature de l'exception, dans des blocs ``catch`` successifs. 
+
+.. code-block:: java 
+
+        try {
+            /* code */
+        } catch(ExceptionDeTypeA e) {
+	    /* gestion des exceptions de type A */
+	} catch(ExceptionDeTypeB e) {
+	    /* gestion des exceptions de type B */
+ 	} finally {
+	    /* tout fermer et nettoyer */
+	}
+
+Le bloc optionnel ``finally`` s'exécute toujours. 
+
+Celui qui n'en fait pas assez
+------------------------------
+
+Ne jamais écrire un code qui masque les exceptions. 
+
+.. code-block:: java 
+
+        //PAS BIEN
+        try {
+          unCodeQuiLeveUneException();
+        } catch(Exception e) {
+          /* Aucune action, ce qui masque les erreurs */
+        }
+
+Préférez au moins: 
+
+.. code-block:: java 
+
+        try {
+          unCodeQuiLeveUneException();
+        } catch(Exception e) {
+          /* affiche l'empilement des appels qui ont mené à l'erreur */
+	  e.printStackTrace();
+        }
+
+
+Celui qui en fait trop 
+-----------------------------
+
+N'entourez pas chaque instruction d'un bloc ``try``/``catch``:  
+ça ne sert à rien et va à l'encontre de l'objectif qui est de 
+**séparer** le bloc d'instructions principal, des instructions 
+relevant de la gestion des exceptions pouvant survenir dans ce bloc, 
+afin d'obtenir un code plus lisible et plus facile à réutiliser.    
+
+.. code-block:: java 
+
+        //PAS BIEN
+        try {
+          unCodeQuiLeveUneExceptionA();
+        } catch(ExceptionA e) {
+	  e.printStackTrace();
+        }
+        try {
+          unCodeQuiLeveUneExceptionB();
+        } catch(ExceptionB e) {
+	  e.printStackTrace();
+        }
+
+Ex.5. Exceptions (10 min)
 ---------------------------
 
+Dans votre classe ``Complexe``, ajoutez la méthode suivante: 
+
+``void diviser(Complexe c)`` (NB. :math:`z / z' = z\bar{z'} / Nz'`)
+
+Dans une nouvelle classe ``DemoComplexe``, appelez cette méthode avec en paramètre 
+un complexe nul (:math:`0+i0`). En l'affichant sur la sortie standard, vérifiez que 
+le résultat n'est pas défini. 
+
+Dans votre classe ``Complexe``, levez vous-même une exception personnalisée 
+``DivisionComplexeParZero`` et attrapez-là dans ``DemoComplexe``. 
 
 Ce qu'il faut retenir
 -------------------------
