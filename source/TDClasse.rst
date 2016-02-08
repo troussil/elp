@@ -113,20 +113,19 @@ Sinon, il distingue les champs, des paramètres ou variables locaux:
         }
 
 
-Ex.1. Secteur angulaire (15 min)
+Ex.1. Secteur angulaire (10 min)
 ---------------------------------
 
-Donnez une classe ``Secteur`` modélisant un secteur angulaire non vide, c'est-à-dire un intervalle  
-connexe, borné par deux angles :math:`[\theta_1,\theta_2[`, chacun dans :math:`[0,2\pi[`. 
+Complétez le fichier :download:`Secteur.java <download/Secteur.java>` décrivant 
+la classe ``Secteur`` qui modélise un secteur angulaire, c'est-à-dire un intervalle  
+connexe, borné par deux angles :math:`[\theta_1,\theta_2[`, chacun dans :math:`[0,2\pi]`. 
 Par convention, le secteur est celui qu'on parcourt en partant de :math:`\theta_1` 
 dans le sens trigonométrique. 
 
-Ajoutez une méthode ``toString`` renvoyant une description textuelle de l'objet, 
-ainsi qu'une méthode ``ecart`` donnant l'écart angulaire du secteur. 
-
 Testez avec le fichier :download:`TestSecteur.java <download/TestSecteur.java>`. 
 
-NB. ``java.lang.Math.PI`` donne la valeur de :math:`\pi`.
+NB. ``java.lang.Math.PI`` donne la valeur de :math:`\pi` et `%` est l'opérateur modulo permettant
+de garantir des angles dans :math:`[0,2\pi]`. 
 
 Membres statiques
 ==============================
@@ -164,7 +163,7 @@ Le mot-clé **static** convient pour les
 - champs dont les valeurs sont partagés par tous les objets d'une même classe, comme les constantes (``Math.PI``). Dans ce cas on fait suivre le mot-clé **final** à ``static``.  
            
 
-Ex. 2. Secteur angulaire 2 (5 min)
+Ex.2. Secteur angulaire 2 (10 min)
 ------------------------------------
 
 Dans votre classe modélisant un secteur angulaire: 
@@ -175,6 +174,7 @@ Dans votre classe modélisant un secteur angulaire:
  
  - le secteur complet :math:`[0;2\pi[`
  - le premier quadrant :math:`[0;\pi/2[`
+ - Testez leur écart dans ``TestSecteur``. 
 
 
 Composition d'objets
@@ -272,7 +272,7 @@ le nom des classes en utilisant le mot-clef ``import`` au début des fichiers so
         Point p = new Point(2,5); 
 
 
-Ex.4. Package (15 min)
+Ex.4. Package (10 min)
 -----------------------------
 
 - Dans un répertoire appelé ``ExempleNommage``, ajoutez la hiérarchie 
@@ -280,8 +280,9 @@ Ex.4. Package (15 min)
   les fichiers sources des classes ``Point``, ``Secteur``, ``Cercle``, 
   ``ArcCercle``. 
 
-- Insérez les lignes commençant par les mots-clés ``package`` et ``import`` 
-  pour que ces classes appartiennent toutes au package ``tc.elp.java.geometry``. 
+- Insérez les lignes commençant par le mot-clé ``package``  
+  pour que ces classes appartiennent toutes au package 
+  ``tc.elp.java.geometry``. 
 
 - Dans ``ExempleNommage``, ajoutez la classe ``DemoArcCercle`` qui affiche
   le premier quadrant d'un cercle centrée en l'origine et de rayon 5 (elle 

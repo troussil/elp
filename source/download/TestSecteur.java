@@ -6,7 +6,7 @@ class TestSecteur {
 
 	//premier secteur
 	Secteur s1 = new Secteur(10*java.lang.Math.PI/2,-9*java.lang.Math.PI/2); 
-	System.out.println("[10pi/2:-11pi/2[ == [pi:3pi/2[ == "+s1+" a une etendue de pi/2 == "+s1.ecart());  
+	System.out.println("[10pi/2:-9pi/2[ == [pi:3pi/2[ == "+s1+" a une etendue de pi/2 == "+s1.ecart());  
 	if ( (s1.ecart() <= java.lang.Math.PI/2 + epsilon)
 	     && (s1.ecart() > java.lang.Math.PI/2 - epsilon) )
 	    nbok++; 

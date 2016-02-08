@@ -1,11 +1,11 @@
 class Secteur {
 
-    private static double borneSuperieure = 2.0*java.lang.Math.PI; 
+    private final static double borneSuperieure = 2.0*java.lang.Math.PI; 
 
     private double theta1, theta2; 
 
     private double recaler(double angle) {
-	if (angle >= borneSuperieure)
+	if (angle > borneSuperieure)
 	    return angle % borneSuperieure; 
 	else if (angle < 0.0) 
 	    return (angle % borneSuperieure) + borneSuperieure; 
@@ -27,7 +27,7 @@ class Secteur {
     }
 
     public double ecart() {
-	if (theta2 > theta1)
+	if (theta2 >= theta1)
 	    return (theta2 - theta1); 
 	else 
 	    return theta2 + borneSuperieure - theta1; 

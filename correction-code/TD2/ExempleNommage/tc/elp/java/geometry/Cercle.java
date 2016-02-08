@@ -1,7 +1,5 @@
 package tc.elp.java.geometry; 
 
-import tc.elp.java.geometry.Point; 
-
 class Cercle {
     private Point centre; 
     private double rayon; 

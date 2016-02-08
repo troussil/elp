@@ -1,8 +1,5 @@
 package tc.elp.java.geometry; 
 
-import tc.elp.java.geometry.Cercle; 
-import tc.elp.java.geometry.Secteur; 
-
 public class ArcCercle {
     private Cercle cercle; 
     private Secteur secteur; 
