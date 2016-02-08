@@ -150,6 +150,24 @@ Si aucune méthode appropriée n'est trouvée, la recherche se poursuit dans la 
 ainsi de suite jusqu'à ce qu'une méthode soit trouvée (le compilateur a préalablement vérifié
 qu'il y aura toujours ultimement une méthode appropriée).  
 
+Transtypage
+-------------------------
+
+Vous connaissez le transtypage ascendant (= *upcast*) implicite:  
+
+.. code-block:: java 
+
+	A objetA = new B(); //transtypage ascendant implicite
+
+A l'inverse, il est possible de réaliser explicitement un transtypage descendant (= *downcast*): 
+
+.. code-block:: java 
+
+	B objetB2 = (B) objetA; //transtypage descendant explicite
+
+C'est utile quand on manipule une instance de ``B`` comme un ``A`` (passage de paramètres par exemple), 
+mais qu'on a besoin d'appeler ``methodeB``.
+
 
 Ex.3. TestComplexe (5 min)
 ---------------------------------

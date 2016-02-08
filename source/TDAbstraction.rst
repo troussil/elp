@@ -12,13 +12,13 @@ Mot-clé **abstract**
 
 .. code-block:: java 
 
-        public abstract void methodeAbstraite(); 
+        abstract void methodeAbstraite(); 
   
 - Une classe comportant une méthode abstraite doit être déclarée comme abstraite:
 
 .. code-block:: java 
 
-        public abstract class ClasseAbstraite { ... } 
+        abstract class ClasseAbstraite { ... } 
  
 - Une classe abstraite ne peut pas être instanciée. 
 
@@ -106,24 +106,31 @@ Interfaces
 Interface
 --------------------------
 
+Une interface est un ensemble requêtes.  
+Toutes les instances des classes implémentant une même interface
+répondent (à leur manière) à toutes ces requêtes et sont donc
+de ce point de vue interchangeables.  
+
+Il existe des appareils très différents fournissant un signal audio/vidéo
+(lecteur Blu-ray, ordinateur, console de jeu). Vous pouvez pourtant tous 
+les relier à votre téléviseur par un connecteur approprié (HDMI) pourvu 
+qu'ils respectent tous la même interface (norme et prise).  
+
+
 Syntaxe
 ---------------------------
 
-On déclare une interface ``I`` ainsi: 
+Une interface ``I`` liste toutes les requêtes qu'on peut adresser aux 
+instances des classes l'implémentant:  
 
 .. code-block:: java 
 
-	interface I { ... }
+        interface I {
+	  void unePremiereRequete(); 
+	  ...
+        } 
 
-L'interface ``I`` liste toutes les requêtes qu'on peut adresser aux 
-instances des classes implémentant ``I``:  
-
-.. code-block:: java 
-
-	void unePremiereRequete(); 
-	int uneSecondeRequete(Parametre p); 
-
-On déclare une classe qui implémente ``I`` comme ceci:  
+Une classe implémentant ``I`` est déclarée ainsi:  
 
 .. code-block:: java 
 
@@ -145,41 +152,17 @@ des objets de classes différentes sont interchangeables à partir du moment
 où leurs classes héritent d'une même classe parente ou implémentent la même
 interface. 
 
+.. code-block:: java 
 
-Exemple d'application
-----------------------------------
+	abstract class A { ... } 
+	class B extends A { ... }
+	interface I { ... }
+	class C implements I { ... }
 
-On va implémenter des algo sur des graphes
-mécanisme Graphe et structure de graphe. 
+.. code-block:: java 
 
-
-Ex.4. Interface (5 min)
-----------------------------------
-
-On va créez un noeud abstrait, 
- une interface pour les structures de graphe
-
-
-transtypage
--------------------------
-
-Une variable qui fait référence à une instance d'une classe dérivée de ``C``
-ou implémentant ``I`` va pouvoir être déclarée comme ``C`` ou ``A``: c'est 
-un transtypage ascendant (= *upcast*) implicite.  
-
-A l'inverse, descendant
-
-
-Ex.5. Structure de données (20 min)
------------------------------------- 
-
-on hérite de matrice carre symetrique
-
-Ex.6. Test (10 min)
------------------------------------- 
-
-on cre des graphes pour tester
-
+        A objetA = new B(); //transtypage ascendant implicite
+	I objetI = new C(); //idem
 
 Classe abstraite vs interface
 ------------------------------
@@ -195,6 +178,50 @@ Classe abstraite vs interface
 
   - on préferera une classe abstraite pour modéliser le dénominateur commun à plusieurs classes 
     de même *nature*. Une classe ne peut hériter que d'une seule autre classe. 
+
+
+
+Exemple d'application
+----------------------------------
+
+On veut coder des algorithmes opérant sur des graphes. 
+Mais les graphes peuvent être représentés par différentes 
+structures de données (matrice d'incidence, d'adjacence, 
+collections de noeuds et d'arêtes intereliés par des pointeurs). 
+
+On va séparer ``Graph`` (la classe offrant l'accès aux algorithmes) 
+et ``GraphStruct`` (l'interface implémentée par les différentes 
+structures de données de graphe); une instance de ``Graph`` sera
+couplée à une instance de ``GraphStruct``. 
+
+On a déjà implémenté un calcul du nombre de composantes connexes
+comme preuve de concept dans :download:`Graph.java <download/Graph.java>`. 
+
+
+Ex.4. Interface (5 min)
+----------------------------------
+
+- Créez une classe abstraite vide appelée ``Node``. Elle représente
+  les noeuds de toute structure de données de graphe. 
+ 
+- Créez une interface appelée ``GraphStruct`` possédant deux méthodes: 
+  - ``Node[] getNodes()`` (renvoie l'ensemble des noeuds),
+  - ``Node[] getNeighbors(Node aNode)`` (renvoie les voisins d'un noeud).
+
+- Compilez les classes ``Graph``, ``GraphStruct``, ``Node`` pour s'assurer
+  que les noms concordent.  
+
+
+Ex.5. Structure de données (20 min)
+------------------------------------ 
+
+on hérite de matrice carre symetrique
+
+Ex.6. Test (10 min)
+------------------------------------ 
+
+on cre des graphes pour tester
+
 
 
 Héritage de classe ?
