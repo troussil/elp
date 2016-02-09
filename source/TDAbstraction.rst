@@ -48,7 +48,7 @@ l'action de se déplacer est commune à tous les véhicules.
 Ex.1. Integration/Point de variation (5 min)
 -----------------------------------------------
 
-- :download:`Téléchargez <download/Integration.java>` le fichier ``Integration.java`` 
+- Téléchargez le fichier :download:`Integration.java <download/Integration.java>`  
   qui permet d'intégrer numériquement la fonction :math:`g : \mathbb{R} \rightarrow \mathbb{R}` 
   telle que :math:`g(x) = x^2`.
 
@@ -167,7 +167,7 @@ interface.
 Classe abstraite vs interface
 ------------------------------
 
-- Une classe *purement* abstraite, sans attribut et dont toutes les méthodes sont abstraites,
+- Une classe *purement* abstraite, sans champs et dont toutes les méthodes sont abstraites,
   ressemble à une interface. 
 
 - La différence est subtile: 
@@ -187,12 +187,12 @@ Exemple d'application
 On veut coder des algorithmes opérant sur des graphes. 
 Mais les graphes peuvent être représentés par différentes 
 structures de données (matrice d'incidence, d'adjacence, 
-collections de noeuds et d'arêtes intereliés par des pointeurs). 
+collections de noeuds et d'arêtes intereliés par des références). 
 
 On va séparer ``Graph`` (la classe offrant l'accès aux algorithmes) 
 et ``GraphStruct`` (l'interface implémentée par les différentes 
-structures de données de graphe); une instance de ``Graph`` sera
-couplée à une instance de ``GraphStruct``. 
+structures de données de graphe); une instance de ``Graph`` 
+manipulera une instance de ``GraphStruct``. 
 
 On a déjà implémenté un calcul du nombre de composantes connexes
 comme preuve de concept dans :download:`Graph.java <download/Graph.java>`. 
@@ -201,27 +201,51 @@ comme preuve de concept dans :download:`Graph.java <download/Graph.java>`.
 Ex.4. Interface (5 min)
 ----------------------------------
 
-- Créez une classe abstraite vide appelée ``Node``. Elle représente
-  les noeuds de toute structure de données de graphe. 
+- Créez une classe appelée ``Node``. Il est raisonnable de choisir qu'un 
+  noeud possède au moins un numéro qui l'identifie dans le graphe. 
  
 - Créez une interface appelée ``GraphStruct`` possédant deux méthodes: 
+
   - ``Node[] getNodes()`` (renvoie l'ensemble des noeuds),
-  - ``Node[] getNeighbors(Node aNode)`` (renvoie les voisins d'un noeud).
+  - ``Node[] getNeighbors(Node aNode)`` (renvoie les voisins d'un noeud donné).
 
 - Compilez les classes ``Graph``, ``GraphStruct``, ``Node`` pour s'assurer
   que les noms concordent.  
 
 
-Ex.5. Structure de données (20 min)
+Ex.5. Structure de données (15 min)
 ------------------------------------ 
 
-on hérite de matrice carre symetrique
+- Ecrivez une classe appelée ``GraphStructByAdjMat``, qui étend 
+  :download:`SquareMatrix <download/SquareMatrix.java>` et qui 
+  implémente l'interface ``GraphStruct``. 
 
-Ex.6. Test (10 min)
+
+Ex.6. Test (5 min)
 ------------------------------------ 
 
-on cre des graphes pour tester
+- Ecrivez du code client pour tester le calcul du nombre de composantes connexes: 
 
+ - sur trois noeuds isolés (3 composantes)
+ - sur trois noeuds dont deux sont reliés par une arête (2 composantes), 
+ - etc. 
+
+
+
+Ce qu'il faut retenir
+---------------------------
+
+- Une interface définit ce que sait faire les classes qui l'implémentent. Une classe 
+  peut implémenter plusieurs interfaces.  
+
+- Une classe mère définit un dénominateur commun qu'enrichissent ses classes filles. 
+  Une classe ne peut dériver que d'une seule classe. Quand la classe mère est abstraite, 
+  elle n'est pas instanciable.  
+
+- Dans les deux cas, il y a polymorphisme: les objets de même type sont interchangeables. 
+
+- Pour écrire du code générique et réutilisable, mieux vaut programmer pour une interface, 
+  plutôt que pour des objets particuliers. 
 
 
 Héritage de classe ?
@@ -240,19 +264,3 @@ l'héritage convient (mais c'est plutôt rare).
 Dans le cas 1., une relation de composition pourrait être préférée.  
 
 Dans le cas 2., mieux vaut considérer l'utilisation d'une classe abstraite ou d'une interface. 
-
-
-Ce qu'il faut retenir
----------------------------
-
-- Une interface définit ce que sait faire les classes qui l'implémentent. Une classe 
-  peut implémenter plusieurs interfaces.  
-
-- Une classe mère définit un dénominateur commun qu'enrichissent ses classes filles. 
-  Une classe ne peut dériver que d'une seule classe. Quand la classe mère est abstraite, 
-  elle n'est pas instanciable.  
-
-- Dans les deux cas, il y a polymorphisme: les objets de même type sont interchangeables. 
-
-- Pour écrire du code générique et réutilisable, mieux vaut programmer pour une interface, 
-  plutôt que pour des objets particuliers. 
