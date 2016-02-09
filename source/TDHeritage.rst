@@ -1,6 +1,6 @@
-======================
-Hiérarchie de classes
-======================
+=====================================
+Hiérarchie de classes et exceptions
+=====================================
 
 
 Héritage
@@ -76,7 +76,7 @@ Faites une classe ``Complexe``, qui étend ``Vecteur``, par les méthodes:
  - ``void multiplier(Complexe c)``
 
 NB: pour :math:`z = x + iy, z' = x' +iy'`,
- - :math:`Nz := x^2 + y^2` (norme),
+ - :math:`Nz = x^2 + y^2` (norme),
  - :math:`\bar{z} = x - iy` (conjugué),
  - :math:`z * z' = (xx' - yy') + i(xy' + yx')`. 
 
@@ -122,8 +122,8 @@ Attention: cette relation n'est pas *symétrique*.
 Requêtes
 ----------------------------
 
-- Si une méthode ``methodeA`` est définie dans la classe ``A``, 
-  on peut l'appeler à partir de la variable ``objetA``: 
+- Une méthode ``methodeA`` non privée de la classe ``A``, 
+  peut être appelée à partir de la variable ``objetA``: 
 
 .. code-block:: java 
 
@@ -149,6 +149,24 @@ La recherche de cette méthode commence avec la classe de l'objet auquel la requ
 Si aucune méthode appropriée n'est trouvée, la recherche se poursuit dans la classe parente et 
 ainsi de suite jusqu'à ce qu'une méthode soit trouvée (le compilateur a préalablement vérifié
 qu'il y aura toujours ultimement une méthode appropriée).  
+
+Transtypage
+-------------------------
+
+Vous connaissez le transtypage ascendant (= *upcast*) implicite:  
+
+.. code-block:: java 
+
+	A objetA = new B(); //transtypage ascendant implicite
+
+A l'inverse, il est possible de réaliser explicitement un transtypage descendant (= *downcast*): 
+
+.. code-block:: java 
+
+	B objetB2 = (B) objetA; //transtypage descendant explicite
+
+C'est utile quand on manipule une instance de ``B`` comme un ``A`` (passage de paramètres par exemple), 
+mais qu'on a besoin d'appeler ``methodeB``.
 
 
 Ex.3. TestComplexe (5 min)
