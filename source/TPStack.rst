@@ -50,7 +50,7 @@ Création d'un projet
 Compilation
 -------------------------------
 
-- La classe ``App.java`` a été créée par défaut. Que fait elle ?
+- La classe ``App.java`` a été créée par défaut. Que fait-elle ?
 
 - Depuis le répertoire ``Hanoi``, compilez avec ``mvn compile``. 
   Observez la hiérarchie de répertoires avec ``ls -R`` ou ``tree``. 
@@ -61,8 +61,19 @@ Compilation
 
 - Que fait ``mvn clean`` ?
 
-Configurer la version du compilateur
--------------------------------------
+Tests
+---------------------------------
+
+- Pour tester nos classes nous allons utiliser le framework JUnit. 
+
+- Depuis le répertoire ``Hanoi``, compilez avec ``mvn test-compile``. 
+  Observez la hiérarchie de répertoires avec ``ls -R`` ou ``tree``. 
+  Où est ``AppTest.class`` ?
+
+- Exécutez avec ``mvn test``. 
+
+Configurer les versions de Java, JUnit
+-----------------------------------------
 
 Pour utiliser Java 5 (annotations), dans ``pom.xml``, ajoutez ceci entre 
 les balises ``project``:  
@@ -83,12 +94,14 @@ les balises ``project``:
           </plugins>
         </build> 
 
+De plus, pour les tests, corrigez la version de JUnit en 4.2. 
+
 Organisation des fichiers
 ------------------------------------
 
 A partir de maintenant, sauf mention contraire, 
 les classes de l'application appartiendront au package ``tc.elp.java.datastructures``. 
-Leur fichiers sources ``.java`` seront donc situés dans le répertoire 
+Leur fichier source d'extension ``.java`` sera donc ajouté au répertoire 
 ``src/main/java/tc/elp/java/datastructures``. 
 
 
@@ -98,15 +111,25 @@ Un tableau dynamique (45 min)
 .. _DynamicArray-label:
 
 
+Objectif
+-------------------------------------
+
+- Dans cette partie, l'objectif est d'écrire une classe ``DynamicArray`` qui 
+  implémente un tableau d'entiers dynamique auquel on peut ajouter autant 
+  d'entiers qu'on veut à droite (dans les cases de plus grands indices).
+
+- Pour tester, téléchargez :download:`TestDynamicArray.java <download/TestDynamicArray.java>`
+  et ajoutez-le au répertoire 
+  ``src/test/java/tc/elp/java/datastructures``. 
+
+
 Classe ``DynamicArray``
 ----------------------------------
 
-- Ecrivez une classe ``DynamicArray``dans le répertoire ``src/main/java. qui implémente un tableau d'entiers
-  dynamique auquel on peut ajouter des valeurs autant qu'on veut. Par composition, 
-  il contiendra un champs de type tableau. L'idée est d'allouer un tableau dont 
-  la longueur est une puissance de 2, en commençant par 1 à la construction. 
-  A chaque fois que la taille du tableau est dépassée lors de l'ajout d'un nouvel élément, 
-  un nouveau tableau de taille deux fois plus grande est utilisé.  
+- La classe ``DynamicArray`` repose sur un champs de type tableau. L'idée est d'instancier 
+  un tableau dont la longueur est une puissance de 2, en commençant par 1 à la construction. 
+  A chaque fois que la taille de ce tableau est dépassée lors de l'ajout d'un nouvel élément, 
+  un nouveau tableau de taille deux fois plus grande est créé puis utilisé.  
 
 .. figure:: figs/DynamicArray.*
    :alt: diagramme UML de la classe DynamicArray
@@ -127,21 +150,12 @@ Détails d'implémentation
    :scale: 50%
 
 - La méthode ``get`` retourne l'élément se trouvant à l'indice donné. 
-- La méthode ``push`` ajoute un nouvel élément à l'indice ``mySize``.  
-
-``TestDynamicClass``
--------------------------------------
-
-- Créez du code client pour garantir le bon fonctionnement des instances de ``DynamicArray``. 
-  Le fichier source ``.java`` pourra avantageusement appartenir au répertoire 
-  ``src/test/java/tc/elp/java/datastructures``. 
-
-- Dans une instance de ``DynamicArray``, ajoutez avec ``push`` les 256 premiers entiers
-  et assurez-vous que la capacité maximale est atteinte à chaque puissance de 2 avec 
-  ``capacity`` et ``size``. Vérifiez le contenu du tableau avec ``get``. 
+- La méthode ``push`` ajoute un nouvel élément à l'indice ``mySize``
+  quand ce dernier n'est pas donné.  
 
 
-Deux implémentations de piles (45 min)
+
+Implémentation de piles (45 min)
 ========================================
 
 
@@ -154,14 +168,27 @@ Interface ``Stack``
  
   -  ``boolean empty()`` (indique si la pile est vide) 
   -  ``int top()`` (renvoie l'élément du dessus) 
-  -  ``void push(int aValue)`` (ajoute une élément au-dessus) 
+  -  ``void push(int aValue)`` (ajoute un élément au-dessus) 
   -  ``void pop()`` (supprime l'élément du dessus) 
 
-Test
+Objectif 
 -----------------------------------
 
-Téléchargez le test 
+- L'objectif de cette partie est d'implémenter deux structures de piles. 
+  L'une de type liste chaînée, l'autre basée sur la classe ``DynamicArray``
+  précédente. 
 
+- Pour tester, téléchargez le :download:`TestStack.java <download/TestStack.java>` et ajoutez-le au répertoire 
+  ``src/test/java/tc/elp/java/datastructures``. 
+
+Exception
+----------------------------------
+
+- Vous avez certainement vu que les méthodes ``top`` et ``pop`` sont mal définies
+  dans le cas d'une pile vide. 
+
+- Créez une classe ``EmptyStackException`` dérivant de ``java.lang.Exception``, 
+  de façon à ce qu'une exception de ce type soit levée au moment opportun. 
 
 .. _StackByLinkedList-label:
 
@@ -185,17 +212,25 @@ Classe ``StackByArray``
 
 
 
-
-Code client
+Code client (20 min)
 ===========================
 
-Hanoi (15 min)
+Hanoi
 ------------------------
 
+L'objectif est maintenant d'implémenter l'algorithme qui 
+déplace les tours de Hanoi; chaque tour étant modélisée 
+par une pile d'entiers. 
+
+Bien sûr, vous devez veiller à ce que toute structure de données 
+de pile (respectant l'interface ``Stack``) puisse être utilisé dans
+votre code.  
+
+Ce code sera écrit dans la classe ``Hanoi``, ajoutée au répertoire
+``src/main/java`` (elle n'appartient pas au package ``tc.elp.java.datastructures``). 
 
 
-
-Jar (15 min)
+Jar (20 min)
 ========================
 
 Qu'est-ce que c'est ?
@@ -213,30 +248,25 @@ Cela facilite donc le déploiement et la diffusion d'un projet.
 
 .. _Hanoi-label:
 
-Ex.1. Jar non exécutable (15 min)
+Création d'une archive jar
 ------------------------------------
 
-- Créez un répertoire ``ExHanoiJar``, contenant un répertoire ``build`` (vide) et 
-  ``src``, contenant :download:`Hanoi.java <download/Hanoi.java>` et les cinq 
-  fichiers relatifs aux piles ``StackByArray.java``, 
-  ``DynamicArray.java``, ``StackByLinkedList.java``, ``LinkedListNode.java``, 
-  ``Stack.java``. 
+- Depuis le répertoire ``target/classes``, créez une archive
+  en tapant ``jar -cvf monArchive.jar tc/elp/java/datastructures/*`` 
 
-- Depuis ``ExHanoiJar``, compilez en tapant ``javac src/*.java -d build/``.
+- Vérifez le contenu de l'archive générée avec la commande ``jar -tvf monArchive.jar``.  
 
-- Dans le répertoire ``build``, créez une archive
-  en tapant ``jar -cvf monArchive.jar *.class`` 
-
-- Vérifez le contenu de l'archive générée avec la commande ``jar -tvf``.  
-  Essayez ``jar -xvf`` pour désarchiver. 
+- Créez un répertoire ``tmp``. Depuis ce répertoire, désarchivez avec ``jar -xvf ../monArchive.jar``. 
 
 
-Ex.5. Librairie/Hanoi (5 min) 
+Utilisation d'un jar
 ------------------------------
 
-- Depuis ``ExPackage``, compilez ``Hanoi.java`` avec ``javac -cp monArchive.jar Hanoi.java``. 
+- Copiez ``Hanoi.java`` et ``monArchive.jar`` dans le répertoire racine ``Hanoi``,  
 
-- Exécutez avec ``java -cp build/monArchive.jar:. Hanoi``. Attention au ``:.``. 
+- Compilez avec ``javac -cp monArchive.jar Hanoi.java``. 
+
+- Exécutez avec ``java -cp monArchive.jar:. Hanoi``. Attention au ``:.``. 
 
 - NB: L'option **-classpath** (= **-cp**) des commandes **javac** et **java** accepte 
   non seulement des chemins, mais aussi des archives jar. Le ``:`` permet de séparer deux 
@@ -244,20 +274,114 @@ Ex.5. Librairie/Hanoi (5 min)
   l'option *-cp* doit se trouver avant le fichier à compiler ou la classe à exécuter.   
 
 
-Ex.2. Jar exécutable (5 min)
+Jar exécutable 
 -----------------------------------
 
-- Dans le répertoire ``build``, créez une archive exécutable 
-  en tapant ``jar -cvfe monArchive.jar Hanoi *.class`` 
+- Dans le répertoire racine ``Hanoi``, ajoutez à votre archive le fichier 
+  ``Hanoi.class`` et spécifiez un point d'entrée pour la rendre exécutable, 
+  en tapant ``jar -uvfe monArchive.jar Hanoi Hanoi.class``.
 
 NB. L'option ``e`` permet de spécifier la classe à exécuter (= *entrypoint*). 
 
 - Tapez ``java -jar monArchive.jar`` pour l'exécuter.
 
+Maven et Jar
+--------------------------------------
 
-Pour aller plus loin
-========================
 
-Pile générique
+- Invoquez la commande ``mvn package`` qui génère un jar du projet.
+- Listez les fichiers du jar, testez-le.
+- Rendez-le exécutable en spécifiant un point d’entrée avec ``jar -uvfe``.
+
+Rendu du travail
+---------------------------------------
+
+- Copiez votre archive jar exécutable dans le répertoire racine ``Hanoi``. 
+
+- Nettoyez le reste du projet avec ``mvn clean``. 
+
+- Copiez le répertoire ``Hanoi`` (et tout ce qu'il contient) dans un répertoire
+  à vos noms (de la forme ``NomEtudiant1-NomEtudiant2``)
+
+- Archivez et compressez ce répertoire en un fichier d'extension ``.tar.gz`` 
+  que vous chargerez sur Moodle. 
+
+
+Pour aller plus loin (45 min)
+==============================
+
+Généricité
 -------------------------
 
+Nous avons manipulé jusqu'à maintenant des tableaux et piles d'entiers. 
+Mais aucune partie du code n'est spécifique au type ``int``; nous voudrions
+donc avoir des structures de données dont on peut choisir le type des éléments. 
+
+Depuis Java 5, les `generics <https://docs.oracle.com/javase/tutorial/java/generics/>`_
+fournissent un mécanisme pour que les classes, interfaces, méthodes puissent 
+être paramétrées par un type; les incohérences étant détectées à la compilation. 
+
+Syntaxe
+------------------------
+
+On fait suivre le nom de la classe (ou interface) par le 
+paramètre de type entre chevrons: 
+
+.. code-block:: java
+
+        class LinkedListNode<E> { ... }
+
+Dans le code, ``E`` représente le type d'un élément: 
+
+.. code-block:: java
+
+        private E myValue; /// valeur d'un élément
+
+Pour instancier, on donne en argument un type existant: 
+
+.. code-block:: java
+
+        LinkedListNode<Integer> node = new LinkedListNode<Integer>(); 
+
+Le mécanisme de substitution est celui du passage de paramètres.  
+
+Restriction
+--------------------------
+
+Il n'est pas possible d'avoir un type primitif comme argument: 
+
+.. code-block:: java
+
+        LinkedListNode<int> node = new LinkedListNode<int>(); //compile pas
+
+En remplacement, on utilise les *wrappers* ``Boolean``, ``Character``, 
+``Integer``, ``Long``, ``Float``, and ``Double`` 
+qui héritent tous de ``Object`` (comme tout type non primitif), 
+et ajoutent des services aux types primitifs (conversion, etc.).
+
+.. code-block:: java
+
+        LinkedListNode<Integer> node = new LinkedListNode<Integer>(); //ok 
+
+
+Objectif
+--------------------------
+
+L'objectif de cette partie est de rendre générique l'interface ``Stack``
+et les classes ``LinkedListNode``, ``StackByLinkedList`` (afin d'avoir
+des piles dont le type d'élément est arbitraire). 
+
+En revanche, comme tableaux et *generics* cohabitent mal, on exige simplement
+de la classe ``StackByArray`` (qui dérive de ``DynamicArray``) qu'elle satisfasse 
+l'interface ``Stack<Integer>``. 
+
+Dans les tests et dans ``Hanoi``, on n'utilisera que des instances de classes 
+respectant l'interface ``Stack<Integer>``.
+
+NB. Pour éviter de tout casser, travaillez sur une copie de votre projet. 
+
+Rendu du travail
+---------------------------------------
+
+- Si vous avez réussi, archivez et compressez votre projet (avec le jar exécutable)
+  et chargez-le sur Moodle. 
