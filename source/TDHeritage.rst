@@ -23,11 +23,11 @@ Syntaxe et vocabulaire
 
 .. code-block:: java 
 
-	public class B extends A { ... }
+	class B extends A { ... }
 
 .. code-block:: java 
 
-	public class C extends A { ... }
+	class C extends A { ... }
 
 ================ ==============
 ``A``            ``B``, ``C``
@@ -107,7 +107,7 @@ un mécanisme complexe.
 
 .. code-block:: java 
 
-	public class B extends A { ... }
+	class B extends A { ... }
 
 .. code-block:: java 
 
@@ -264,8 +264,6 @@ avec le mot-clé ``throws`` et peut effectivement **lever une exception** au mom
 .. code-block:: java 
    :emphasize-lines: 3,5
 
-        import java.lang.Exception; 
-        ...
         public int pop() throws Exception {
             if ( myNode == null ) 
                 throw new Exception();
@@ -279,8 +277,6 @@ Créer sa propre classe d'exception
 
 .. code-block:: java 
 
-        import java.lang.Exception; 
-        ...
         public class EmptyStackException extends Exception {
            ...
         }

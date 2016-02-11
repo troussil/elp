@@ -106,8 +106,8 @@ Interfaces
 Interface
 --------------------------
 
-Une interface est un ensemble requêtes.  
-Toutes les instances des classes implémentant une même interface
+Une interface est un ensemble de requêtes.  
+Toutes les instances des classes **implémentant** une même interface
 répondent (à leur manière) à toutes ces requêtes et sont donc
 de ce point de vue interchangeables.  
 

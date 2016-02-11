@@ -234,25 +234,28 @@ Package et nom complet
         tc.elp.java.geometry.Point p; //déclaration d'une variable
 
 
-Chargement des classes
+Recherche des classes
 --------------------------
 
-- Les classes compilées (fichiers ``.class``) sont chargées en mémoire à l'exécution par la machine virtuelle. 
- 
-- Elles sont recherchées sur le système de fichiers. Le **classpath** indique le répertoire 
-  *à partir duquel* elles sont cherchées (le répertoire courant par défaut). Depuis ce répertoire, 
-  le chemin donné par le nom du package, en remplaçant les points par des *slash*, mène au repertoire 
-  où elles doivent se trouver.
+A la compilation (resp. à l'exécution), les fichiers ``.java`` (resp. ``.class``) sont 
+recherchés sur le système de fichiers. Le **classpath** (option ``-classpath`` ou ``-cp``)
+indique le répertoire *à partir duquel* ils sont cherchés (le répertoire courant par défaut). 
+Depuis ce répertoire, le chemin donné par le nom strict de la classe, en remplaçant les points par des *slash*, 
+mène au repertoire où ils doivent se trouver.
 
-Dans notre exemple, la machine virtuelle cherchera:  
+Dans notre exemple, le compilateur cherchera: 
  
-**./tc/elp/java/geometry/** ``Point.class`` 
+*classpath* **/tc/elp/java/geometry/Point** ``.java`` 
+
+A l'exécution, la machine virtuelle cherchera:   
+
+*classpath* **/tc/elp/java/geometry/Point** ``.class`` 
 
 
 Alias
 -------------------------
 
-Ce mécanisme de nommage permet d'éviter les *conflits de noms*, 
+Ce mécanisme de nommage permet d'éviter les **conflits de noms**, 
 mais les noms de classe sont déraisonnablement longs: 
 
 .. code-block:: java
@@ -285,7 +288,7 @@ Ex.4. Package (10 min)
   ``tc.elp.java.geometry``. 
 
 - Dans ``ExempleNommage``, ajoutez la classe ``DemoArcCercle`` qui affiche
-  le premier quadrant d'un cercle centrée en l'origine et de rayon 5 (elle 
+  le premier quadrant d'un cercle centré en l'origine et de rayon 5 (elle 
   n'appartient pas au même package). 
 
 - Comment compiler et exécuter ? 

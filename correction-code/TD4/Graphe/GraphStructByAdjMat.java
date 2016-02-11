@@ -38,18 +38,17 @@ public class GraphStructByAdjMat extends SquareMatrix implements GraphStruct {
    * @return neighbor set
    */
   public Node[] getNeighbors(Node aNode) {
-    Node node = (Node) aNode; 
     //count
     int c = 0; 
     for (int j = 0; j < N; j++) {
-      if (data[node.id][j] != 0)
+      if (data[aNode.id][j] != 0)
 	c++; 
     }
     //copy
     Node[] neighbors = new Node[c];
     c = 0; 
     for (int j = 0; j < this.N; j++) {
-      if (data[node.id][j] != 0) {
+      if (data[aNode.id][j] != 0) {
 	neighbors[c] = myNodeSet[j]; 
 	c++; 
       }

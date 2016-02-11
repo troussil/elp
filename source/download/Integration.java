@@ -37,9 +37,9 @@ public class Integration
 
 	if (args.length >= 3 )
 	    {
-		a = (double) Double.parseDouble(args[0]); 
-		b = (double) Double.parseDouble(args[1]);
-		n = (int) Integer.parseInt(args[2]); 
+		a = Double.parseDouble(args[0]); 
+		b = Double.parseDouble(args[1]);
+		n = Integer.parseInt(args[2]); 
 	    }
 	else
 	    {
