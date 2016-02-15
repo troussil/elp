@@ -15,4 +15,5 @@ ELP-JAVA
 - :doc:`TD3. Hiérarchie de classes <TDHeritage>`
 - :doc:`TD4. Mécanismes d'abstraction <TDAbstraction>`
 - :doc:`TP intermédiaire: structure de données <TPStack>`
+- :doc:`TD5. Flux <TDFlux>`
  
