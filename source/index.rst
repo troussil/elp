@@ -2,7 +2,7 @@
 ELP-JAVA
 ================================================
 
-
+Séquence des TDs:
 
 .. toctree::
    :maxdepth: 1
@@ -12,3 +12,7 @@ ELP-JAVA
    TDClasse
    TDHeritage
    TDAbstraction
+
+
+:doc:`TP intermédiaire <TPStack>`
+   
