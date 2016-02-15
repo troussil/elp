@@ -2,17 +2,17 @@
 ELP-JAVA
 ================================================
 
-Séquence des TDs:
-
 .. toctree::
    :maxdepth: 1
-   :numbered:
+   :hidden:
+   :glob:
 
-   TDCodeClient
-   TDClasse
-   TDHeritage
-   TDAbstraction
+   TD*
+   TP*
 
-
-:doc:`TP intermédiaire <TPStack>`
-   
+- :doc:`TD1. Introduction <TDCodeClient>`
+- :doc:`TD2. Classes <TDClasse>`
+- :doc:`TD3. Hiérarchie de classes <TDHeritage>`
+- :doc:`TD4. Mécanismes d'abstraction <TDAbstraction>`
+- :doc:`TP intermédiaire: structure de données <TPStack>`
+ 
