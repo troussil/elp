@@ -243,36 +243,18 @@ Si tous les attributs sont de type primitif ou sont des objets sérializables, i
 à faire.  
 
 
-Ex.2 Sérialization (20 min)
+Ex.2 Sérialisation (15 min)
 ------------------------------------------
 
-- Copiez la classe suivante: 
+- Téléchargez les classes :download:`Message <download/Message.java>`
+  et :download:`EcrireMessage <download/EcrireMessage.java>`. 
 
-.. literalinclude:: code/TD5/Message.java
-   :language: java
+- Compilez et tapez la commande **java EcrireMessage msg.ser**. Que se passe-t-il ?
 
+- Ecrire une classe exécutable appelée `LireMessage` qui, en utilisant 
+  la méthode `readObject` de `ObjectInputStream`, lit le message stocké 
+  dans le fichier `msg.ser`, puis l'affiche sur la sortie standard. 
 
-Ex.2 Sérialization (20 min)
-------------------------------------------
-
-- Dans une classe `EcrireMessage`, sérialisez dans un fichier 
-  un objet de la classe `Message`. 
-
-.. code-block:: java
-
-        Message m = new Message( new Date(), "toto", "salut!");
- 
-- Il suffit pour cela d'appeler la méthode `writeObject` de 
-  `ObjectOutputStream`:
-
-.. code-block:: java
-
-        FileOutputStream fout = new FileOutputStream("storage.ser"); 
-	ObjectOutputStream oout = new ObjectOutputStream(fout);
-	//TODO
- 
-- Dans une classe `LireMessage`, désérialisez l'objet sauvegardé 
-  en utilisant la méthode `readObject` de `ObjectInputStream`. 
 
 Principales classes à connaitre 
 ----------------------------------------
@@ -348,19 +330,20 @@ Ex.3. Serveur (15 min)
 
 
 
-A la maison. Client (15 min)
+Ex.4. Client (15 min)
 ----------------------------------
 
 - Ecrivez une classe `Client` qui envoie des lignes de texte lues sur l'entrée standard
   au serveur. Comme vous devez procéder ligne par ligne, vous allez envelopper le flux de 
   sortie dans un `PrintWriter` comme dans :ref:`l'exemple précédent <FluxLignes-label>`. 
-  Cependant, activez le *flush* automatique: 
+  Cependant, activez le *flush* automatique avec l'argument supplémentaire `true`: 
 
 .. code-block:: java 
 
 	PrintWriter out = new PrintWriter( 
 	  new OutputStreamWriter( socket.getOutputStream() ), true ); 
 
-- Enfin, dans la classe `Serveur`, redirigez le texte envoyé par le client vers ce dernier comme un echo. 
+- Pour aller plus loin, dans la classe `Serveur`, redirigez le texte envoyé par le client 
+  vers ce dernier comme un echo. 
 
 

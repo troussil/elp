@@ -14,7 +14,6 @@ public class Serveur {
 	System.out.println("connected to "+socket.getInetAddress()); 
 
 	BufferedReader r = new BufferedReader( new InputStreamReader( socket.getInputStream() ) ); 
-	//PrintWriter p = new PrintWriter( new OutputStreamWriter( socket.getOutputStream() ) ); 
 	
 	String l = r.readLine(); 
 	while (l != null)
