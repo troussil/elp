@@ -120,6 +120,77 @@ trois vues de type ``Collection``:
 - la collection de valeurs est renvoyé par la méthode ``values()``, 
 - l'ensemble de paires clé-valeur est renvoyé par la méthode ``entrySet()``.
 
+Exemple d'application
+-----------------------------------
+
+Nous allons développer un programme qui résoud une grille de sudoku de 9 par 9
+en utilisant intensivement les conteneurs de type ``List``, ``Set`` et ``Map``. 
+
+Commençons par nous mettre d'accord sur les mots. La grille de sudoku comprend 
+81 **positions**, regroupées en **unités**: **lignes**, **colonnes**, **régions 3x3**. 
+Une position donnée ``p`` appartient à 3 unités (une ligne, une colonne, un région 3x3) 
+dont les positions sont dites **amies** de la position ``p``.
+
+Ex.2. Positions et unités (10 min)
+--------------------------------------
+
+La classe :download:`Position <download/Position.java>` modélise une position
+comme une paire de deux indices entre 0 et 8. Une position peut notamment
+renvoyer une représentation textuelle (concaténation du chiffre des deux indices), 
+renvoyer la ligne, la colonne, la région à laquelle elle appartient. 
+
+La classe abstraite :download:`Unit <download/Unit.java>` modélise une unité dont on peut
+obtenir toutes les 9 positions qu'elle recouvre, comme une liste de positions. Les classes
+:download:`Row <download/Row.java>` (ligne), ``Col`` (colonne)  et :download:`Box <download/Box.java>` (région 3x3) 
+héritent de ``Unit``.     
+
+Complétez la classe ``Row`` et codez la classe ``Col``. 
+
+Ex.3. Ensemble de chiffres possibles (10 min)
+----------------------------------------------
+
+Nous allons ensuite distinguer la **grille originale** (pour certaines positions, 
+un chiffre entre 1 et 9 est donné), de la **grille de travail** (à chaque position, 
+il y a un **ensemble de chiffres possibles**).  
+
+Nous allons complétez maintenant la classe :download:`DigitSet <download/DigitSet.java>`
+qui modélise un ensemble de 1 à 9 chiffres possibles. 
+
+Ex.4. Structures de données (10 min)
+---------------------------------------------- 
+
+La classe :download:`SudokuSolver <download/SudokuSolver.java>` à compléter
+possède plusieurs structures de données dont les clés sont les positions:
+
+- `originalGrid`, l'association entre positions et entiers affectés à ces positions au départ, 
+- `workingGrid`, l'association entre positions et ensemble de chiffres possibles pour ces positions, 
+  sur laquelle on travaille.  
+- `friends`, l'association entre toutes les positions et la liste de leurs positions amies, 
+- `marks`, l'ensemble des positions auxquelles le *solver* a déjà affecté une valeur.     
+
+Complétez la méthode `fillExtraDataStructures` de manière à initialiser les champs `workingGrid` et `friends`. 
+
+TODO vérifier code solver: position comme clé au lien de string, renommer position en square ?
+
+Ex.5. Démonstrateur (10 min)
+----------------------------------------------
+
+Ecrire une classe exécutable ``DemoSudoku`` dans laquelle vous: 
+
+- instanciez ``SudokuSolver`` en lisant la grille sur l'entrée standard, 
+- affichez la grille originale, puis la grille de travail sur la sortie standard. 
+
+Téléchargez les fichiers :download:`easy1.txt <download/easy1.txt>` et
+:download:`hard1.txt <download/hard1.txt>` puis, après avoir compilé le tout
+dans un répertoire ``build``, tapez la commande ``java -cp build SudokuSolver < easy1.txt``.  
+
+Ex.6. Résolution (10 min)
+-----------------------------------------------
+
+Codez la méthode `solve` de ``SudokuSolver``. 
+
+Ex.7. Pour aller plus loin
+-----------------------------------------------
 
 
 

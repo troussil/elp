@@ -37,8 +37,7 @@ class DigitSet {
      * @param other another digit set
      */
     public DigitSet(DigitSet other) {
-	for (Integer i: other.mySet)
-	    mySet.add(i); 
+	//TODO
     }
 
     /**
@@ -48,7 +47,7 @@ class DigitSet {
      * is not in the set
      */
     public void remove(int aDigit) {
-	mySet.remove(aDigit); 
+	//TODO
     }
 
     /**
@@ -56,15 +55,14 @@ class DigitSet {
      * @param other another digit set
      */
     public void remove(DigitSet other) {
-	for (Integer i: other.mySet)
-	    remove(i); 
+	//TODO
     }
 
     /** Give the set size (number of digits)
      * @return set size
      */
     public int size() {
-	return mySet.size(); 
+	//TODO
     }
 
     /**
@@ -72,18 +70,16 @@ class DigitSet {
      * @return first digit
      */
     public int firstDigit() {
-	return mySet.iterator().next(); 
-    }
+	//TODO
+   }
 
     /** Give a string representation of the digit set
-     * (the string length is the set size)
+     * where all digits are concatenated without space. 
+     * @warning the string length must be equal to the set size
      * @return the string
      */
     @Override
     public String toString() {
-	String res = ""; 
-	for (Integer i: mySet)
-	    res += i; 
-	return res; 
+	//TODO
     }
 }

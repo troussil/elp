@@ -6,9 +6,9 @@ class SudokuSolver {
     private static int size = 9;
  
     /// map of pairs (position string, digit), ie original grid to complete
-    private Map<String,Integer> grid = new HashMap<String,Integer>(); 
+    private Map<String,Integer> originalGrid = new HashMap<String,Integer>(); 
     /// map of pairs (position string, set of possible digits)
-    private Map<String,DigitSet> digits = new HashMap<String,DigitSet>(); 
+    private Map<String,DigitSet> workingGrid = new HashMap<String,DigitSet>(); 
     /// map of pairs (position string, list of position friends)
     private Map<String,List<Position> > friends = new HashMap<String,List<Position> >(); 
     /// assignation marks as a set of position 
@@ -36,7 +36,7 @@ class SudokuSolver {
 		if (Character.isDigit(c)) {
 		    d = Integer.valueOf(String.valueOf(c)); 
 		    if ( (d >= 1)&&(d <= 9) )
-			grid.put(""+i+j, d);
+			originalGrid.put(""+i+j, d);
 		    j++;
 		} 
 	    }
@@ -63,7 +63,7 @@ class SudokuSolver {
 	for (int i =  0; i < size; i++) {
 	    for (int j =  0; j < size; j++) {
 		Position p = new Position(i,j); 
-		digits.put(p.toString(), new DigitSet());
+		workingGrid.put(p.toString(), new DigitSet());
 	    }
 	}
 
@@ -111,7 +111,7 @@ class SudokuSolver {
     public boolean remove(Map<String,DigitSet> aMap, Position aPosition, int aDigit) {
 
 	//we remove aDigit from the digit set s at position aPosition
-	DigitSet s = digits.get(aPosition.toString()); 
+	DigitSet s = aMap.get(aPosition.toString()); 
 	s.remove(aDigit); 
 
 	if (s.size() == 0)
@@ -164,15 +164,15 @@ class SudokuSolver {
     public boolean solve() {
 	/// propagate constraint from every known digit
 	boolean isOK = true; 
-	Iterator<Map.Entry<String,Integer> > it = grid.entrySet().iterator();
+	Iterator<Map.Entry<String,Integer> > it = originalGrid.entrySet().iterator();
 	while ( (it.hasNext())&&(isOK) ) {
 	    Map.Entry<String,Integer> e = it.next(); 
-	    isOK = isOK && assign(digits, new Position(e.getKey()), e.getValue()); 
+	    isOK = isOK && assign(workingGrid, new Position(e.getKey()), e.getValue()); 
 	}
 	return isOK; 
     }
 
-    public void displayGrid(OutputStream stream) {
+    public void displayOriginalGrid(OutputStream stream) {
 	PrintWriter out = new PrintWriter( new OutputStreamWriter(stream), true );
 	String line; //line to print 
 	Integer d; //digit to print
@@ -182,7 +182,7 @@ class SudokuSolver {
 	for(int i = 0; i < size; i++) {
 	    line = ""; 
 	    for(int j = 0; j < size; j++) {
-		if ((d = grid.get(""+i+j)) != null)
+		if ((d = originalGrid.get(""+i+j)) != null)
 		    line += " "+d+" ";
 		else 
 		    line += " . "; 
@@ -195,7 +195,7 @@ class SudokuSolver {
 	}
     }
 
-    public void displaySolution(OutputStream stream) {
+    public void displayWorkingGrid(OutputStream stream) {
 	PrintWriter out = new PrintWriter( new OutputStreamWriter(stream), true );
 	String line; 
 	DigitSet s; 
@@ -205,7 +205,7 @@ class SudokuSolver {
 	for(int i = 0; i < size; i++) {
 	    line = ""; 
 	    for(int j = 0; j < size; j++) {
-		s = digits.get(""+i+j); 
+		s = workingGrid.get(""+i+j); 
 		line += " "+s.toString();
 		line += repeatedString(" ", size+1 - s.size()); 
 		if ((j % 3) == 2)

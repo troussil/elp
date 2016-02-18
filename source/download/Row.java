@@ -21,9 +21,6 @@ class Row extends Unit {
      * @return list of the 9 positions of the row
      */
     public List<Position> positions() {
-	List<Position> list = new ArrayList<Position>(9); 
-	for (int i =  0; i < 9; i++) 
-	    list.add(new Position(myIndex, i)); 
-	return list; 
+	//TODO
     }
 }
