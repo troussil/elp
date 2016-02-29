@@ -67,25 +67,10 @@ class SudokuSolver {
     private void fillExtraDataSructures() {
 
 	/// fill friends
-	for (int i =  0; i < size; i++) {
-	    for (int j =  0; j < size; j++) {
-		Square s = new Square(i,j); 
-		List<Square> list = s.getRow().squares(); 
-		list.remove(s); 
-		list.addAll(s.getCol().squares()); 
-		list.remove(s); 
-		list.addAll(s.getBox().squares()); 
-		list.remove(s); 
-		friends.put(s, list); 
-	    }
-	}
+
  
 	/// fill working grid
-	for (int i =  0; i < size; i++) {
-	    for (int j =  0; j < size; j++) {
-		workingGrid.put(new Square(i,j), new DigitSet());
-	    }
-	}
+
 
     }
 
@@ -191,13 +176,7 @@ class SudokuSolver {
 	// and the 'assign' method returns true, 
 	// we take the next entry and call the 'assign' 
 	// method for it. 
-	boolean isOK = true; 
-	Iterator<Map.Entry<Square,Integer> > it = originalGrid.entrySet().iterator();
-	while ( (it.hasNext())&&(isOK) ) {
-	    Map.Entry<Square,Integer> e = it.next(); 
-	    isOK = isOK && assign(workingGrid, marks, e.getKey(), e.getValue()); 
-	}
-	return isOK; 
+
     }
 
     /** Display the original grid

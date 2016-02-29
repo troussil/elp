@@ -18,12 +18,12 @@ class Col extends Unit {
     }
 
     /**
-     * return list of the 9 positions of the column
+     * return list of the 9 squares of the column
      */
-    public List<Position> positions() {
-	List<Position> list = new ArrayList<Position>(9); 
+    public List<Square> squares() {
+	List<Square> list = new ArrayList<Square>(9); 
 	for (int i =  0; i < 9; i++) 
-	    list.add(new Position(i, myIndex)); 
+	    list.add(new Square(i, myIndex)); 
 	return list; 
     }
 }

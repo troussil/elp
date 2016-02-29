@@ -21,8 +21,7 @@ et des opérations envisagées (parcours, ajout, suppression, concaténation, et
 Conteneurs
 ---------------------------------------
 
-En plus des tableaux, le package ``java.util`` propose sans surprise 
-les conteneurs suivants:
+Le package ``java.util`` propose les conteneurs suivants:
  
 - ``ArrayList``, ``ArrayDeque``
 - ``LinkedList``
@@ -120,6 +119,32 @@ trois vues de type ``Collection``:
 - la collection de valeurs est renvoyé par la méthode ``values()``, 
 - l'ensemble de paires clé-valeur est renvoyé par la méthode ``entrySet()``.
 
+L'interface ``Map.Entry``
+-----------------------------------
+
+.. code-block:: java 
+
+	Map<Integer,String> annuaire = new HashMap<Integer,String>(); 
+
+L'interface ``Map.Entry`` représente une paire clé-valeur: 
+``getKey()`` retourne la clé, tandis que ``getValue()`` retourne la valeur. 
+
+.. code-block:: java 
+
+        Iterator<Map.Entry<Integer,String> > it;  
+	for (it = annuaire.entrySet().iterator(); it.hasNext(); ) {
+	    Map.Entry<Integer,String> e = it.next();
+            System.out.println(e.getKey() + ": " + e.getValue());  
+	}
+
+.. code-block:: java 
+
+	for (Map.Entry<Integer,String> e: annuaire.entrySet()) {
+            System.out.println(e.getKey() + ": " + e.getValue());  
+	}
+
+
+
 Exemple d'application
 -----------------------------------
 
@@ -127,21 +152,22 @@ Nous allons développer un programme qui résoud une grille de sudoku de 9 par 9
 en utilisant intensivement les conteneurs de type ``List``, ``Set`` et ``Map``. 
 
 Commençons par nous mettre d'accord sur les mots. La grille de sudoku comprend 
-81 **positions**, regroupées en **unités**: **lignes**, **colonnes**, **régions 3x3**. 
-Une position donnée ``p`` appartient à 3 unités (une ligne, une colonne, un région 3x3) 
-dont les positions sont dites **amies** de la position ``p``.
+81 positions (**squares**), regroupées en unités (**units**) : ligne (**row**),
+colonne (**column**), régions 3x3 (**box**). 
+Une position donnée appartient à 3 unités (une ligne, une colonne, un région 3x3) 
+contenant toutes les positions amies (**friends**) de cette position.
 
 Ex.2. Positions et unités (10 min)
 --------------------------------------
 
-La classe :download:`Position <download/Position.java>` modélise une position
+La classe :download:`Square <download/Square.java>` modélise une position
 comme une paire de deux indices entre 0 et 8. Une position peut notamment
 renvoyer une représentation textuelle (concaténation du chiffre des deux indices), 
 renvoyer la ligne, la colonne, la région à laquelle elle appartient. 
 
 La classe abstraite :download:`Unit <download/Unit.java>` modélise une unité dont on peut
-obtenir toutes les 9 positions qu'elle recouvre, comme une liste de positions. Les classes
-:download:`Row <download/Row.java>` (ligne), ``Col`` (colonne)  et :download:`Box <download/Box.java>` (région 3x3) 
+obtenir les 9 positions qu'elle recouvre, comme une liste de positions. Les classes
+:download:`Row <download/Row.java>`, ``Col`` et :download:`Box <download/Box.java>` 
 héritent de ``Unit``.     
 
 Complétez la classe ``Row`` et codez la classe ``Col``. 
@@ -149,11 +175,11 @@ Complétez la classe ``Row`` et codez la classe ``Col``.
 Ex.3. Ensemble de chiffres possibles (10 min)
 ----------------------------------------------
 
-Nous allons ensuite distinguer la **grille originale** (pour certaines positions, 
-un chiffre entre 1 et 9 est donné), de la **grille de travail** (à chaque position, 
-il y a un **ensemble de chiffres possibles**).  
+Nous allons ensuite distinguer la *grille originale* (pour certaines positions, 
+un chiffre entre 1 et 9 est donné), de la *grille de travail* (à chaque position, 
+il y a un *ensemble de chiffres possibles*).  
 
-Nous allons complétez maintenant la classe :download:`DigitSet <download/DigitSet.java>`
+Nous allons compléter maintenant la classe :download:`DigitSet <download/DigitSet.java>`
 qui modélise un ensemble de 1 à 9 chiffres possibles. 
 
 Ex.4. Structures de données (10 min)
@@ -170,7 +196,6 @@ possède plusieurs structures de données dont les clés sont les positions:
 
 Complétez la méthode `fillExtraDataStructures` de manière à initialiser les champs `workingGrid` et `friends`. 
 
-TODO vérifier code solver: position comme clé au lien de string, renommer position en square ?
 
 Ex.5. Démonstrateur (10 min)
 ----------------------------------------------
@@ -184,14 +209,16 @@ Téléchargez les fichiers :download:`easy1.txt <download/easy1.txt>` et
 :download:`hard1.txt <download/hard1.txt>` puis, après avoir compilé le tout
 dans un répertoire ``build``, tapez la commande ``java -cp build SudokuSolver < easy1.txt``.  
 
-Ex.6. Résolution (10 min)
+Ex.6. Résolution 
 -----------------------------------------------
 
-Codez la méthode `solve` de ``SudokuSolver``. 
+- Codez la méthode `solve` de ``SudokuSolver`` (10 min). 
 
-Ex.7. Pour aller plus loin
------------------------------------------------
-
+- Cette approche par propagation de contraintes n'aboutit pas toujours. Pour améliorer ce solver, 
+  vous pourrez implémenter une recherche inspirée de `cette solution <http://norvig.com/sudoku.html>`_: 
+  choisir une position non résolue (mais dont le nombre de possibilités est le plus petit), puis 
+  essayer chacune des possibilités. A chaque fois, qu'une possibilité mène à une solution invalide, 
+  revenir en arrière.  
 
 
 Ce qu'il faut retenir

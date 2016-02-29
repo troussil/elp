@@ -18,9 +18,9 @@ class Row extends Unit {
     }
 
     /**
-     * @return list of the 9 positions of the row
+     * @return list of the 9 squares of the row
      */
-    public List<Position> positions() {
+    public List<Square> squares() {
 	//TODO
     }
 }

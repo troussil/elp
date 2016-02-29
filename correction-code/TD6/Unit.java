@@ -6,8 +6,8 @@ import java.util.List;
 abstract class Unit {
 
     /**
-     * @return list of the 9 positions of the unit
+     * @return list of the 9 squares of the unit
      */
-    public abstract List<Position> positions(); 
+    public abstract List<Square> squares(); 
 
 }
