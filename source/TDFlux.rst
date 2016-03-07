@@ -147,9 +147,9 @@ Ex.1. Copie de fichiers (30 min)
 - Ecrivez une classe exécutable `Copy` qui réalise la copie d'un fichier dans un autre octet par octet, 
   en respectant la convention suivante: 
 
-  - ``java Copy source.txt cible.txt`` pour copier ``source.txt``
-    vers ``cible.txt``. 
-  - ``java Copy source.txt`` pour écrire sur la sortie standard. 
+  - ``java Copy source cible`` pour copier ``source``
+    vers ``cible``. 
+  - ``java Copy source`` pour écrire sur la sortie standard. 
   - ``java Copy`` pour lire puis écrire sur la sortie standard. 
 
 - Le coeur de la copie sera effectuée dans la méthode suivante: 
@@ -181,13 +181,13 @@ Comment faire pour lire/écrire des variables de type double?
 
 .. code-block:: java 
 
-        FileInputStream fis = new FileInputStream("source.txt");
+        FileInputStream fis = new FileInputStream("source");
         DataInputStream dis = new DataInputStream(fis);
         double d = dis.readDouble();
 
 .. code-block:: java 
 
-        FileOutputStream fos = new FileOutputStream("cible.txt");
+        FileOutputStream fos = new FileOutputStream("cible");
         DataOutputStream dos = new DataOutputStream(fos);
         dos.writeDouble(123.456);
 
