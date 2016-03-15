@@ -166,7 +166,7 @@ Quand plusieurs threads partagent des données, il peut y avoir *interférence*
 Pour éviter ces problèmes, on peut définir des **sections critiques** avec 
 le mot-clef ``synchronized``. 
 
-- La méthode d'un objet qualifiée ``synchronized`` n'est exécutée que par un seul thread à la fois. 
+- L'objet dont une méthode qualifiée ``synchronized`` est exécutée par un thread n'est plus disponible pour les autres threads.  
 
 - Le bloc ``synchronized`` permet d'utiliser de manière exclusive un objet par le thread courant. 
 
