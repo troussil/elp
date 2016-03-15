@@ -18,4 +18,5 @@ ELP-JAVA
 - :doc:`TD5. Entrées/Sorties <TDFlux>`
 - :doc:`TD6. Conteneurs <TDConteneurs>`
 - :doc:`TD7. Threads <TDThreads>`
+- :doc:`TD8. Interface graphique <TDGui>`
  
