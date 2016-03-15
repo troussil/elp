@@ -50,17 +50,17 @@ Il contient:
 
 - Joueur : modélise un joueur qui, à son tour, dépose une marque de sa couleur sur la grille
 - Arbitre : modélise un arbitre qui s'assure que les joueurs jouent à tour de rôle
-- LecteurDePosition : interface caractérisant les objets à qui on peut demander une position à laquelle déposer une nouvelle marque. 
-- LecteurDePositionDeFlux : LecteurDePosition dans lequel la position est lue depuis un flux (entrée standard par exemple). 
+- LecteurPosition : interface caractérisant les objets à qui on peut demander une position à laquelle déposer une nouvelle marque. 
+- LecteurPositionDeFlux : LecteurPosition dans lequel la position est lue depuis un flux (entrée standard par exemple). 
 
  
 Joueur vs Utilisateur
 --------------------------
 
 Un objet Joueur, a une couleur, connait la configuration des pions, l'arbitre, ainsi qu'un objet 
-de type LecteurDePosition. Si cet objet est du sous-type LecteurDePositionDeFlux, 
-alors le joueur est en attente d'une chaine de caractères sur un flux d'entrée représentant le 
-déplacement qu'il doit jouer. 
+de type LecteurPosition. Si cet objet est du sous-type LecteurPositionDeFlux, 
+alors le joueur est en attente d'une chaine de caractères sur un flux d'entrée contenant la
+position qu'il doit jouer. 
 
 Un utilisateur peut donc transmettre par le flux d'entrée standard son déplacement à 
 l'objet Joueur qui le représente.   
@@ -96,7 +96,7 @@ dans le shell.
 Dans la méthode ``main``: 
 
 - créez un configuration (instance ``EnsembleDeMarques``), 
-- créez un lecteur de position (instance de ``LecteurDePositionDeFlux``), 
+- créez un lecteur de position (instance de ``LecteurPositionDeFlux``), 
 - créez un arbitre, un joueur blanc, un joueur noir (instances de ``Arbitre`` et ``Joueur``),
 - lancez deux threads, un pour chaque joueur.   
 
@@ -148,10 +148,10 @@ Elle doit satisfaire l'interface `Observer <http://docs.oracle.com/javase/7/docs
 c'est-à-dire posséder une méthode ``update(Observable o, Object arg)`` (appelée par ``notifyObservers(Object arg)``). 
 C'est dans cette méthode que vous devez déclencher l'affichage.  
 
-NB. Pensez au *downcast* pour récupérer le type initial des objets passés en argments. Par exemple: 
+L'objet ``o`` est l'objet observable qui appelle ``update`` (``EnsembleDeMarques``). 
+Le paramètre ``arg`` permet d'ajouter une information pour la mise à jour; par exemple, 
+la position à laquelle à été ajouté la nouvelle marque. 
 
-- ``EnsembleDeMarques grille = (EnsembleDeMarques) o;`` 
-- ``Position p = (Position) arg;``  
 
 Dans l'application ``TicTacToeShell``
 ------------------------------------------
@@ -186,12 +186,12 @@ Serveur
 -------------------------
 
 - Pour lire un déplacement depuis la machine distante, il suffit, pour 
-  le joueur distant, de fournir à l'objet de type ``LecteurDePositionDeFlux`` 
+  le joueur distant, de fournir à l'objet de type ``LecteurPositionDeFlux`` 
   le flux d'entrée du socket. Testez cette partie avec ``telnet``.
 
 - Pour transmettre un déplacement, nous allons créer une nouvelle classe 
   ``JoueurTransmetteur`` qui dérive de ``Joueur`` et qui redéfinit la 
-  méthode ``jouer`` de façon à, une fois un déplacement réalisé, 
+  méthode ``jouer`` de façon à, une fois une position choisie, 
   l'écrire sur le flux de sortie du socket. Testez encore avec ``telnet``. 
   
 
@@ -229,30 +229,11 @@ Conception
 
 La conception est libre, mais si vous ne savez pas quoi faire, vous pouvez: 
  
-- écrire une classe ``Damier`` dérivant de ``JPanel``. La vue possédera un damier. 
-- écrire une classe ``CaseNoire`` dérivant de ``JPanel``. Le damier sera composé
-  de cases blanches (objet ``JPanel`` par défaut) et de cases noires. Les cases 
-  noires se chargent du dessin de la case et de la pièce qu'elle contient éventuellement. 
-- les cases peuvent être organisées dans le damier sous forme tabulaire par un ``GridLayout``. 
+- écrire une classe ``Case`` dérivant de ``JButton`` avec un champs contenant la position correspondante.
+- dans la classe ``VueGraphique``, organisez les cases dans un panel (``JPanel``) sous forme tabulaire (``GridLayout``). 
 
-Ce n'est pas forcément la meilleure solution.  
-
-Comment dessiner ?
----------------------------
-
-Vous aurez probablement besoin des méthodes de la classe 
-`Graphics <http://docs.oracle.com/javase/7/docs/api/java/awt/Graphics.html>`_
-pour dessiner les marques. 
-
-- ``setColor``
-- ``fillRect``
-- ``fillOval`` 
-- ...
-
-Chaque composant graphique (de type ``JComponent``) possède
-une méthode ``paintComponent`` prenant en entrée un objet de type ``Graphics``. 
-Vous pouvez donc adapter l'aspect de vos composants en redéfinissant cette méthode,  
-qui est appelé à la création du composant et à chaque appel de la méthode ``repaint``. 
+Vous pouvez commencer par tester votre affichage en donnant les positions par le shell. Mais comment lire les positions
+directement sur l'interface graphique ? 
 
 
 Evénements (45 min)
@@ -277,8 +258,8 @@ Conception
    Une instance de cette classe devrait transmettre la position de 
    la case cliquée par l'utilisateur à la vue.   
 
-2. Puis écrire une classe ``LecteurDePositionDeVue`` qui satisfait
-   l'interface ``LecteurDePosition``. La vue devrait connaitre le 
+2. Puis écrire une classe ``LecteurPositionDeVue`` qui satisfait
+   l'interface ``LecteurPosition``. La vue devrait connaitre le 
    lecteur afin de lui transmettre les positions du déplacement.  
 
 Pour aller plus loin

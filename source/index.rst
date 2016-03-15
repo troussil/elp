@@ -19,4 +19,5 @@ ELP-JAVA
 - :doc:`TD6. Conteneurs <TDConteneurs>`
 - :doc:`TD7. Threads <TDThreads>`
 - :doc:`TD8. Interface graphique <TDGui>`
+- :doc:`TP final: Jeu en réseau <TPJeu>`
  
