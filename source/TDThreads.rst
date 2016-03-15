@@ -141,17 +141,15 @@ Ex.2. Tableaux de threads (10 min)
 Ex.3. Accès concurrents (10 min)
 ---------------------------------------
 
-- Dans la classe ``Baigneur``, quel est l'objet partagé par les threads ?
-
-- Ajoutez des sections critiques avec la construction suivante: 
+- Dans la classe ``Piscine``, ajoutez des sections critiques avec la construction suivante: 
 
 .. code-block:: java
 
-	  synchronized (objetPartage) {
+	  synchronized (this) {
              ...
           }
 
-L'objet passé en paramètre est utilisé de manière exclusive par le thread courant. 
+L'objet entre parenthèse est utilisé de manière exclusive par le thread courant. 
 L'exécution des autres threads est bloquée jusqu'à ce que le thread courant exécute
 la dernière instruction du bloc.
 
