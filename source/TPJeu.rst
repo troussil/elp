@@ -246,37 +246,28 @@ Maintenant que nous avons une interface graphique, nous voulons
 aussi que les utilisateurs puissent prescrire leurs déplacements 
 par des actions (clics) sur l'interface graphique.  
 
-Dans un premier temps, nous supposons que l'utilisateur ne réalise
-que des déplacements simples impliquant uniquement une position de 
-départ et une positions d'arrivée (pas de rafles). 
-
 
 Conception
 ---------------------------
 
-1. Vous devez écrire un *listener*, par exemple ``CaseNoireListener``. 
-   Une instance de cette classe devrait transmettre la position de 
-   la case cliquée par l'utilisateur à la vue.   
+1. Vous devez écrire un *listener*, par exemple ``CaseListener``. 
+   Une instance de cette classe devrait récupérer la position 
+   de la case choisie (et c'est pourquoi il est utile qu'une case
+   connaisse sa position). 
 
-2. Puis écrire une classe ``LecteurPositionDeVue`` qui satisfait
-   l'interface ``LecteurPosition``. La vue devrait connaitre le 
-   lecteur afin de lui transmettre les positions du déplacement.  
+2. Puis écrire une classe ``LecteurPositionDeVueGraphique`` qui satisfait
+   l'interface ``LecteurPosition``. La vue, comme le *listener*, doivent
+   connaitre le lecteur afin de lui transmettre la position de la case
+   choisie.  
 
-Pour aller plus loin
-----------------------------
-
-Pour que l'utilisateur puisse réaliser n'importe quel déplacement, 
-deux stratégies sont possibles: 
-
-- Un signal est utilisé par les utilisateurs pour indiquer la fin
-  du déplacement (clic sur un bouton réservé à cet effet par exemple). 
-
-- Le déplacement est considéré comme terminé dès qu'il est valide 
-  (avec prise obligatoire et prise du plus grand nombre de pièces obligatoire
-  selon les `règles du jeu`_). 
 
 Fin
 ===========================
+
+Pour aller plus loin
+---------------------------
+
+Trouvez les bugs et corrigez-les...
 
 Rendu
 ---------------------------
@@ -289,8 +280,4 @@ Rendu
 
 - Le projet ne doit comporter que les fichiers sources et 
   doit pouvoir être compilé sans erreur.  
-
-
-Evolutions possibles
-----------------------------
 
