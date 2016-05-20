@@ -10,13 +10,12 @@ ELP-JAVA
    TD*
    TP*
 
-- :doc:`TD1. Introduction, code client <TDCodeClient>`
-- :doc:`TD2. Classes <TDClasse>`
-- :doc:`TD3. Hiérarchie de classes, exceptions <TDHeritage>`
-- :doc:`TD4. Mécanismes d'abstraction <TDAbstraction>`
-- :doc:`TP intermédiaire: structure de données <TPStack>`
-- :doc:`TD5. Entrées/Sorties <TDFlux>`
-- :doc:`TD6. Conteneurs <TDConteneurs>`
-- :doc:`TD7. Threads <TDThreads>`
-- :doc:`TD8. Interface graphique <TDGui>`
+- :doc:`TD1. Introduction, code client <TD1CodeClient>`
+- :doc:`TD2. Classes <TD2Classe>`
+- TD3. Hiérarchie de classes, exceptions
+- TD4. Mécanismes d'abstraction
+- TD5. Entrées/Sorties
+- TD6. Conteneurs
+- TD7. Threads
+- TD8. Interface graphique
  
