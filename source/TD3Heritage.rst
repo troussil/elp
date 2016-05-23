@@ -70,7 +70,7 @@ Ex.2. Complexe (10 min)
 Faites une classe ``Complexe``, qui étend ``Vecteur``, par les méthodes: 
  - ``double obtenirNorme()``
  - ``Complexe obtenirConjugue()``
- - ``void multiplier(Complexe c)``
+ - ``Complexe multiplier(Complexe c)``
 
 NB: pour :math:`z = x + iy, z' = x' +iy'`,
  - :math:`Nz = x^2 + y^2` (norme),
