@@ -14,8 +14,8 @@ ELP-JAVA
 - :doc:`TD2. Classes <TD2Classe>`
 - :doc:`TD3. Hiérarchie de classes <TD3Heritage>`
 - :doc:`TD4. Mécanismes d'abstraction <TD4Abstraction>`
-- TD5. Entrées/Sorties
-- TD6. Conteneurs
+- :doc:`TD5. Conteneurs <TD5Conteneurs>`
+- :doc:`TD6. Entrées/Sorties <TD6Flux>`
 - TD7. Threads
 - TD8. Interface graphique
  
