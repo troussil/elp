@@ -1,25 +1,18 @@
-public class Vecteur extends Point {
-
-    public Vecteur(double x, double y) {
-	super(x,y); 
+class Vecteur extends Point {
+    
+    public Vecteur(double unX, double unY) {
+	super(unX, unY) ; 
     }
-
-    public Vecteur(Vecteur v) {
-	super(v.x,v.y); 
-    }
-
+    
     public boolean comparer(Vecteur v) {
-	return ( (x == v.x) && (y == v.y) );  
+	return (x == v.x) && (y == v.y) ;  
     }
-
-    public void ajouter(Vecteur v) {
-	x += v.x; 
-	y += v.y;  
+    
+    public Vecteur ajouter(Vecteur v) {
+	return new Vecteur(x + v.x, y + v.y) ;
     }
-
-    public void retirer(Vecteur v) {
-    	x -= v.x; 
-    	y -= v.y;  
+    
+    public Vecteur retirer(Vecteur v) {
+	return new Vecteur(x - v.x, y - v.y) ; 
     }
-
 }

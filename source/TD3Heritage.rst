@@ -63,9 +63,6 @@ et :download:`Vecteur.java <download/Vecteur.java>`.
 - Que fait ce code ? 
 - A quoi correspondent ``x`` et ``y`` dans chacun des fichiers ?
 - A quoi sert le mot-clé ``super`` ?
-- Voyez-vous un cas de **surcharge** (= *overloading*), qui permet à plusieurs
-  méthodes de partager le même *nom*, à condition que leur *signature* 
-  (nombre et type des paramètres) soit différente ?
   
 Ex.2. Complexe (10 min)
 ----------------------------
@@ -179,10 +176,29 @@ Ecrivez une classe ``TestComplexe``, dans laquelle vous testez
    :math:`z\bar{z}` doit être égale à la norme :math:`Nz`).  
 
 
-Redéfinition
+Surcharge
 ----------------------------
 
-Et si une même méthode ``methodeAB`` est définie à la fois dans ``A`` et ``B`` ?
+Dans une classe, on peut définir plusieurs méthodes ayant le même nom, pourvu que leurs signatures 
+soient différentes. 
+
+L'intérêt est de faciliter l'écriture du code client et de fournir des valeurs par défaut pour certains
+arguments. Par exemple, un réel pure est un nombre complexe n'ayant qu'une partie réelle (la partie 
+imaginaire est à zéro). Il est donc naturel de pouvoir appliquer les opérations non seulement sur 
+des complexes, mais aussi sur des réels.  
+
+Ex.4. Surcharge (5 min)
+----------------------------
+
+Dans la classe ``Complexe``, 
+ - surchargez la méthode ``multiplier`` pour permettre la multiplication d'un nombre complexe avec un réel pure, 
+ - surchargez le constructeur pour obtenir un nombre complexe 
+
+   - à partir d'un réel pure, 
+   - à partir d'un vecteur.  
+
+Redéfinition
+----------------------------
 
 Dans une classe fille, il est possible de redéfinir certaines méthodes 
 dont elle hérite pour les implémenter d'une autre manière. 
@@ -210,14 +226,18 @@ Cette classe possède quelques méthodes pouvant être redéfinies comme
 ``toString`` qui retourne une représentation textuelle de type ``String`` de l'objet
 (nom de la classe, arobase, hash code par défaut). 
 
-Ex.4. Notation complexe (5 min)
+Ex.5. Redéfinition (5 min)
 ---------------------------------
 
-Redéfinissez la méthode ``toString`` dans votre classe ``Complexe`` de façon à 
-afficher les nombres en notation complexe (sous la forme :math:`x+iy`), plutôt qu'en notation 
-vectorielle (sous la forme :math:`(x,y)`). 
+- Redéfinissez la méthode ``toString`` dans votre classe ``Complexe`` de façon à 
+  afficher les nombres en notation complexe (sous la forme :math:`x+iy`), plutôt qu'en notation 
+  vectorielle (sous la forme :math:`(x,y)`). 
+- Redéfinissez les méthodes ``ajouter`` et ``retirer`` de façon à retourner des nombres
+  complexes plutôt que des vecteurs. Dans du code client, vérifiez avec une instruction du type: 
 
+.. code-block:: java 
 
+        Complexe sum = a.ajouter(b); //a et b sont de type Complexe
 
 Ce qu'il faut retenir
 ----------------------------------
@@ -232,188 +252,3 @@ Ce qu'il faut retenir
 - le mécanisme de **liaison dynamique** (comment la machine virtuelle recherche
   à l'exécution la méthode à appeler en réponse à une requête).
 
-
-Exceptions 
-============================
-
-
-Erreurs et exceptions
-------------------------------------
-
-Les **exceptions** désignent les situations où l'exécution peut se poursuivre, 
-généralement de façon différente. Elles sont matérialisées en Java  par des instances
-de classes dérivant de ``java.lang.Exception``, elle-même dérivant de ``java.lang.Throwable``. 
-
-C'est donc aussi l'occasion d'avoir un aperçu de la hiérarchie des classes de 
-`l'API standard <http://docs.oracle.com/javase/7/docs/api/>`_: 
-
-     java.lang.Object
-        java.lang.Throwable
-            java.lang.Exception
-
-N'hésitez pas à lire les `tutoriaux <http://docs.oracle.com/javase/tutorial/essential/exceptions/index.html>`_
-qui traitent le sujet.  
-
-
-Le développeur
--------------------------
-
-Le développeur d'une classe peut indiquer aux clients qu'une méthode est susceptible de lever une exception
-avec le mot-clé ``throws`` et peut effectivement **lever une exception** au moment voulu avec le mot-clé ``throw``. 
-
-.. code-block:: java 
-   :emphasize-lines: 3,5
-
-        public int pop() throws Exception {
-            if ( myNode == null ) 
-                throw new Exception();
-            else
-                myNode = myNode.next(); 
-        }
-
-
-Créer sa propre classe d'exception
-----------------------------------
-
-.. code-block:: java 
-
-        public class EmptyStackException extends Exception {
-           ...
-        }
-
-
-.. code-block:: java 
-
-        public int pop() throws EmptyStackException {
-            if ( myNode == null ) 
-                throw new EmptyStackException();
-            else
-                myNode = myNode.next(); 
-        }
-
-Propager une exception
---------------------------
-
-.. code-block:: java 
-
-        private static void oneMove(Stack src, Stack dest) 
-          throws EmptyStackException {
-            try {
-	        dest.push( src.top() ); 
-	        src.pop();
-            } catch (EmptyStackException e) {
-                throw new EmptyStackException("empty stack");
-            }
-        }
-
-Plutôt que d'attraper et lever la même exception, il est possible de la **propager**.
- 
-.. code-block:: java 
-
-        private static void oneMove(Stack src, Stack dest) 
-          throws EmptyStackException {
-            dest.push( src.top() ); 
-	    src.pop();
-        }
-
-
-Le client qui traite les exceptions
-------------------------------------
-
-Le bloc d'instructions principal est mis dans un bloc ``try``, 
-tandis que la gestion des exceptions est répartie, selon la 
-nature de l'exception, dans des blocs ``catch`` successifs. 
-
-.. code-block:: java 
-
-        try {
-            /* code */
-        } catch(ExceptionDeTypeA e) {
-	    /* gestion des exceptions de type A */
-	} catch(ExceptionDeTypeB e) {
-	    /* gestion des exceptions de type B */
- 	} finally {
-	    /* tout fermer et nettoyer */
-	}
-
-Le bloc optionnel ``finally`` s'exécute toujours. 
-
-Celui qui n'en fait pas assez
-------------------------------
-
-Ne jamais écrire un code qui masque les exceptions. 
-
-.. code-block:: java 
-
-        //PAS BIEN
-        try {
-          unCodeQuiLeveUneException();
-        } catch(Exception e) {
-          /* Aucune action, ce qui masque les erreurs */
-        }
-
-Préférez au moins: 
-
-.. code-block:: java 
-
-        try {
-          unCodeQuiLeveUneException();
-        } catch(Exception e) {
-          /* affiche l'empilement des appels qui ont mené à l'erreur */
-	  e.printStackTrace();
-        }
-
-
-Celui qui en fait trop 
------------------------------
-
-N'entourez pas chaque instruction d'un bloc ``try``/``catch``:  
-ça ne sert à rien et va à l'encontre de l'objectif qui est de 
-**séparer** le bloc d'instructions principal, des instructions 
-relevant de la gestion des exceptions pouvant survenir dans ce bloc, 
-afin d'obtenir un code plus lisible et plus facile à réutiliser.    
-
-.. code-block:: java 
-
-        //PAS BIEN
-        try {
-          unCodeQuiLeveUneExceptionA();
-        } catch(ExceptionA e) {
-	  e.printStackTrace();
-        }
-        try {
-          unCodeQuiLeveUneExceptionB();
-        } catch(ExceptionB e) {
-	  e.printStackTrace();
-        }
-
-Ex.5. Exceptions (10 min)
----------------------------
-
-Dans votre classe ``Complexe``, ajoutez la méthode suivante: 
-
-``void diviser(Complexe c)`` (NB. :math:`z / z' = z\bar{z'} / Nz'`)
-
-Dans une nouvelle classe ``DemoComplexe``, appelez cette méthode avec en paramètre 
-un complexe nul (:math:`0+i0`). En l'affichant sur la sortie standard, vérifiez que 
-le résultat n'est pas défini. 
-
-Dans votre classe ``Complexe``, levez vous-même une exception personnalisée 
-``DivisionComplexeParZero`` et attrapez-là dans ``DemoComplexe``. 
-
-Ce qu'il faut retenir
--------------------------
-
-- Les exceptions sont des instances de classes dérivant de ``java.lang.Exception``.
-
-- La levée d'une exception provoque une remontée dans l'appel des
-  méthodes jusqu'à ce qu'un bloc ``catch`` acceptant cette exception
-  soit trouvé.
-
-- L'appel à une méthode susceptible de lever une exception doit :
-
-  - soit être contenu dans un bloc ``try`` / ``catch``
-  - soit être situé dans une méthode propageant cette classe d'exception (``throws``) 
-
-- Un bloc ``finally`` peut suivre les blocs ``catch``. Son contenu est toujours exécuté 
-  (avec ou sans exception, et même en cas de ``break``, ``continue``, ``return`` dans le bloc ``try``). 
