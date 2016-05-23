@@ -13,7 +13,7 @@ ELP-JAVA
 - :doc:`TD1. Introduction, code client <TD1CodeClient>`
 - :doc:`TD2. Classes <TD2Classe>`
 - :doc:`TD3. Hiérarchie de classes <TD3Heritage>`
-- TD4. Mécanismes d'abstraction
+- :doc:`TD4. Mécanismes d'abstraction <TD4Abstraction>`
 - TD5. Entrées/Sorties
 - TD6. Conteneurs
 - TD7. Threads
