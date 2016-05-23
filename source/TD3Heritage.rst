@@ -1,5 +1,5 @@
 =====================================
-Hiérarchie de classes et exceptions
+Hiérarchie de classes
 =====================================
 
 
