@@ -70,7 +70,7 @@ Ex.2. Complexe (10 min)
 Faites une classe ``Complexe``, qui étend ``Vecteur``, par les méthodes: 
  - ``double obtenirNorme()``
  - ``Complexe obtenirConjugue()``
- - ``void multiplier(Complexe c)``
+ - ``Complexe multiplier(Complexe c)``
 
 NB: pour :math:`z = x + iy, z' = x' +iy'`,
  - :math:`Nz = x^2 + y^2` (norme),
@@ -135,18 +135,6 @@ Requêtes
         objetA.methodeB(); //ne compile pas (objetA est de type A)
         objetB.methodeB(); //compile (objetB est de type B)
 
-
-Liaison dynamique
-----------------------------
-
-A l'exécution, la machine virtuelle choisit la méthode à appeler en réponse à une requête, 
-c'est le principe de la **liaison dynamique**. 
-
-La recherche de cette méthode commence avec la classe de l'objet auquel la requête est adressée. 
-Si aucune méthode appropriée n'est trouvée, la recherche se poursuit dans la classe parente et 
-ainsi de suite jusqu'à ce qu'une méthode soit trouvée (le compilateur a préalablement vérifié
-qu'il y aura toujours ultimement une méthode appropriée).  
-
 Transtypage
 -------------------------
 
@@ -166,6 +154,19 @@ C'est utile quand on manipule une instance de ``B`` comme un ``A`` (passage de p
 mais qu'on a besoin d'appeler ``methodeB``.
 
 
+Liaison dynamique
+----------------------------
+
+A l'exécution, la machine virtuelle choisit la méthode à appeler en réponse à une requête, 
+c'est le principe de la **liaison dynamique**. 
+
+La recherche de cette méthode commence avec la classe de l'objet auquel la requête est adressée. 
+Si aucune méthode appropriée n'est trouvée, la recherche se poursuit dans la classe parente et 
+ainsi de suite jusqu'à ce qu'une méthode soit trouvée (le compilateur a préalablement vérifié
+qu'il y aura toujours ultimement une méthode appropriée).  
+
+
+
 Ex.3. TestComplexe (5 min)
 ---------------------------------
 
@@ -183,7 +184,7 @@ Dans une classe, on peut définir plusieurs méthodes ayant le même nom, pourvu
 soient différentes. 
 
 L'intérêt est de faciliter l'écriture du code client et de fournir des valeurs par défaut pour certains
-arguments. Par exemple, un réel pure est un nombre complexe n'ayant qu'une partie réelle (la partie 
+arguments. Par exemple, un réel pur est un nombre complexe n'ayant qu'une partie réelle (la partie 
 imaginaire est à zéro). Il est donc naturel de pouvoir appliquer les opérations non seulement sur 
 des complexes, mais aussi sur des réels.  
 
@@ -191,11 +192,8 @@ Ex.4. Surcharge (5 min)
 ----------------------------
 
 Dans la classe ``Complexe``, 
- - surchargez la méthode ``multiplier`` pour permettre la multiplication d'un nombre complexe avec un réel pure, 
- - surchargez le constructeur pour obtenir un nombre complexe 
-
-   - à partir d'un réel pure, 
-   - à partir d'un vecteur.  
+ - surchargez la méthode ``multiplier`` pour permettre la multiplication d'un nombre complexe avec un réel pur, 
+ - surchargez le constructeur pour obtenir un nombre complexe à partir d'un réel pur. 
 
 Redéfinition
 ----------------------------
@@ -209,16 +207,11 @@ classe ``A``).
 
 Ne pas confondre **redéfinition** (= *overriding*), même signature, mais corps différent entre 
 la classe de base et la classe dérivée, et **surcharge** (= *overloading*), même nom, 
-mais liste de paramètres différente, au sein d'une même classe.  
+mais signature différente, au sein d'une même classe.  
 
 
-Hiérarchie de classes 
+``java.lang.Object``
 ----------------------------
-
-Rien n'empêche de dériver une classe, elle-même dérivée d'une autre classe et 
-ainsi de suite. 
-L'héritage est *transitif*: si ``B`` hérite de ``A`` et si ``D`` hérite de ``B``,
-alors ``D`` hérite aussi de ``A`` via ``B``.  
 
 En Java, toutes les classes dérivent par défaut de ``java.lang.Object`` (cf. 
 `l'API standard <http://docs.oracle.com/javase/7/docs/api/>`_).
@@ -232,12 +225,37 @@ Ex.5. Redéfinition (5 min)
 - Redéfinissez la méthode ``toString`` dans votre classe ``Complexe`` de façon à 
   afficher les nombres en notation complexe (sous la forme :math:`x+iy`), plutôt qu'en notation 
   vectorielle (sous la forme :math:`(x,y)`). 
-- Redéfinissez les méthodes ``ajouter`` et ``retirer`` de façon à retourner des nombres
-  complexes plutôt que des vecteurs. Dans du code client, vérifiez avec une instruction du type: 
+
+Pour aller plus loin
+---------------------------------
+
+Vous avez peut-être remarqué que le résultat de la somme de deux nombres complexes est de type ``Vecteur``,
+car la méthode ``ajouter`` appelée est celle de la classe ``Vecteur``. 
 
 .. code-block:: java 
 
-        Complexe sum = a.ajouter(b); //a et b sont de type Complexe
+        //a et b sont de type Complexe
+        Vecteur vsum = a.ajouter(b); //compile
+	Complexe csum = a.ajouter(b); //ne compile pas
+ 
+C'est embêtant si on veut enchaîner les opérations: multiplier la somme obtenue par un autre nombre complexe, 
+par exemple, car dans ce cas il faut absolument un objet de type ``Complexe``. 
+
+Ex.6. Surcharge 2 (5 min)
+---------------------------------
+
+Dans la classe ``Complexe``, 
+
+ - surchargez le constructeur pour obtenir un nombre complexe à partir d'un vecteur,  
+ - ajoutez les méthodes ``ajouter`` et ``retirer`` avec le type de retour ``Complexe``. 
+   Il suffit pour cela de constuire un nombre complexe à partir du vecteur retourné par
+   les méthodes ``ajouter`` et ``retirer`` de la classe parente. Dans du code client, 
+   vérifiez avec une instruction du type: 
+
+.. code-block:: java 
+
+        //a et b sont de type Complexe
+        Complexe sum = a.ajouter(b); 
 
 Ce qu'il faut retenir
 ----------------------------------
