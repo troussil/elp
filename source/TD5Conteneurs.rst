@@ -143,10 +143,10 @@ L'interface ``Map.Entry`` représente une paire clé-valeur:
             System.out.println(e.getKey() + ": " + e.getValue());  
 	}
 
-Ex.2. Etudiants (30 min)
+Ex.2. Etudiants (15 min)
 -----------------------------------
 
-- Téléchargez la classe :download:`Etudiant <Etudiant.java>`.  
+- Téléchargez la classe :download:`Etudiant <download/Etudiant.java>`.  
 
 - Créez une classe ``GroupeEtudiant`` qui possède la méthode ``void ajout(Etudiant e)``. 
   Les étudiants sont stockés dans un ``ArrayList``. 
@@ -158,6 +158,27 @@ Ex.2. Etudiants (30 min)
 - Dans la classe ``ClientEtudiant``, rechercher `Toto`, en appelant la méthode
   ``List<Etudiant> recherche(String nom)`` codée dans ``GroupeEtudiant``. 
   Quelle est la complexité de la méthode de recherche ?
+
+Ex.3. ``LinkedList`` (15 min)
+-------------------------------
+
+La classe ``LinkedList`` implémente aussi l'interface ``Queue`` et possède 
+les méthodes ``add(E e)``, ``E element()``, ``E remove()`` (et ``int size()``). 
+
+- Dans une classe ``Hanoi``, écrivez une méthode statique ``oneMove`` 
+  qui prend le premier élément d'une file (d'entiers) et l'ajoute à une autre. 
+- Testez l'algorithme récursif des tours de Hanoi: 
+
+.. code-block:: java
+
+    public static void move(Queue<Integer> src, 
+                            Queue<Integer> dest, 
+                            Queue<Integer> tmp) {
+	oneMove(src, tmp); 
+	if ( src.size() != 0 ) 
+	    move(src, dest, tmp); //recursive call
+	oneMove(tmp, dest);
+    }
 
 
 Ce qu'il faut retenir
@@ -331,10 +352,16 @@ afin d'obtenir un code plus lisible et plus facile à réutiliser.
 	  e.printStackTrace();
         }
 
-Ex.5. Exceptions (10 min)
----------------------------
 
-TODO interface queue
+Ex.4. ``NoSuchElementException`` (10 min)
+-------------------------------------------
+
+- Dans la classe ``Hanoi``, appelez la méthode ``move`` alors que les trois files sont vides. 
+  Que se passe-t-il ?
+
+- Propoger l'exception de la méthode ``oneMove`` à la méthode ``move``, puis à la méthode ``main``. 
+  Dans ``main``, attrapez l'exception avec un bloc ``try/catch``.  
+
 
 Ce qu'il faut retenir
 -------------------------
