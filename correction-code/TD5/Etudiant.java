@@ -4,7 +4,7 @@ public class Etudiant {
     private String prenom; 
     private String nom; 
 
-    Etudiant(Integer numero, String prenom, String nom) {
+    public Etudiant(Integer numero, String prenom, String nom) {
 	this.numero = numero; 
 	this.prenom = prenom; 
 	this.nom = nom; 

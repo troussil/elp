@@ -183,8 +183,13 @@ Classe abstraite vs interface
 Ex.4. Interface (10 min)
 ----------------------------
 
-- D'après vous, quels sont les quatre requêtes qu'on doit pouvoir adresser à une structure de données 
-  de type pile ?
+- Les quatre requêtes qu'on doit pouvoir adresser à une structure de données 
+  de type pile sont:
+ 
+  - ``void push(int aValue)`` (empiler)
+  - ``void pop()`` (dépiler)
+  - ``int top()`` (haut de la pile)
+  - ``boolean empty()`` (est vide ?)
 
 - Définissez une interface appelée ``Stack`` qui liste ces requêtes. 
 
