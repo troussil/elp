@@ -16,6 +16,6 @@ ELP-JAVA
 - :doc:`TD4. Mécanismes d'abstraction <TD4Abstraction>`
 - :doc:`TD5. Conteneurs et exceptions <TD5Conteneurs>`
 - :doc:`TD6. Entrées/Sorties <TD6Flux>`
-- TD7. Threads
-- TD8. Interface graphique
+- :doc:`TD7. Threads <TD7Threads>`
+- :doc:`TD8. Interface graphique <TD8Gui>`
  
