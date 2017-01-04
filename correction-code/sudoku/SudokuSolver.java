@@ -99,8 +99,6 @@ class SudokuSolver {
     private boolean assign(Map<Square,DigitSet> aMap, Set<Square> aMarkSet, Square aSquare, int aDigit) {
 	//assign,
 	aMap.put(aSquare, new DigitSet(aDigit));
-//	System.out.println("je mets "+aDigit+" dans "+aSquare); 	
-//	displayWorkingGrid(System.out); 
 	//mark,
 	aMarkSet.add(aSquare); 
 	//and propagate
