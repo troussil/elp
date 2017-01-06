@@ -157,29 +157,17 @@ Ex.2. Etudiants (15 min)
 
 - Dans la classe ``ClientEtudiant``, rechercher `Toto`, en appelant la méthode
   ``List<Etudiant> recherche(String nom)`` codée dans ``GroupeEtudiant``. 
-  Quelle est la complexité de la méthode de recherche ?
+  Quelle est la complexité de la méthode de recherche en temps et en espace ?
 
-Ex.3. ``LinkedList`` (15 min)
--------------------------------
+Pour aller plus loin (15 min)
+------------------------------------
 
-La classe ``LinkedList`` implémente aussi l'interface ``Queue`` et possède 
-les méthodes ``add(E e)``, ``E element()``, ``E remove()`` (et ``int size()``). 
+- Ajoutez maintenant une méthode permettant de rechercher un étudiant par 
+  son identifiant (sachant que chaque identifiant est unique). Quelle est la complexité 
+  de cette méthode de recherche ?
 
-- Dans une classe ``Hanoi``, écrivez une méthode statique ``oneMove`` 
-  qui prend le premier élément d'une file (d'entiers) et l'ajoute à une autre. 
-- Testez l'algorithme récursif des tours de Hanoi: 
-
-.. code-block:: java
-
-    public static void move(Queue<Integer> src, 
-                            Queue<Integer> dest, 
-                            Queue<Integer> tmp) {
-	oneMove(src, tmp); 
-	if ( src.size() != 0 ) 
-	    move(src, dest, tmp); //recursive call
-	oneMove(tmp, dest);
-    }
-
+- Utilisez une autre struture de données pour stocker les étudiants afin d'abaisser
+  la complexité en temps de la recherche par identifiant. 
 
 Ce qu'il faut retenir
 ------------------------------------
@@ -223,64 +211,19 @@ qui traitent le sujet.
 Le développeur
 -------------------------
 
-Le développeur d'une classe peut indiquer aux clients qu'une méthode est susceptible de lever une exception
-avec le mot-clé ``throws`` et peut effectivement **lever une exception** au moment voulu avec le mot-clé ``throw``. 
+Le développeur d'une classe peut **lever une exception** au moment opportun avec le mot-clé ``throw``
+et peut indiquer aux clients que la méthode concernée est susceptible de lever une exception
+avec le mot-clé ``throws``. 
 
 .. code-block:: java 
-   :emphasize-lines: 3,5
+   :emphasize-lines: 1,3
 
-        public int pop() throws Exception {
+        public int pop() throws RuntimeException {
             if ( myNode == null ) 
-                throw new Exception();
+                throw new RuntimeException();
             else
                 myNode = myNode.next(); 
         }
-
-
-Créer sa propre classe d'exception
-----------------------------------
-
-.. code-block:: java 
-
-        public class EmptyStackException extends Exception {
-           ...
-        }
-
-
-.. code-block:: java 
-
-        public int pop() throws EmptyStackException {
-            if ( myNode == null ) 
-                throw new EmptyStackException();
-            else
-                myNode = myNode.next(); 
-        }
-
-Propager une exception
---------------------------
-
-.. code-block:: java 
-
-        private static void oneMove(Stack src, Stack dest) 
-          throws EmptyStackException {
-            try {
-	        dest.push( src.top() ); 
-	        src.pop();
-            } catch (EmptyStackException e) {
-                throw new EmptyStackException("empty stack");
-            }
-        }
-
-Plutôt que d'attraper et lever la même exception, il est possible de la **propager**.
- 
-.. code-block:: java 
-
-        private static void oneMove(Stack src, Stack dest) 
-          throws EmptyStackException {
-            dest.push( src.top() ); 
-	    src.pop();
-        }
-
 
 Le client qui traite les exceptions
 ------------------------------------
@@ -302,6 +245,67 @@ nature de l'exception, dans des blocs ``catch`` successifs.
 	}
 
 Le bloc optionnel ``finally`` s'exécute toujours. 
+
+
+Propager une exception
+--------------------------
+
+.. code-block:: java 
+
+        private static void oneMove(Stack src, Stack dest) 
+          throws RuntimeException {
+            try {
+	        dest.push( src.top() ); 
+	        src.pop();
+            } catch (RuntimeException e) {
+                throw new RuntimeException();
+            }
+        }
+
+Plutôt que d'attraper et lever la même exception, il est possible de la **propager**:
+ 
+.. code-block:: java 
+
+        private static void oneMove(Stack src, Stack dest) 
+          throws RuntimeException {
+            dest.push( src.top() ); 
+	    src.pop();
+        }
+
+Deux types d'exceptions
+------------------------------------
+
+En général, le compilateur s'assure qu'un bloc de code susceptible de lever 
+une exception propage l'exception avec ``throws`` ou l'attrape avec ``try``/``catch``
+et affiche un message d'erreur si ce n'est pas le cas. Les exceptions qui déclenchent 
+un tel comportement sont vérifiées (*checked exceptions*).
+
+Il existe cependant des exceptions, matérialisées par des instances de ``Error``, 
+de ``RuntimeException`` et de leurs classes dérivées, qui ne sont pas vérifiées
+(*unchecked exceptions*). Elles doivent être réservées aux événements après lesquels 
+le programme ne peut plus continuer à fonctionner normalement (bug ou ressource externe 
+nécessaire manquante). 
+
+
+Personnaliser l'exception
+---------------------------------------
+
+Avoir sa propre classe d'exception, même vide, permet de distinguer
+cette exception des autres par différents blocs ``catch``. 
+
+.. code-block:: java 
+
+        public class EmptyStackException extends RuntimeException {}
+
+
+.. code-block:: java 
+
+        public int pop() throws EmptyStackException {
+            if ( myNode == null ) 
+                throw new EmptyStackException();
+            else
+                myNode = myNode.next(); 
+        }
 
 Celui qui n'en fait pas assez
 ------------------------------
@@ -353,15 +357,20 @@ afin d'obtenir un code plus lisible et plus facile à réutiliser.
         }
 
 
-Ex.4. ``NoSuchElementException`` (10 min)
+
+Ex.3. Gestion des exceptions (15 min)
 -------------------------------------------
 
-- Dans la classe ``Hanoi``, appelez la méthode ``move`` alors que les trois files sont vides. 
-  Que se passe-t-il ?
+- Téléchargez cette :download:`archive <download/helper.tar.gz>` contenant 
+  les classes ``ProgramOptions`` et ``DemoProgramOptions``. 
+  La seconde illustre le fonctionnement de la première, écrite pour gérer 
+  une sequence d'option passée à un programme.  
 
-- Propoger l'exception de la méthode ``oneMove`` à la méthode ``move``, puis à la méthode ``main``. 
-  Dans ``main``, attrapez l'exception avec un bloc ``try/catch``.  
+- Commencez par jouer avec le démonstrateur en passant divers arguments en ligne de commande. 
 
+- Ecrivez les classes ``MissingOptionValue`` et ``UnknownOption``, 
+  dérivant de ``java.lang.Exception``. Dans ``ProgramOptions``, levez les exceptions au bon endroit  
+  et attrapez-les dans le code client.
 
 Ce qu'il faut retenir
 -------------------------
@@ -372,11 +381,10 @@ Ce qu'il faut retenir
   méthodes jusqu'à ce qu'un bloc ``catch`` acceptant cette exception
   soit trouvé.
 
-- L'appel à une méthode susceptible de lever une exception doit :
+- L'appel à une méthode susceptible de lever une exception vérifiée doit :
 
   - soit être contenu dans un bloc ``try`` / ``catch``
   - soit être situé dans une méthode propageant cette classe d'exception (``throws``) 
 
-- Un bloc ``finally`` peut suivre les blocs ``catch``. Son contenu est toujours exécuté 
-  (avec ou sans exception, et même en cas de ``break``, ``continue``, ``return`` dans le bloc ``try``). 
+- Un bloc ``finally`` peut suivre les blocs ``catch``. Son contenu est toujours exécuté. 
 
