@@ -82,7 +82,7 @@ Ex.2. Integration/Parametre (10 min)
   et modifiez l'appel de la méthode en conséquence. 
 
 
-Ex.3. Integration/Abstraction (10 min)
+Ex.3. Integration/Abstraction (15 min)
 -----------------------------------------
 
 - Dans le code client, on veut maintenant approcher l'intégration de n'importe 
@@ -180,56 +180,30 @@ Classe abstraite vs interface
     de même *nature*. Une classe ne peut hériter que d'une seule autre classe. 
 
 
+Ex.4. Interface (10 min)
+----------------------------
 
-Exemple d'application
-----------------------------------
-
-On veut coder des algorithmes opérant sur des graphes. 
-Mais les graphes peuvent être représentés par différentes 
-structures de données (matrice d'incidence, d'adjacence, 
-collections de noeuds et d'arêtes intereliés par des références). 
-
-On va séparer ``Graph`` (la classe offrant l'accès aux algorithmes) 
-et ``GraphStruct`` (l'interface implémentée par les différentes 
-structures de données de graphe); une instance de ``Graph`` 
-manipulera une instance de ``GraphStruct``. 
-
-On a déjà implémenté un calcul du nombre de composantes connexes
-comme preuve de concept dans :download:`Graph.java <download/Graph.java>`. 
-
-
-Ex.4. Interface (5 min)
-----------------------------------
-
-- Créez une classe appelée ``Node``. Il est raisonnable de choisir qu'un 
-  noeud possède au moins un numéro qui l'identifie dans le graphe. 
+- Les quatre requêtes qu'on doit pouvoir adresser à une structure de données 
+  de type pile sont:
  
-- Créez une interface appelée ``GraphStruct`` possédant deux méthodes: 
+  - ``void push(int aValue)`` (empiler)
+  - ``void pop()`` (dépiler)
+  - ``int top()`` (haut de la pile)
+  - ``boolean empty()`` (est vide ?)
 
-  - ``Node[] getNodes()`` (renvoie l'ensemble des noeuds),
-  - ``Node[] getNeighbors(Node aNode)`` (renvoie les voisins d'un noeud donné).
+- Définissez une interface appelée ``Stack`` qui liste ces requêtes. 
 
-- Compilez les classes ``Graph``, ``GraphStruct``, ``Node`` pour s'assurer
-  que les noms concordent.  
+Ex.5. Pile par tableau dynamique (15 min)
+--------------------------------------------
 
+- Téléchargez la classe :download:`DynamicArray <download/DynamicArray.java>` qui modélise un 
+  tableau dynamique (dont la capacité de stockage s'accroit en fonction du nombre d'éléments 
+  ajoutés au tableau). 
 
-Ex.5. Structure de données (15 min)
------------------------------------- 
+- Définissez une classe ``StackByArray``, qui dérive de ``DynamicArray``
+  et qui implémente l'interface ``Stack``. 
 
-- Ecrivez une classe appelée ``GraphStructByAdjMat``, qui étend 
-  :download:`SquareMatrix <download/SquareMatrix.java>` et qui 
-  implémente l'interface ``GraphStruct``. 
-
-
-Ex.6. Test (5 min)
------------------------------------- 
-
-- Ecrivez du code client pour tester le calcul du nombre de composantes connexes: 
-
- - sur trois noeuds isolés (3 composantes)
- - sur trois noeuds dont deux sont reliés par une arête (2 composantes), 
- - etc. 
-
+- Testez votre classe avec le fichier :download:`TestStack.java <download/TestStack.java>`.    
 
 
 Ce qu'il faut retenir

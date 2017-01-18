@@ -2,18 +2,12 @@ public class DemoComplexe {
 
      public static void main(String[] args) {
 
-	 try {
+	 Complexe a = new Complexe(2,3); 
+	 Complexe b = new Complexe(3,4); 
 
-	 Complexe o = new Complexe(0,0);
-	 Complexe c = new Complexe(2,1);
-	 System.out.print(c + " / " + o + " == "); 
-	 c.diviser(o); 
-	 System.out.println(c); 
+	 Complexe sum = a.ajouter(b); 
 
-	 }
-	 catch (DivisionComplexeParZero e) {
-	     e.printStackTrace(); 
-	 }
+	 System.out.println(sum); 
     }
 
 }

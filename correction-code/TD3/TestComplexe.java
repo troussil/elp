@@ -5,11 +5,11 @@ public class TestComplexe {
 	Complexe conjugue = unC.obtenirConjugue();
 	System.out.print(unC + " * " + conjugue + " == ");
  
-	conjugue.multiplier(unC);
-	Complexe resultat = new Complexe(unC.obtenirNorme(),0);
-	System.out.println(conjugue + " == " + resultat); 
+	Complexe resultat1 = conjugue.multiplier(unC);
+	System.out.println(resultat1);
 
-	return conjugue.comparer(resultat); 
+	Complexe resultat2 = new Complexe(unC.obtenirNorme(),0);
+	return resultat1.comparer(resultat2); 
     }
 
     public static void main(String[] args) {

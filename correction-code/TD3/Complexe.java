@@ -1,42 +1,45 @@
-public class Complexe extends Vecteur {
+class Complexe extends Vecteur {
 
     public Complexe(double re, double im) {
-	super(re,im); 
+	super(re, im); 
     }
 
-    public Complexe(Complexe c) {
-	super(c.x,c.y); 
+    public Complexe(double reelPure) {
+	super(reelPure, 0.0); 
+    }
+
+    public Complexe(Vecteur v) {
+	super(v.x, v.y); 
     }
 
     public double obtenirNorme() {
-	return x*x + y*y; 
+	return x * x + y * y; 
     }
 
     public Complexe obtenirConjugue() {
 	return new Complexe(x, -y); 
     }
 
-    public void multiplier(Complexe c) {
-    	double re = x*c.x - y*c.y; 
-	double im = x*c.y + y*c.x; 
-	x = re; 
-	y = im; 
+    public Complexe ajouter(Vecteur v) {
+	return new Complexe( super.ajouter(v) ); 
     }
 
-    public void diviser(Complexe c) throws DivisionComplexeParZero {
-	double normeDeC = c.obtenirNorme(); 
-	if (normeDeC == 0)
-	    throw new DivisionComplexeParZero(); 
-	else {
-	    Complexe conjugueDeC = c.obtenirConjugue(); 
-	    multiplier(conjugueDeC); 
-	    x /= normeDeC; 
-	    y /= normeDeC;
-	} 
+    public Complexe retirer(Vecteur v) {
+	return new Complexe( super.ajouter(v) ); 
+    }
+
+    public Complexe multiplier(Complexe c) {
+    	double re = x * c.x - y * c.y; 
+	double im = x * c.y + y * c.x; 
+	return new Complexe(re, im);
+    }
+
+    public Complexe multiplier(double reelPure) {
+	return new Complexe(x*reelPure, y*reelPure);
     }
 
     public String toString() {
-	return x + " + i*" + y; 
+	return "(" + x + " + i*" + y + ")"; 
     }
 
 }

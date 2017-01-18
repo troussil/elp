@@ -9,25 +9,7 @@ public class Baigneur implements Runnable {
     }
 
     public void run() {
-	try {
-	    boolean aPrisCabine = false; 
-	    synchronized (maPiscine) {
-		if (maPiscine.cabineDeLibre()) {
-		    maPiscine.prendreCabine();
-		    aPrisCabine = true; 
-		} else {
-		    maPiscine.occuperPieceCollective();
-		}
-	    }
-	    seChanger();
-	    if (aPrisCabine) {
-		synchronized (maPiscine) {
-		    maPiscine.laisserCabine(); 
-		}
-	    }
-	} catch (InterruptedException e) {
-	    System.err.println("ERR: interrompu en train de se changer"); 
-	}
+	maPiscine.occuperPlace(this); 
     }
 
     public void seChanger() throws InterruptedException {

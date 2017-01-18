@@ -13,8 +13,15 @@ public class EvenCounter implements Runnable {
 	return myCounter; 
     }
     public void run() {
-	while (true) {
-	    System.out.println(">" + toNextEven());
+	boolean stop = false; 
+	while (!stop) {
+	    synchronized(this) {
+		if (myCounter < 50) {
+		    System.out.println(">" + Thread.currentThread().getName() + " " + toNextEven());
+		} else {
+		    stop = true; 
+		}
+	    }
 	}
     }
 

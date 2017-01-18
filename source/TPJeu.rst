@@ -2,7 +2,7 @@
 TP: tic-tac-toe en réseau
 ===========================================
 
-Prise en main (45 min)
+Prise en main (30 min)
 =========================
 
 L'objectif
@@ -95,7 +95,7 @@ dans le shell.
 
 Dans la méthode ``main``: 
 
-- créez un configuration (instance ``EnsembleDeMarques``), 
+- créez une configuration (instance ``EnsembleDeMarques``), 
 - créez un lecteur de position (instance de ``LecteurPositionDeFlux``), 
 - créez un arbitre, un joueur blanc, un joueur noir (instances de ``Arbitre`` et ``Joueur``),
 - lancez deux threads, un pour chaque joueur.   
@@ -259,25 +259,4 @@ Conception
    l'interface ``LecteurPosition``. La vue, comme le *listener*, doivent
    connaitre le lecteur afin de lui transmettre la position de la case
    choisie.  
-
-
-Fin
-===========================
-
-Pour aller plus loin
----------------------------
-
-Trouvez les bugs et corrigez-les...
-
-Rendu
----------------------------
-
-- Une archive ``tar.gz`` contenant le projet Maven et portant le nom 
-  des deux auteurs dans l'ordre alphabétique
-  sous la forme suivante: ``Nom1-Nom2.tar.gz``. 
-
-- A charger sur Moodle avant la date limite indiquée sur la plateforme. 
-
-- Le projet ne doit comporter que les fichiers sources et 
-  doit pouvoir être compilé sans erreur.  
 
