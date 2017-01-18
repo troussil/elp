@@ -8,9 +8,9 @@ Introduction aux threads
 Qu'est-ce que c'est ?
 ----------------------------------------
 
-- Java propose un mécanisme pour exécuter concurremment (et simultanément pour une machine multiprocesseurs) plusieurs séquences d'instructions.  
+- Java propose un mécanisme pour exécuter en concurrence (et simultanément pour une machine multiprocesseurs) plusieurs séquences d'instructions.  
 
-- Chaque séquence est un **thread**. Les threads sont des processus léger qui s'exécutent dans le même espace d'adressage.  
+- Chaque séquence est un **thread**. Les threads sont des processus légers qui s'exécutent dans le même espace d'adressage.  
 
 - Toute application s'exécute d'abord (méthode ``main``) dans le thread initial. Pour en créer de nouveaux, elle instancie ``java.lang.Thread``, 
   puis lance le thread au moyen de la méthode ``start``.  
@@ -59,75 +59,6 @@ On passe une instance de la classe implémentant ``Runnable`` au constructeur de
 	Thread t = new Thread( r ); 
 	t.start();
 
-Cycle de vie d'un Thread
----------------------------------------
-
-- Un thread est activé et prêt après l'appel de sa méthode ``start``. 
-- Quand le *scheduler* lui donne la main, il exécute la méthode ``run``. 
-- Il peut décider lui-même de rendre la main par la méthode ``yield``. 
-- Sinon, il s'exécute tant que le *scheduler* ne le préempte pas (le suspend provisoirement). 
-- Un thread est bloqué par une opération d'entrée-sortie, par les méthodes ``sleep`` ou ``wait``.
-- Dans ces cas, il redevient prêt quand l'opération s'achève ou qu'il est réveillé (méthode ``notify``).   
- 
-
-Synchronisation temporelle
-============================
-
-Controle des threads
------------------------------------------
-
-- Méthode de ``java.lang.Thread``: 
-
-  - ``start`` : active ce thread.
-  - ``run`` : exécute ce thread.
-  - ``interrupt`` : interromp ce thread. 
-  - ``join`` : attend que ce thread se termine.   
-  - ``sleep`` : endort ce thread durant un certain temps (en millisecondes).
-  - ``yield`` : ce thread rends la main. 
-
-Controle des threads
------------------------------------------
-
-- Méthodes de ``java.lang.Object``: 
-
-  - ``wait``: met en attente le thread courant sur l'objet auquel la requête est adressée, jusqu'à ce qu'il soit 
-    réveillé ou interrompu par un autre thread (ou jusqu'à ce qu'une durée donnée se soit écoulée). 
-  - ``notify``: réveille le thread qui est en attente sur l'objet dont on appelle la méthode ``notify`` (s'il y en a
-    plusieurs, l'un d'eux est choisi arbitrairement).   
-  - ``notifyAll``: réveille tous les threads en attente sur l'objet.  
-
-
-
-Problème producteur/consommateur
----------------------------------------
-
-- Imaginons un producteur; il produit des objets et les entreprose. Mais il n'y a qu'une seule place. 
-
-- Imaginons un consommateur; il retire l'objet entreposé.  
-
-- Comment synchroniser leurs actions afin que le producteur 
-  n'essaie d'entreproser un nouvel objet que lorsque la place est libre et que le consommateur 
-  n'essaie de retirer un nouvel objet que lorsqu'un objet est disponible ? 
-
-
-Ex.1. Wait/Notify (20 min)
----------------------------------------
-
-- Téléchargez cette :download:`archive <download/ProducerConsumer.tar.gz>`. 
-
-- Que fait la classe ``ProducerConsumerTest`` ? Compilez et exécutez. Que se passe-t-il ?
-
-- Ecrivez une classe ``SyncCubbyHole``, qui étend ``CubbyHole`` et qui redéfinit les méthodes 
-  ``get`` et ``put`` en les marquant ``synchronized`` et en appelant les méthodes ``wait`` et ``notify``. 
-
-
-Ce qu'il faut retenir
-----------------------------------------
-
-- Tous les objets peuvent mettre en attente le thread courant avec ``wait``. 
-
-- Tous les objets peuvent réveiller le(s) thread(s) bloqué(s) par eux, avec ``notify`` et ``notifyAll``. 
-
 
 Synchronisation physique
 ==========================
@@ -136,13 +67,37 @@ Partage de la mémoire et verrou
 --------------------------------------
 
 Tous les threads ont accès au même espace mémoire. Quand les threads manipulent
-une référence vers un même objet, il se peut que cela génère des erreurs. 
+une référence vers un même objet, les accès concurrents au même objet sont 
+suceptibles de génèrer des erreurs. 
  
-Pour les éviter, on verrouille un objet ou une méthode avec le mot-clef ``synchronized``. 
-L'objet accédé via ce verrou implique que tout autre thread doit attendre la fin de cet 
-accès pour y avoir accès à son tour.  
+Pour les éviter, chaque objet a un **verrou** (*intrinsic lock*, *monitor lock*, *monitor*).
+Un thread qui veut un acces exclusif à un objet acquière ce verrou, puis le libère 
+quand il a finit. Entre temps, il possède le verrou. Aucun autre thread ne peut 
+alors acquérir le verrou de cet objet.
 
-Ex.2. Compteur (10 min)
+Le mot-clé ``synchronized``
+--------------------------------------
+
+Quand un thread appelle une méthode ``synchronized`` d'un objet, il acquière son verrou
+et le relâche à la fin de l'exécution de la méthode. 
+
+.. code-block:: java
+
+        synchronized typeRetour nomMethode(listeParametres) { ... }  
+
+On peut aussi écrire des blocs ``synchronized`` pour avoir un niveau plus fin 
+et éviter un blocage non nécessaire.   
+
+.. code-block:: java
+
+	  synchronized (this) {
+             ...
+          }
+
+.. NB. un thread peut acquérir un verrou qu'il possède déjà. 
+.. NB: on ne doit pas appeler une méthode non "synchronized" dans une méthode "synchronized" du même objet ou d'un autre, sinon on brise l'exclusivité.  
+
+Ex.1. Compteur (10 min)
 ---------------------------------------
 
 - Téléchargez la classe :download:`EvenCounter <download/EvenCounter.java>`. Que fait-elle ?
@@ -154,17 +109,118 @@ Ex.2. Compteur (10 min)
 
 - Ajoutez le mot-clef ``synchronized`` à la méthode ``toNextEven``. Que se passe-t-il ?
 
-.. code-block:: java
+Ex.2. Arrêt du compteur (10 min) 
+--------------------------------------
 
-        private synchronized void toNextEven() {
+Modifiez les classes ``EvenCounter`` et ``EvenCounterTest`` de façon à ce que 
+la valeur du compteur ne s'affiche que tant qu'elle est inférieure à 50. 
+Utilisez le mot-clé ``synchronized`` a bon escient pour éviter les accès concurrents, 
+tout en permettant aux deux threads de travailler.  
+
+Astuce: Préfixez les affichages par ``Thread.currentThread().getName()``. 
 
 
-Ex.3. Tableaux de threads (10 min)
+
+
+Ce qu'il faut retenir
 ---------------------------------------
 
-- Téléchargez la classe :download:`Piscine <download/Piscine.java>`. Que fait-elle ?
+Quand plusieurs threads partagent des données, il peut y avoir *interférence* 
+(deux exécutions d'une même méthode sont entrelacées) ou *incohérence* 
+(les appels de différentes méthodes d'un même objet sont entrelacés). 
 
-- Téléchargez la classe :download:`Baigneur <download/Baigneur.java>`. Que fait-elle ?
+Pour éviter ces problèmes, on utilise le mot-clé ``synchronized``. 
+
+Quand un thread appelle une méthode ``synchronized`` d'un objet ou exécute 
+un bloc ``synchronized(this)`` dans une de ses méthodes, il acquière son verrou,
+et le relâche à la fin de l'exécution.
+
+
+Synchronisation temporelle
+============================
+
+Cycle de vie d'un Thread
+---------------------------------------
+
+- Un thread est activé et prêt après l'appel de sa méthode ``start``. 
+- Quand le *scheduler* lui donne la main, il exécute la méthode ``run``. 
+- Il peut décider lui-même de rendre la main par la méthode ``yield``. 
+- Sinon, il s'exécute tant que le *scheduler* ne le préempte pas (le suspend provisoirement). 
+- Un thread est bloqué par une opération d'entrée-sortie ou par l'appel de certaines méthodes. 
+- Dans ces cas, il redevient prêt quand l'opération s'achève ou qu'il est réveillé.   
+ 
+Controle des threads via ``java.lang.Thread``
+------------------------------------------------
+
+  - ``start`` : active ce thread.
+  - ``run`` : exécute ce thread.
+  - ``interrupt`` : interromp ce thread. 
+  - ``join`` : attend que ce thread se termine.   
+  - ``sleep`` : endort ce thread durant un certain temps (en millisecondes).
+  - ``yield`` : ce thread rends la main. 
+
+Ex.3. Fin (5 min) 
+----------------------------
+
+Modifiez la classe ``EvenCounterTest`` de façon à faire afficher par le thread principal 
+un message de fin sur la sortie standard. 
+
+
+Coordination
+---------------------
+
+Il peut y avoir plusieurs problèmes de concurrence: 
+
+  - deadblock : chaque thread laisse passer l'autre (image de deux personnes qui n'avancent pas tant que l'une n'a pas fait le premier pas). 
+  - liveblock : chaque thread réagit par rapport à l'autre (image de deux personnes qui ne parviennent pas à se croiser en faisant toutes deux un pas de même côté)
+  - starvation : un thread lent empêche les autres de faire leur travail. 
+
+Pour coordonner les threads, on implémente des **commandes bloquantes** avec les méthodes ``wait`` et ``notifiy(All)`` de ``java.lang.Object``. 
+
+Controle des threads via ``java.lang.Object``
+------------------------------------------------
+
+  - ``wait``: le thread courant doit posséder le verrou de l'objet (c'est pourquoi la méthode 
+    dans laquelle ``wait`` est appelée doit être déclarée ``synchronized``). 
+    Il relâche le verrou et attends qu'un autre thread le réveille par ``notify(All)`` 
+    (ou qu'une durée donnée soit écoulée). Il attend ensuite d'obtenir le verrou pour poursuivre l'exécution.  
+  - ``notifyAll``: réveille tous les threads en attente sur l'objet.  
+  - ``notify``: réveille un seul thread, choisi arbitrairement. 
+
+
+Ex.4. Wait/NotifyAll (20 min)
+---------------------------------------
+
+- Téléchargez cette :download:`archive <download/ProducerConsumer.tar.gz>`. 
+
+- Que fait la classe ``ProducerConsumerTest`` ? Compilez et exécutez. Que se passe-t-il ?
+
+- Ecrivez une classe ``SyncCubbyHole``, qui étend ``CubbyHole`` et qui redéfinit les méthodes 
+  ``get`` et ``put`` en les marquant ``synchronized`` et en appelant les méthodes ``wait`` et ``notifyAll``. 
+
+NB: Une bonne pratique est d'appeler ``wait`` dans une boucle testant la condition attendue 
+(``myProduct == null`` ou ``myProduct != null``), car le thread qui attends peut être réveillé par un 
+thread quelconque alors que la condition attendue n'est pas vérifiée.  
+
+Ce qu'il faut retenir
+----------------------------------------
+
+- On peut attendre que des threads se terminent avec ``join`` afin d'exploiter le résultat de leurs traitements. 
+
+- On peut utiliser ``wait`` et ``notifyAll`` pour implémenter des commandes bloquantes: 
+
+ - Tous les objets peuvent mettre en attente le thread courant avec ``wait``. 
+ - Tous les objets peuvent réveiller le(s) thread(s) bloqué(s) par eux, avec ``notify(All)``. 
+
+
+Pour aller plus loin
+============================
+
+A la maison. Tableaux de threads (10 min)
+-------------------------------------------
+
+- Téléchargez les classes :download:`Piscine <download/Piscine.java>` et
+  :download:`Baigneur <download/Baigneur.java>`. Que font-elles ?
 
 - Ecrivez une classe ``BaigneursTest`` qui lance des threads opérant sur 150 instances de 
   la classe ``Baigneur``, chacune connaissant un seul objet de type ``Piscine``: 
@@ -179,42 +235,7 @@ Ex.3. Tableaux de threads (10 min)
  
 - Compilez, puis exécutez plusieurs fois. Est-ce que ça fonctionne ?
 
-Ex.4. Accès concurrents (10 min)
----------------------------------------
-
-- Dans la classe ``Piscine``, ajoutez des sections critiques avec la construction suivante: 
-
-.. code-block:: java
-
-	  synchronized (this) {
-             ...
-          }
-
-L'objet entre parenthèse est utilisé de manière exclusive par le thread courant. 
-L'exécution des autres threads est bloquée jusqu'à ce que le thread courant exécute
-la dernière instruction du bloc.
-
-
-Ce qu'il faut retenir
----------------------------------------
-
-Quand plusieurs threads partagent des données, il peut y avoir *interférence* 
-(deux exécutions d'une même méthode sont entrelacées) ou *incohérence* 
-(les appels de différentes méthodes d'un même objet sont entrelacés). 
-
-Pour éviter ces problèmes, on peut définir des **sections critiques** avec 
-le mot-clef ``synchronized``. 
-
-- L'objet dont une méthode qualifiée ``synchronized`` est exécutée par un thread n'est plus disponible pour les autres threads.  
-
-- Le bloc ``synchronized`` permet d'utiliser de manière exclusive un objet par le thread courant. 
-
-Dans les deux cas, la synchronisation porte sur *un objet particulier*. 
-
-
-
-Pour aller plus loin
-============================
+- Dans la classe ``Piscine``, utilisez à bon escient le mot-clé ``synchronized``. 
 
 
 Fabrique de threads
