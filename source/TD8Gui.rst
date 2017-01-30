@@ -230,3 +230,7 @@ Ce qu'il faut retenir
   des événements particuliers. Lorsqu'un énénement écouté (``ActionEvent``) est déclenché, le 
   code associé au *listeners* est exécutée par le *Event-Dispatching Thread*. 
   
+Ce que vous devez savoir faire
+---------------------------------
+
+Réaliser une application graphique qui réagit aux actions de l'utilisateur. 

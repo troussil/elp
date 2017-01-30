@@ -337,3 +337,11 @@ Le sens et l'intérêt des mots-clés (ou de l'absence des mot-clés):
  - ``static``,
  - ``package``, ``import``.  
 
+
+Ce que vous devez savoir faire
+---------------------------------
+
+- Classer java parmi les langages objets. 
+- Ecrire une classe modélisant un objet. 
+- Combiner plusieurs objets. 
+- Lister et expliquer les mots-clés principaux : de visibilité (private/protected/public), de nommage (package/import), this, static. 

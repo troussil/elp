@@ -353,3 +353,10 @@ Ce qu'il faut retenir
   
 - Mais copie des **références** (et pas des objets eux-même) pour les variables de type personnalisé. 
 
+Ce que vous devez savoir faire
+---------------------------------
+
+- Classer java parmi les langages pseudo-compilé avec portabilité du bytecode.  
+- Compiler un projet java et lancer une classe exécutable en modifiant si besoin le classpath. 
+- Résoudre un problème simple à l'aide de tableaux et de structures de contrôle.
+- Comparer les variables de types primitifs et les objets dans une affectation ou un passage de paramètres. 

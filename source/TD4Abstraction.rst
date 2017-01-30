@@ -238,3 +238,10 @@ l'héritage convient (mais c'est plutôt rare).
 Dans le cas 1., une relation de composition pourrait être préférée.  
 
 Dans le cas 2., mieux vaut considérer l'utilisation d'une classe abstraite ou d'une interface. 
+
+
+Ce que vous devez savoir faire
+---------------------------------
+
+- Reconnaître les points de variations et les encapsuler dans la méthode d'un objet.
+- Choisir de coder pour des interfaces, plutôt que pour des objets particuliers.

@@ -388,3 +388,10 @@ Ce qu'il faut retenir
 
 - Un bloc ``finally`` peut suivre les blocs ``catch``. Son contenu est toujours exécuté. 
 
+Ce que vous devez savoir faire
+---------------------------------
+
+- Connaître la complexité théorique des opérations principales pour un conteneur donné. 
+- Choisir un conteneur pour résoudre un problème donné. 
+- Stocker une collection d'objets dans un conteneur et la parcourir.  
+- Distinguer exceptions vérifiées et non vérifiées, choisir entre propager et traiter une exception.  

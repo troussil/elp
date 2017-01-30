@@ -281,3 +281,9 @@ A la maison. Pool de threads (10 min)
 
 - Testez avec un nombre de threads égal à 150, puis 50, puis 3. 
 
+Ce que vous devez savoir faire
+---------------------------------
+
+- Exécuter des threads en concurrence. 
+- Mettre en oeuvre l'exclusion mutuelle avec "synchronized". 
+- Mettre en oeuvre des relations d'ordre temporelle avec "join", "wait", "notifyAll".  

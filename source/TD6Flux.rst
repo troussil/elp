@@ -346,4 +346,7 @@ Ex.4. Client (15 min)
 - Pour aller plus loin, dans la classe `Serveur`, redirigez le texte envoyé par le client 
   vers ce dernier comme un echo. 
 
+Ce que vous devez savoir faire
+---------------------------------
 
+- Lire et écrire des données codées sous différentes formes entre entrée et sortie standards, fichiers et socket réseau. 

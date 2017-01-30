@@ -270,3 +270,8 @@ Ce qu'il faut retenir
 - le mécanisme de **liaison dynamique** (comment la machine virtuelle recherche
   à l'exécution la méthode à appeler en réponse à une requête).
 
+Ce que vous devez savoir faire
+---------------------------------
+
+- Etendre une classe existante pour factoriser du code. 
+- Expliquer le mécanisme du polymorphisme. 
