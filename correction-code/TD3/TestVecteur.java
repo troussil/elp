@@ -2,13 +2,14 @@ public class TestVecteur {
 
     public static boolean testsUnitaires(Vecteur unO, Vecteur unV) {
 
-	Vecteur v = unO.ajouter(unV) ;
-	System.out.println(unO + " + " + unV + " == " + v) ; 
+	Vecteur v = unO.ajouter(unV);
+	System.out.println(unO + " + " + unV + " == " + v); 
 
-	v = v.retirer(unV) ;
-	System.out.println(v + " - " + unV + " == " + v) ;  
-		 
-	return v.comparer(unO) ; 
+	System.out.print(v + " - " + unV + " == ");  
+	v = v.retirer(unV);
+	System.out.println(v);
+	 
+	return v.comparer(unO); 
     }
 
     public static void main(String[] args) {

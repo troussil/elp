@@ -25,7 +25,7 @@ class Complexe extends Vecteur {
     }
 
     public Complexe retirer(Vecteur v) {
-	return new Complexe( super.ajouter(v) ); 
+	return new Complexe( super.retirer(v) ); 
     }
 
     public Complexe multiplier(Complexe c) {
