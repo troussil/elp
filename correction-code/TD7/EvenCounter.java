@@ -13,6 +13,9 @@ public class EvenCounter implements Runnable {
 	return myCounter; 
     }
     public void run() {
+	//premiere solution
+	//le bloc "synchronized" permet de coupler le test sur myCounter 
+	//et l'appel a toNextEven dans un acces exclusif a "this"
 	boolean stop = false; 
 	while (!stop) {
 	    synchronized(this) {
@@ -23,6 +26,15 @@ public class EvenCounter implements Runnable {
 		}
 	    }
 	}
+	// //second solution
+	// //on appelle toNextEven et on poursuit l'affichage qui 
+	// //si la valeur de retour est inferieure au seuil
+	// int res = toNextEven(); 
+	// while (res <= 50) {
+	//     System.out.println(">" + Thread.currentThread().getName() 
+	// 		       + ": " + res);
+	//     res = toNextEven(); 
+	// }
     }
 
 }

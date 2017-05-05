@@ -5,7 +5,7 @@ public class SyncCubbyHole extends CubbyHole {
 	try {
 	    while (myProduct == null)
 		wait(); 
-	    //myProduct != null
+	    //maintenant myProduct != null
 	    res = myProduct; 
 	    myProduct = null; 
 	    notifyAll(); 
@@ -21,7 +21,7 @@ public class SyncCubbyHole extends CubbyHole {
 	try {
 	    while (myProduct != null) 
 		wait(); 
-	    //myProduct == null
+	    //maintenant myProduct == null
 	    myProduct = aProduct;
 	    System.out.println("put " + myProduct); 
 	    notifyAll(); 

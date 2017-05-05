@@ -36,7 +36,7 @@ L'exécution du thread se termine au retour de la méthode ``run``.
 .. code-block:: java
 
         MonPremierThread t = new MonPremierThread(); 
-	monPremierThread.start(); 
+	t.start(); 
 
 
 Comment éviter l'héritage ?
@@ -71,7 +71,7 @@ une référence vers un même objet, les accès concurrents au même objet sont
 suceptibles de génèrer des erreurs. 
  
 Pour les éviter, chaque objet a un **verrou** (*intrinsic lock*, *monitor lock*, *monitor*).
-Un thread qui veut un acces exclusif à un objet acquière ce verrou, puis le libère 
+Un thread qui veut un accès exclusif à un objet acquière ce verrou, puis le libère 
 quand il a finit. Entre temps, il possède le verrou. Aucun autre thread ne peut 
 alors acquérir le verrou de cet objet.
 
@@ -182,7 +182,7 @@ Controle des threads via ``java.lang.Object``
 
   - ``wait``: le thread courant doit posséder le verrou de l'objet (c'est pourquoi la méthode 
     dans laquelle ``wait`` est appelée doit être déclarée ``synchronized``). 
-    Il relâche le verrou et attends qu'un autre thread le réveille par ``notify(All)`` 
+    Il relâche le verrou et attend qu'un autre thread le réveille par ``notify(All)`` 
     (ou qu'une durée donnée soit écoulée). Il attend ensuite d'obtenir le verrou pour poursuivre l'exécution.  
   - ``notifyAll``: réveille tous les threads en attente sur l'objet.  
   - ``notify``: réveille un seul thread, choisi arbitrairement. 
@@ -199,7 +199,7 @@ Ex.4. Wait/NotifyAll (20 min)
   ``get`` et ``put`` en les marquant ``synchronized`` et en appelant les méthodes ``wait`` et ``notifyAll``. 
 
 NB: Une bonne pratique est d'appeler ``wait`` dans une boucle testant la condition attendue 
-(``myProduct == null`` ou ``myProduct != null``), car le thread qui attends peut être réveillé par un 
+(``myProduct == null`` ou ``myProduct != null``), car le thread qui attend peut être réveillé par un 
 thread quelconque alors que la condition attendue n'est pas vérifiée.  
 
 Ce qu'il faut retenir
