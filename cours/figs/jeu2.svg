@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="84pt" height="67pt" viewBox="0 0 84 67" version="1.1">
+<g id="surface1">
+<path style="fill:none;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 140.432219 632.000781 L 132.432219 632.000781 " transform="matrix(1,0,0,-1,-132.233,696.2)"/>
+<path style="fill-rule:evenodd;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 140.432219 632.000781 L 133.432219 634.332813 L 133.432219 629.66875 Z M 140.432219 632.000781 " transform="matrix(1,0,0,-1,-132.233,696.2)"/>
+<path style="fill:none;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-dasharray:1,3;stroke-miterlimit:10;" d="M 135.998625 632.000781 L 151.998625 632.000781 L 151.998625 648.000781 L 167.998625 648.000781 L 167.998625 664.000781 L 183.998625 664.000781 L 183.998625 680.000781 L 199.998625 680.000781 L 199.998625 696.000781 L 215.998625 696.000781 " transform="matrix(1,0,0,-1,-132.233,696.2)"/>
+</g>
+</svg>

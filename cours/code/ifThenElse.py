@@ -1,0 +1,5 @@
+myTrue = lambda x : (lambda y : x)
+myFalse = lambda x : (lambda y : y)
+myIf = lambda a : (lambda b : (lambda c: a(b)(c)))
+print( myIf(myTrue)("b")("c") )
+print( myIf(myFalse)("b")("c") )
