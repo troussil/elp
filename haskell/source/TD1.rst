@@ -120,10 +120,6 @@ demander le type d'une expression avec ``:type`` (``:t``),
 charger des fichiers Haskell avec ``:load`` (``:l``) et ``:reload`` (``:r``),
 et bien plus encore (``:?`` pour une liste des commandes disponibles).
 
-..
-  documentation:
-  https://downloads.haskell.org/~ghc/7.4.1/docs/html/users_guide/ghci.html
-
 Comme les entrées-sorties ne sont pas évidentes en Haskell
 (à cause de la paresse et de la pureté du langage),
 nous allons d'abord surtout utiliser ce mode interactif en tapant ``ghci``. 
@@ -479,18 +475,25 @@ Par exemple :
 
 Astuce : ``head lst`` fournit le premier élément de ``lst``. 
    
-Complexité
-----------------------------
+défi bonus. ``slice``
+--------------------------
 
-Pour ces deux versions, tracez (sur papier) l'évaluation de ``myReverse [1,2,3,4]``.
-D'après vous, quelle est la complexité de ``:``, ``++`` et de ces deux versions de ``myReverse`` ?
+Définissez la fonction 
 
-.. literalinclude:: code/reverse1.hs
+.. literalinclude:: code/slice.hs
    :language: haskell
+   :lines: 1
 
-.. literalinclude:: code/reverse2.hs
-   :language: haskell
+qui extrait d'une liste donnée, une sous-liste déterminée par deux indices.
+Par exemple :
 
+.. code-block:: none
+
+    *Main> slice "abcdefghij" 3 7
+    "cdefg"
+
+Astuce : quand le premier indice est ``1``, ``slice`` se comporte comme ``split``.
+    
 
 Conclusion
 ===================
@@ -503,7 +506,7 @@ Capacités/Connaissances
 - Classer Haskell parmi les langages compilés à typage statique.
 - Distinguer types atomiques (``Char``, ``Int``) et types polymorphes (tuple, liste). 
 - Définir une fonction récursive sur des listes.
-- Expliquer le mécanisme du *pattern matching* et tracer l'évaluation d'une fonction récursive. 
+- Expliquer le mécanisme du *pattern matching*.  
 
 défi 1. ``addElemInList`` 
 ---------------------------
@@ -547,3 +550,8 @@ défi bonus. ``group``
 .. literalinclude:: code/group.hs
    :language: haskell
 
+défi bonus. ``slice``
+-------------------------
+
+.. literalinclude:: code/slice.hs
+   :language: haskell
