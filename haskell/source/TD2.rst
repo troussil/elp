@@ -102,13 +102,15 @@ Trace
     = 4 : (([] ++ [3]) ++ [2]) ++ [1] 
     {il reste à évaluer le second argument de (:) pour obtenir la liste,
     donc pour chaque élément on remonte la suite de concaténations...}
-	      
 
+    
 Défi 2 : complexité
 ----------------------------
 
 Pour la version suivante, tracez (sur papier) l'évaluation de ``myReverse [1,2,3,4]``.
 D'après vous, quelle est la complexité de cette version de ``myReverse`` ?
+
+.. _reversecode:
 
 .. literalinclude:: code/reverse2.hs
    :language: haskell
