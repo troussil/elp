@@ -153,8 +153,8 @@ et sont de bons exemples pour expliquer divers concepts de ces langages.
 - Diverses fonctions du `Prelude` sont chargées par défaut :
   ``length, head, tail, take, drop, init, last, reverse, elem``, etc. 
 
-Exercice
-------------------
+Inspection des types
+------------------------
 
 Par la commande ``:t`` de GHCi, donnez le type de :
 
@@ -247,7 +247,8 @@ Les équations sont en fait une manière élégante de définir des fonctions
     inc x = x + 1
     add x y = x + y
 
-équivalente à l'utilisation de *lambda-fonctions* (fonctions anonymes). 
+équivalente à l'utilisation de *lambda-fonctions* (fonctions anonymes,
+où la barre oblique rappelle le plus long des deux traits d'un lambda). 
     
 .. code-block:: haskell
 
@@ -385,7 +386,7 @@ est équivalent à
     ...
     f pn1, ..., pnk = en
 
-Mais c'est une bonne habitude de choisir la première version, car une case expression peut être utilisé
+Mais c'est une bonne habitude de choisir la première version, car une case expression peut être utilisée
 aussi en dehors du contexte de la définition d'une fonction. 
     
 défi 3. ``repli`` 

@@ -1,6 +1,6 @@
-=========================================
-Evaluation paresseuse et 
-=========================================
+================================================
+Evaluation paresseuse et modèles de traitement
+================================================
 
 
 Evaluation paresseuse
@@ -59,21 +59,56 @@ Soient les fonctions suivantes :
 .. literalinclude:: code/take-repeat.hs
    :language: haskell
 
-Tracez l'évaluation de : 
+Tracez (sur papier) l'évaluation de : 
 
 .. code-block:: haskell
 
     take 3 (repeat 7)
 
-    
-Défi 2 : complexité
-----------------------------
+Complexité
+---------------------------
 
-Pour ces deux versions, tracez (sur papier) l'évaluation de ``myReverse [1,2,3,4]``.
-D'après vous, quelle est la complexité de ces deux versions de ``myReverse`` ?
+Soit la fonction suivante
 
 .. literalinclude:: code/reverse1.hs
    :language: haskell
+
+où
+
+.. literalinclude:: code/concat.hs
+   :language: haskell
+
+Pour avoir une idée de la complexité
+de ce code, nous allons tracer l'évaluation
+de ``myReverse [1,2,3,4]``.  
+	      
+Trace 
+---------------------------
+
+.. code-block:: none
+
+    myReverse [1,2,3,4] {second motif de myReverse}
+    = myReverse [2,3,4] ++ [1]
+    {le premier argument de (++) est évalué pour le matching}
+    = (myReverse [3,4] ++ [2]) ++ [1] {même chose...}
+    = ((myReverse [4] ++ [3]) ++ [2]) ++ [1]		
+    = (((myReverse [] ++ [4]) ++ [3]) ++ [2]) ++ [1] {premier motif}		
+    = ((([] ++ [4]) ++ [3]) ++ [2]) ++ [1] {premier motif de (++)}
+    = (([4] ++ [3]) ++ [2]) ++ [1] {second motif de (++)}
+    = ((4 : [] ++ [3]) ++ [2]) ++ [1] 
+    {le second motif de (++) est immédiatement choisi,
+    car (4 : [] ++ [3]) correspond clairement à (x:xs)}
+    = (4 : ([] ++ [3]) ++ [2]) ++ [1] {même chose...}
+    = 4 : (([] ++ [3]) ++ [2]) ++ [1] 
+    {il reste à évaluer le second argument de (:) pour obtenir la liste,
+    donc pour chaque élément on remonte la suite de concaténations...}
+	      
+
+Défi 2 : complexité
+----------------------------
+
+Pour la version suivante, tracez (sur papier) l'évaluation de ``myReverse [1,2,3,4]``.
+D'après vous, quelle est la complexité de cette version de ``myReverse`` ?
 
 .. literalinclude:: code/reverse2.hs
    :language: haskell
@@ -160,7 +195,7 @@ Il est implicitement importé dans chaque programme Haskell.
   ``length, head, tail, take, drop, init, last, reverse, elem``, etc.
 
 - Nous allons en voir d'autres maintenant : 
-  ``map``, ``fmap``, ``filter``, ``foldl``, ``foldr``, ``foldl'``, etc. 
+  ``map``, ``filter``, ``foldl``, ``foldr``, ``foldl'``, etc. 
   
 
   
@@ -210,7 +245,7 @@ Un deuxième modèle de traitement consiste à appliquer une même opération à
 
 Le premier argument est une fonction qui prend un ``a`` et retourne un ``b``.
 Celle-ci est appliquée à tous les éléments de type ``a`` d'une liste,
-ce qui donne une liste d'éléments de type ``b`` de même taille. 
+ce qui donne une liste d'éléments de type ``b`` (de même taille). 
     
 En ayant défini ``inc x = x + 1``, l'expression ``map inc [1,2,3]`` est évaluée
 en ``[2,3,4]``. 
@@ -289,7 +324,7 @@ et qui remplace avantageusement l'utilisation de ``map`` et ``filter`` dans un g
     [ f x | x <- xs, x < k ]
 
 signifie "la liste de tous les ``f x`` telle que ``x`` vienne de la liste ``xs`` et soit inférieur à ``k``" 
-et équivaut à la notation mathématique 
+et s'inspire de la notation mathématique 
 
 .. math::
 
@@ -348,22 +383,34 @@ La fonction de combinaison va être d'abord appliquée à la valeur initiale ``z
 et à l'élément de fin de liste (le plus à droite). 
 Le résultat sera ensuite combiné avec l'élément précédent et ainsi de suite.
 La dernière application de la fonction de combinaison retournera la valeur finale. 
-   
-Défi 6 : sommation 
------------------------
+
+Défi 6 : reverse par foldl 
+----------------------------
 
 Définissez la fonction
 
-.. literalinclude:: code/mySum.hs
+.. literalinclude:: code/reverse3.hs
    :language: haskell
    :lines: 1
 
-en utilisant la fonction ``foldr``.
+en utilisant la fonction ``foldl`` (une ligne de code).
 
-.. code-block:: none
 
-   *Main> mySum [1..10]
-   55
+.. Défi 6 : sommation 
+   -----------------------
+
+   Définissez la fonction
+
+   .. literalinclude:: code/mySum.hs
+      :language: haskell
+      :lines: 1
+
+   en utilisant la fonction ``foldr``.
+
+   .. code-block:: none
+
+      *Main> mySum [1..10]
+      55
 
 
 Point-free style
@@ -374,7 +421,7 @@ il est possible de définir ``mySum`` sans donner aucun argument :
 
 .. literalinclude:: code/mySum2.hs
    :language: haskell
-   :lines: 2
+   :lines: 1-2
 
 au lieu de
 
@@ -383,7 +430,7 @@ au lieu de
    :lines: 2
 
 	   
-C'est le "point-free style" ("point" réfère aux arguments)
+C'est le "point-free style" (où "point" réfère aux arguments)
 qu'adopte les développeurs expérimentés parce qu'il décrit
 ce qu'*est* une fonction, plutôt que ce qu'elle *fait*. 
 
@@ -410,7 +457,7 @@ Capacités/Connaissances
 - Expliquer le mécanisme de l'évalution paresseuse
 - Tracer l'évaluation d'expressions données
 - Citer des exemples où une fonction est passée en argument à une autre fonction.   
-- Utiliser à bon escient les fonctions ``filter``, ``map``, ``foldl``, etc.
+- Utiliser à bon escient les fonctions ``filter``, ``map``, ``foldr`` ou ``foldl``, etc.
 - Définir une fonction sur les listes par une syntaxe en extension ou par des fonctions usuelles.   
   
 
@@ -441,37 +488,8 @@ Défi 1 : tracer une évaluation (aussi `là <http://www.cis.upenn.edu/~cis194/s
     = 7 : 7 : 7 : take 0 (repeat 7)
     = 7 : 7 : 7 : [] = [7,7,7]
 		
-Défi 2 : version 1 en :math:`O(n^2)`
----------------------------------------
 
-.. literalinclude:: code/concat.hs
-   :language: haskell
-
-.. code-block:: none
-
-    myReverse [1,2,3,4] {second motif de myReverse}
-    = myReverse [2,3,4] ++ [1]
-    {le premier argument de (++) est évalué pour le matching}
-    = (myReverse [3,4] ++ [2]) ++ [1] {même chose...}
-    = ((myReverse [4] ++ [3]) ++ [2]) ++ [1]		
-    = (((myReverse [] ++ [4]) ++ [3]) ++ [2]) ++ [1] {premier motif}		
-    = ((([] ++ [4]) ++ [3]) ++ [2]) ++ [1] {premier motif de (++)}
-    = (([4] ++ [3]) ++ [2]) ++ [1] {second motif de (++)}
-    = ((4 : [] ++ [3]) ++ [2]) ++ [1] 
-    {le second motif de (++) est immédiatement choisi,
-    car (4 : [] ++ [3]) correspond clairement à (x:xs)}
-    = (4 : ([] ++ [3]) ++ [2]) ++ [1] {même chose...}
-    = 4 : (([] ++ [3]) ++ [2]) ++ [1] 
-    {il reste à évaluer le second argument de (:) pour obtenir la liste,
-    donc pour chaque élément on remonte la suite de concaténations...}
-
-..		
-    = 4 : (([] ++ [3]) ++ [2]) ++ [1] {premier motif de (++)}
-    = 4 : ([3] ++ [2]) ++ [1] 
-    = 4 : (3 : [] ++ [2]) ++ [1] 
-    = 4 : 3 : ([] ++ [2]) ++ [1] 
-
-Défi 2 : version 2 en :math:`O(n)`
+Défi 2 : complexité en :math:`O(n)`
 ---------------------------------------
 
 .. code-block:: none
@@ -487,3 +505,34 @@ Défi 2 : version 2 en :math:`O(n)`
     = 4:3:[2,1]
     = 4:[3,2,1]
     = [4,3,2,1]
+
+Défi 3 : ``filter``
+------------------------
+
+.. literalinclude:: code/group2.hs
+   :language: haskell
+
+Défi 4 : ``map``
+---------------------------------
+
+.. literalinclude:: code/encode2.hs
+   :language: haskell
+
+Défi 5 : ``comprehension list``
+---------------------------------
+
+.. literalinclude:: code/quicksort.hs
+   :language: haskell
+	      
+Défi 6 : reverse par foldl 
+----------------------------
+
+.. literalinclude:: code/reverse3.hs
+   :language: haskell
+
+Défi bonus : définir quelques fonctions
+-------------------------------------------
+
+.. literalinclude:: code/withFoldr.hs
+   :language: haskell
+
