@@ -1,10 +1,10 @@
 data Point a = Point a a
   deriving (Show)
-data Shape = Circle (Point Float) Float |
-             Rectangle (Point Float) (Point Float)
+data Shape a = Circle (Point a) a |
+             Rectangle (Point a) (Point a)
   deriving (Show)
 
-surface :: Shape -> Float  
+surface :: Shape Float -> Float  
 surface shape = case shape of
                   (Circle _ r)
                     -> pi * r ^ 2  

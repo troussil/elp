@@ -16,16 +16,6 @@ Plan
       :alt: types et typage
       :align: center
 
-.. Polymorphisme
-   ---------------------------
-
-   Les types composés sont *polymorphes* quand ils décrivent une famille de types :
-
-   ``[a]`` désigne la famille des listes d'éléments de type ``a``
-   (le :math:`(\forall a)` est implicite).  
-
-   Exemple : ``[1,2,3], ['a','b','c'], ["azerty", "qwerty"]`` sont de type ``[a]``, mais pas ``[2,'b']``. 
-
 
 Déclarations
 -------------------
@@ -59,13 +49,31 @@ En Haskell, on peut définir nos propres types par des déclarations ``data`` :
 
 Il est possible de définir plusieurs sortes de type de cette façon :
    
-- type polymorphe
 - type énuméré
+- type tuple
+- type polymorphe
 - type récursif
 
-  
-Type polymorphe
------------------
+
+Type énuméré vs type tuple 
+--------------------------------
+
+- Pour créer un *type énuméré*, on utilise ``|`` pour faire
+  l'union des ensembles de valeur.
+- Pour créer un *type tuple*, on utilise simplement l'espace
+  pour faire un produit cartésien des ensembles de valeur. 
+
+.. literalinclude:: code/carte.hs
+   :language: haskell
+   :lines: 1-4
+
+``CouleurCarte`` et ``ValeurCarte`` sont deux types énumérés,
+tandis que ``Carte`` est un type tuple.
+Par exemple, ``Cte As Trefle`` est une valeur de type ``Carte``. 	   
+
+
+Type tuple polymorphe
+-------------------------
 
 Un *type polymorphe* est composé d'au moins une famille de type.
 
@@ -80,7 +88,7 @@ Le constructeur de valeur ``Pt :: a -> a -> Point a`` est une manière d'obtenir
 des valeurs de type ``Point a``. Par exemple, ``Pt 2.0 3.0`` est le point :math:`(2,3)`.
 
 Avertissement
------------------
+-------------------------
 
 Les constructeurs de type comme ``Point`` et les constructeurs de valeurs comme ``Pt``
 se trouvent dans des espaces de noms séparés. Il est donc possible de donner le même nom
@@ -91,23 +99,16 @@ de valeur associé.
    :language: haskell
    :lines: 1
 
-Type énuméré
------------------
-
-On utilise le symbole ``|`` pour faire des unions (disjointes)
-dans les ensembles de valeur représentant un type : 
-
-.. .. code-block:: haskell
-
-      data Day = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
+Type énuméré polymorphe
+--------------------------
 
 .. literalinclude:: code/shape.hs
    :language: haskell
    :lines: 3-4
 
-Autrement dit, une valeur de type ``Shape`` est soit un cercle
-(défini par un point de type ``Point Float`` et un rayon de type ``Float``),
-soit un rectangle (défini par deux points de type ``Point Float``).  
+Autrement dit, le type ``Shape a`` correspond soit à un cercle
+(défini par un point de type ``Point a`` et un rayon de type ``a``),
+soit à un rectangle (défini par deux points de type ``Point a``).  
 	   
 .. literalinclude:: code/shape.hs
    :language: haskell
@@ -217,15 +218,133 @@ Il est possible de définir des synonymes de types grâce à la déclaration ``t
 Classe et surcharge
 ==========================
 
-Polymorphisme contraint
+Surcharge
+---------------------------
+
+La *surcharge* désigne le fait qu'une même opération
+puisse être appliquée à des types différents *tout en* menant à des
+comportements différents.
+
+- Les opérateurs numériques comme ``+`` fonctionnent sur différents types de nombres (``Int``, ``Float``, etc.)
+- Les opérateurs de comparaison comme ``<`` fonctionnent sur de très nombreux types (nombre, caractère, liste, etc.),
+  mais pas tous (couleur par exemple). 
+
+Les déclarations ``class`` et ``instance`` vont nous permettre de regrouper
+les types en classe selon les opérations qu'on peut leur appliquer. 
+
+Déclaration ``class``
+--------------------------
+
+Intuitivement, une *classe* correspond à un ensemble de type pour lesquels certaines opérations sont définies.
+Par exemple, la classe ``Eq`` du Prélude correspond à tous les types ``a``
+pour lesquels l'opération ``(==)`` est définie. 
+
+.. literalinclude:: code/Eq.hs
+   :language: haskell
+
+Notez que l'opérateur ``(/=)`` est implémenté directement à partir de l'opérateur ``(==)``, qui est le point de variation.
+L'implémentation de cet opérateur devra être fourni par les types se déclarant comme instance de ``Eq``. 
+
+
+Exemple
+--------------------------
+
+Soit le type suivant : 
+
+.. literalinclude:: code/carte.hs
+   :language: haskell
+   :lines: 1
+
+On ne peut pas faire par défaut de test d'égalité,
+car l'opérateur ``(==) :: Eq a => a -> a -> Bool``
+ne prend en paramètre que des types qui sont des instances de ``Eq``.
+
+.. code-block:: none
+
+   *Main> Trefle == Pique
+	      
+   <interactive>:6:8:
+   No instance for (Eq CouleurCarte) arising from a use of ‘==’
+   In the expression: Trefle == Pique
+   In an equation for ‘it’: it = Trefle == Pique
+	   
+
+Déclaration ``instance``
+--------------------------
+
+Un type déclaré comme *instance* d'une classe doit surcharger les opérations associées à la classe.
+Par exemple, pour pouvoir comparer deux couleurs de carte à jouer, il faut explicitement déclarer
+le type ``CouleurCarte`` comme instance de ``Eq`` et surcharger ``(==)`` : 
+
+
+.. literalinclude:: code/carte.hs
+   :language: haskell
+   :lines: 6-12
+
+.. code-block:: none
+
+   *Main> Trefle == Pique
+   False
+   *Main> Trefle /= Pique
+   True
+
+Classes du Prélude
+-------------------------
+
+Le Prélude a de nombreuses classes : 
+
+- ``Eq`` (``==``, ``/=``)
+- ``Ord`` (``compare``, ``<``, ``<=``, ``>``, ``>=``, ``min``, ``max``)
+- ``Enum`` (facilité d'énumération ``toEnum``, ``fromEnum``, ``enumFrom``, etc.)  
+- ``Show``, ``Read`` (conversion en chaîne de caractères ``show``, ``read``, etc.)
+- ``Num`` (nombres ``+``, ``-``, etc.)
+
+Obtenez la liste complète des opérations d'une classe et de ses instances
+avec la commande ``:i`` suivi du nom de la classe dans GHCi. 
+
+Hiérarchie de classe
 ----------------------------
 
-Le *contexte* qui précède le type indique quelles opérations on peut effectuer avec les valeurs de type ``a``:
+Exemple des nombres
+---------------------------
 
-- ``Eq a`` (``==``, ``!=``)
-- ``Ord a`` (``<``, ``<=``, ``>``, ``>=``, ``min``, ``max``)
-- ``Show a`` (conversion en chaîne de caractères ``show``, ``shows``)
-- ``Num a`` (opérations arithmétiques...)
+Clause ``deriving``
+--------------------------
+
+La déclaration de ``CouleurCarte`` comme instance de ``Eq`` est simple mais ennuyante à écrire.
+Heureusement, l'instance peut être déduite *automatiquement* d'une déclaration ``data`` si on
+spécifie la clause ``deriving`` comme dans l'exemple suivant :
+
+.. literalinclude:: code/carte2.hs
+   :language: haskell
+   :lines: 1-5
+
+Les instances de ``Ord``, ``Enum``, ``Read``, ``Show`` peuvent aussi être générées automatiquement
+dans la même clause.  
+
+défi 4 :
+------------------------
+
+tester pleins d'opérations sur les cartes à jouer
+
+défi 5 :
+------------------------
+
+Créer une carte à jouer et en faire une instance de Eq, Ord, de façon à ce que seulement la valeur compte.
+
+défi 6 :
+------------------------
+
+faire un tas de carte et le créer à partir d'une list comprehension
+
+
+OOP
+----------------------------
+
+
+
+
+
 
 
 Conclusion

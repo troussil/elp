@@ -182,7 +182,7 @@ Exemple : ``[1,2,3], ['a','b','c'], ["azerty", "qwerty"]`` sont de type ``[a]``,
 
 Le *contexte* qui précède le type indique quelles opérations on peut effectuer avec les valeurs de type ``a``:
 
-- ``Eq a`` (``==``, ``!=``)
+- ``Eq a`` (``==``, ``/=``)
 - ``Ord a`` (``<``, ``<=``, ``>``, ``>=``, ``min``, ``max``)
 - ``Show a`` (conversion en chaîne de caractères ``show``, ``shows``)
 - ``Num a`` (opérations arithmétiques...)

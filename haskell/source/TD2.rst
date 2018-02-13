@@ -223,7 +223,7 @@ Défi 3 : ``filter``
 -------------------------
 
 En utilisant la fonction ``filter``, ainsi que les opérateurs ``==`` (égalité)
-et ``!=`` (différence), définissez récursivement la fonction  
+et ``/=`` (différence), définissez récursivement la fonction  
 
 .. literalinclude:: code/group2.hs
    :language: haskell
