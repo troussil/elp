@@ -1,6 +1,6 @@
-=========================
-Types
-=========================
+====================================
+Définition des types et des classes
+====================================
 
 Plan
 =========================
@@ -29,7 +29,8 @@ On va maintenant en voir d'autres :
   
 - ``data`` declaration (créer un type)
 - ``type`` declaration (créer un synonyme de type)
-- ``newtype`` declaration (créer un type à partir d'un autre)
+
+  .. - ``newtype`` declaration (créer un type à partir d'un autre)
 
 - ``class`` declaration (créer un groupe de type)
 - ``instance`` declaration (déclarer un type comme appartenant à un groupe donné) 
@@ -45,14 +46,15 @@ En Haskell, on peut définir nos propres types par des déclarations ``data`` :
 
 .. code-block:: haskell
 
-   data constructeurDeType = constructeurDeValeur
+   data constructeurDeType [params] = constructeurDeValeur [params]
 
-Il est possible de définir plusieurs sortes de type de cette façon :
-   
-- type énuméré
-- type tuple
-- type polymorphe
-- type récursif
+Il est ainsi possible de définir plusieurs sortes de type :
+
+.. figure:: figs/typeDeType.svg
+   :width: 350pt 
+   :alt: différentes sortes de type
+   :align: center
+
 
 
 Type énuméré vs type tuple 
@@ -121,7 +123,7 @@ Types récursifs
 Il est possible de se référer au type que l'on crée
 dans un des constructeurs de valeurs. 
 
-.. literalinclude:: code/tree.hs
+.. literalinclude:: code/tree2.hs
    :language: haskell
    :lines: 1
 
@@ -129,9 +131,9 @@ Autrement dit, une valeur de type ``Tree a`` est un arbre binaire polymophique
 dont les éléments sont soit une feuille (contenant une valeur de type ``a``),
 soit un noeud interne reliant deux sous-arbres.      
 
-.. literalinclude:: code/tree.hs
+.. literalinclude:: code/tree2.hs
    :language: haskell
-   :lines: 3-6
+   :lines: 3-9
 
 
 Liste revisitée
@@ -163,10 +165,51 @@ et passez-le comme argument à la fonction ``flatten`` dans GHCi.
    :alt: arbre
    :align: center
 
-Défi 2 : liste imbriquée
+Défi 2 : hauteur d'un arbre binaire
+--------------------------------------
+
+Définissez la fonction
+
+.. literalinclude:: code/treeHeight.hs
+   :language: haskell
+   :lines: 1
+
+qui, pour un arbre donné, renvoie la longueur du plus long chemin entre
+la racine et une feuille, c'est-à-dire la hauteur de l'arbre :
+
+.. code-block:: none
+
+   *Main> treeHeight (Leaf 4)
+   1
+   *Main> treeHeight (Node (Leaf 4) (Leaf 5))
+   2
+   *Main> treeHeight (Node (Leaf 4) (Node (Leaf 5) (Leaf 6)))
+   3
+
+		
+.. Défi 2 : aplatir un arbre binaire
+   -----------------------------------
+
+   Proposez une version plus efficace de ``flatten``
+   en utilisant l'opérateur ``(:)`` au lieu de l'opérateur ``(++)``. 
+
+   .. code-block:: none
+
+      *Main> flatten (Node (Node (Leaf 1) (Leaf 2)) (Leaf 3)) 
+      [1,2,3]
+
+   Astuce : comme pour :ref:`MyReverse<reversecode>`, définissez une fonction intermédiaire
+   qui prend en entrée l'arbre et une liste temporaire d'accumulation. 
+
+   .. code-block:: Haskell
+
+      flatten' :: Tree a -> [a] -> [a] 
+
+	   
+Défi 3 : liste imbriquée
 -----------------------------------
 
-Définissez une fonction
+Après avoir défini le type adéquat, écrivez la fonction
 
 .. literalinclude:: code/NestedList.hs
    :language: haskell
@@ -185,23 +228,6 @@ pouvant contenir des listes comme élément.
    []
 
 	   
-Défi 3 : aplatir un arbre binaire
------------------------------------
-
-Proposez une version plus efficace de ``flatten``
-en utilisant l'opérateur ``(:)`` au lieu de l'opérateur ``(++)``. 
-
-.. code-block:: none
-
-   *Main> flatten (Node (Node (Leaf 1) (Leaf 2)) (Leaf 3)) 
-   [1,2,3]
-
-Astuce : comme pour :ref:`MyReverse<reversecode>`, définissez une fonction intermédiaire
-qui prend en entrée l'arbre et une liste temporaire d'accumulation. 
-
-.. code-block:: Haskell
-
-   flatten' :: Tree a -> [a] -> [a] 
 
 
 Synonymes
@@ -227,7 +253,7 @@ comportements différents.
 
 - Les opérateurs numériques comme ``+`` fonctionnent sur différents types de nombres (``Int``, ``Float``, etc.)
 - Les opérateurs de comparaison comme ``<`` fonctionnent sur de très nombreux types (nombre, caractère, liste, etc.),
-  mais pas tous (couleur par exemple). 
+  mais pas tous. 
 
 Les déclarations ``class`` et ``instance`` vont nous permettre de regrouper
 les types en classe selon les opérations qu'on peut leur appliquer. 
@@ -298,15 +324,32 @@ Le Prélude a de nombreuses classes :
 - ``Enum`` (facilité d'énumération ``toEnum``, ``fromEnum``, ``enumFrom``, etc.)  
 - ``Show``, ``Read`` (conversion en chaîne de caractères ``show``, ``read``, etc.)
 - ``Num`` (nombres ``+``, ``-``, etc.)
-
+- ...
+  
 Obtenez la liste complète des opérations d'une classe et de ses instances
 avec la commande ``:i`` suivi du nom de la classe dans GHCi. 
 
 Hiérarchie de classe
 ----------------------------
 
+En Haskell, il est possible d'étendre une classe. Par exemple, la classe ``Ord`` *hérite*
+des opérations ``==`` et ``/=`` de ``Eq`` et possède *en plus* des opérations de comparaison,
+ainsi que les fonctions ``min`` et ``max``. On dit que ``Ord`` est une *sous-classe* de ``Eq``. 
+
+.. literalinclude:: code/Ord.hs
+   :language: haskell
+
+Une fonction qui utilise les opérations de ``Eq`` et ``Ord`` peut utiliser le contexte ``(Ord a)``
+plutôt que ``(Eq a, Ord a)`` car ``Ord`` "implique" ``Eq``.
+
 Exemple des nombres
 ---------------------------
+
+.. figure:: figs/nombres.svg
+   :width: 800pt 
+   :alt: différentes classes de nombre
+   :align: center
+
 
 Clause ``deriving``
 --------------------------
@@ -322,34 +365,93 @@ spécifie la clause ``deriving`` comme dans l'exemple suivant :
 Les instances de ``Ord``, ``Enum``, ``Read``, ``Show`` peuvent aussi être générées automatiquement
 dans la même clause.  
 
-défi 4 :
+Défi 4 : opérations habituelles
+---------------------------------
+
+Que donnent les expressions suivantes ?
+
+- ``show Coeur``
+- ``read "Coeur" :: CouleurCarte``   
+- ``Valet /= Dix``
+- ``Valet <= Dix``, ``Deux < As``
+- ``pred As``, ``succ As``
+- ``fromEnum Trefle``, ``fromEnum Dame``
+- ``enumFrom Valet``,  ``enumFrom Trefle``
+- ``enumFromTo Cinq Dix``
+- ``[Trefle ..]``, ``[Valet ..]``, ``[Cinq .. Dix]``
+- ``toEnum 12 :: ValeurCarte``
+  
+Défi 5 : carte à jouer
 ------------------------
 
-tester pleins d'opérations sur les cartes à jouer
+- Définissez le type d'une carte à jouer.
+- Faites en une instance de ``Eq`` et de ``Ord``, de façon à ce que seulement la valeur compte
+  dans une comparaison.
 
-défi 5 :
+.. code-block:: none
+
+   *Main> Carte As Trefle == Carte As Pique
+   True
+   *Main> Carte As Trefle == Carte Roi Trefle
+   False
+   *Main> Carte As Trefle > Carte Roi Trefle
+   True
+   *Main> min (Carte As Trefle) (Carte Roi Trefle)
+   Carte Roi Trefle
+
+Défi 6 : tas de cartes
 ------------------------
 
-Créer une carte à jouer et en faire une instance de Eq, Ord, de façon à ce que seulement la valeur compte.
-
-défi 6 :
-------------------------
-
-faire un tas de carte et le créer à partir d'une list comprehension
+- Définissez le type d'un tas de carte.
+- Créez le tas de carte à l'aide d'une *list comprehension*. 
+- Donnez l'expression indiquant le nombre de cartes se trouvant dans le tas. 
 
 
-OOP
-----------------------------
+Défi bonus. ``toIntList``
+---------------------------
 
+- Créez la classe ``IntListable`` dotée de la fonction
 
+.. code-block:: haskell
 
+   toIntList :: IntListable a => a -> [Int]
 
+- Faites de
 
+  - ``Int``,
+  - ``Bool``,
+  - ``[Int]``,
+  - une paire d'élément ``IntListable``,
+  
+  des instances de cette classe. 
+   
+Comparaison avec d'autres langages
+-----------------------------------
+
+- Les types ne sont pas des objets. En Haskell, il n'y a pas de notion d'un état interne modifiable
+  comme dans les langages orientés objets. 
+- Cependant, les classes en Haskell sont similaires aux `concepts <http://en.cppreference.com/w/cpp/language/constraints>`_
+  en programmation générique ou encore aux interfaces en Java :
+  elles spécifient un protocole d'utilisation sous forme d'une liste d'opérations. 
+- En Haskell, la cohérence des types est vérifiée à la compilation, il n'y a pas de liaison dynamique 
+  à l'exécution comme dans les langages orientés objets.
+- En Haskell, le type d'une valeur ne peut pas être changé.
+  Il n'y a pas de classe racine comme ``Object`` en Java.  
 
 
 Conclusion
 ================
 
+Capacités/Connaissances
+---------------------------------
+
+- Définir un type à l'aide des déclarations ``data`` et ``type``.
+- Distinguer constructeur de valeur et de type. 
+- Définir une classe à l'aide de la déclaration ``class`` et
+  surcharger une opération à l'aide de la déclaration ``instance``.
+- Citer les classes ``Eq``, ``Ord``, ``Enum``, ``Show``, ``Read``,
+  ``Num`` et leurs opérations. 
+  
 Défi 1 : construire un arbre
 ---------------------------------
 
@@ -363,15 +465,88 @@ Défi 1 : construire un arbre
    *Main> flatten (Node (Node (Leaf 'a') (Leaf 'b')) (Leaf 'c'))
    "abc"
 
-Défi 2 : liste imbriquée
+     
+Défi 2 : hauteur d'un arbre binaire
+--------------------------------------
+
+.. literalinclude:: code/treeHeight.hs
+   :language: haskell
+
+Défi 3 : liste imbriquée
 -----------------------------------
 
 .. literalinclude:: code/NestedList.hs
    :language: haskell
 
-   
-Défi 3 : aplatir un arbre binaire
------------------------------------
+Défi 4 : opérations habituelles
+----------------------------------
 
-.. literalinclude:: code/tree2.hs
+.. code-block:: none
+
+   *Main> show Coeur
+   "Coeur"
+   *Main> :t read
+   read :: Read a => String -> a
+   *Main> read "Coeur" :: CouleurCarte
+   Coeur
+   *Main> pred As
+   Roi
+   *Main> succ As
+   *** Exception: succ{ValeurCarte}: tried to take `succ' of last tag
+   in enumeration
+   *Main> fromEnum Trefle
+   0
+   *Main> fromEnum Dame
+   10
+
+Défi 4 : opérations habituelles (suite)
+----------------------------------------
+
+.. code-block:: none
+
+		
+   *Main> enumFrom Valet
+   [Valet,Dame,Roi,As]
+   *Main> enumFrom Trefle
+   [Trefle,Carreau,Coeur,Pique]
+   *Main> enumFromTo Cinq Dix
+   [Cinq,Six,Sept,Huit,Neuf,Dix]
+   *Main> [Trefle ..]
+   [Trefle,Carreau,Coeur,Pique]
+   *Main> [Cinq ..]
+   [Cinq,Six,Sept,Huit,Neuf,Dix,Valet,Dame,Roi,As]
+   *Main> [Cinq .. Dix]
+   [Cinq,Six,Sept,Huit,Neuf,Dix]
+   *Main> toEnum 12 :: ValeurCarte
+   As
+
+Défi 5 : carte à jouer
+------------------------
+
+.. literalinclude:: code/carte2.hs
    :language: haskell
+   :lines: 1-12
+
+(Inspiré de ce `tutoriel <https://wiki.haskell.org/Type>`_)
+	   
+Défi 6 : tas de cartes
+------------------------
+
+.. literalinclude:: code/carte2.hs
+   :language: haskell
+   :lines: 14-15
+
+.. code-block:: none
+
+   *Main> length leTas
+   52
+
+(Inspiré de ce `tutoriel <https://wiki.haskell.org/Type>`_)
+   
+Défi bonus. ``toIntList``
+---------------------------
+
+.. literalinclude:: code/toIntList.hs
+   :language: haskell
+
+(Inspiré de cette `leçon <http://www.cis.upenn.edu/~cis194/spring13/lectures/05-type-classes.html>`_)

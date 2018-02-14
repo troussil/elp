@@ -10,3 +10,4 @@ instance Eq CouleurCarte where
                (Coeur,Coeur) -> True
                (Pique,Pique) -> True
                (_,_) -> False
+
