@@ -127,7 +127,7 @@ dans un des constructeurs de valeurs.
    :language: haskell
    :lines: 1
 
-Autrement dit, une valeur de type ``Tree a`` est un arbre binaire polymophique
+Autrement dit, une valeur de type ``Tree a`` est un arbre binaire polymorphe
 dont les éléments sont soit une feuille (contenant une valeur de type ``a``),
 soit un noeud interne reliant deux sous-arbres.      
 
@@ -172,7 +172,7 @@ Définissez la fonction
 
 .. literalinclude:: code/treeHeight.hs
    :language: haskell
-   :lines: 1
+   :lines: 3
 
 qui, pour un arbre donné, renvoie la longueur du plus long chemin entre
 la racine et une feuille, c'est-à-dire la hauteur de l'arbre :
@@ -263,7 +263,7 @@ Déclaration ``class``
 
 Intuitivement, une *classe* correspond à un ensemble de type pour lesquels certaines opérations sont définies.
 Par exemple, la classe ``Eq`` du Prélude correspond à tous les types ``a``
-pour lesquels l'opération ``(==)`` est définie. 
+pour lesquels l'opération ``(==)`` est définie.
 
 .. literalinclude:: code/Eq.hs
    :language: haskell
