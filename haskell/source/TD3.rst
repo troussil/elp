@@ -520,6 +520,8 @@ Défi 4 : opérations habituelles (suite)
    *Main> toEnum 12 :: ValeurCarte
    As
 
+.. _carte-label:
+   
 Défi 5 : carte à jouer
 ------------------------
 
@@ -528,7 +530,8 @@ Défi 5 : carte à jouer
    :lines: 1-12
 
 (Inspiré de ce `tutoriel <https://wiki.haskell.org/Type>`_)
-	   
+
+
 Défi 6 : tas de cartes
 ------------------------
 
