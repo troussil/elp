@@ -23,7 +23,7 @@ ELP-JAVA
 - En présentiel: 
 
   - Questions/Réponses. 
-  - TD1. Introspection
+  - :doc:`TD1. Reflexivité <TDReflect>` 
   - TD2. Conteneurs
   - TD3. Entrées/Sorties
   - TD4. Threads
