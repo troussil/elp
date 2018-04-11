@@ -8,7 +8,7 @@ Inspection des classes
 Java est un langage réflexif
 ----------------------------------------
 
-Java est un langage *réflexif* qui donne la possibilité pour un 
+Java est un langage *réflexif* : il donne la possibilité pour un 
 programme en cours d'exécution d'examiner son propre état et d'agir
 sur ce dernier. 
  
@@ -47,16 +47,17 @@ On obtient un objet ``Class`` de 3 manières différentes:
 
 .. code-block:: java 
 
-        String chaine = "azerty";
-	Class classe = chaine.getClass();
+        Class<String> classe
+	  = (Class<String>) Class.forName("java.lang.String"); //by name
+
+.. code-block:: java 
+
+        String aString = "azerty"; //from an object
+	Class<String> classe = (Class<String>) aString.getClass();
    
 .. code-block:: java 
-
-        Class classe = Class.forName("java.lang.String");
-
-.. code-block:: java 
 	
-	Class classe = String.class;
+	Class<String> classe = String.class; //from a class literal
 	
 
 Les méthodes de ``Class``
@@ -76,8 +77,12 @@ Liste non exhaustive, consultez la `documentation <http://docs.oracle.com/javase
 Ex.1. Inspecteur
 --------------------------
 
-compiler et jouer sur des exemples
+- Téléchargez la classe :download:`XRayClass <download/XRayClass.java>`. 
 
+- Compilez et exécutez-la en passant divers paramètres
+  (par exemple, ``java.lang.String methods``, ``java.lang.Integer constructors``). 
+
+    
 Générer du code dynamiquement
 =================================
 
