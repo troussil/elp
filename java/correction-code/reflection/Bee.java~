@@ -1,0 +1,7 @@
+import fr.insalyon.tc.framework; 
+
+public class Bee extends Animal {
+    public String scream() {
+	return "buzz";
+    }
+}
