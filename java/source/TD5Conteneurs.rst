@@ -159,20 +159,21 @@ Ex.2. Etudiants (15 min)
   ``List<Etudiant> recherche(String nom)`` codée dans ``GroupeEtudiant``. 
   Quelle est la complexité de la méthode de recherche en temps et en espace ?
 
-Pour aller plus loin (15 min)
-------------------------------------
+Ex.3. MultiMap (15 min)
+--------------------------
 
-- Ajoutez maintenant une méthode permettant de rechercher un étudiant par 
-  son identifiant (sachant que chaque identifiant est unique). Quelle est la complexité 
-  de cette méthode de recherche ?
-
-- Utilisez une autre struture de données pour stocker les étudiants afin d'abaisser
-  la complexité en temps de la recherche par identifiant. 
+- Créez une classe ``MultiMap<K,List<V> >`` qui associe à une clée de type ``K`` plusieurs valeurs
+  de type ``V`` stockées dans une liste. Elle devra implémenter l'interface ``Map<K,List<V> >``
+  et posséder une méthode ``void putOneValue(K,V)`` qui s'occupe de l'insertion d'une nouvelle valeur
+  et ``boolean containsOneValue(V)`` qui retourne vraie si la valeur donnée se trouve dans le conteneur,
+  faux sinon. 
+- Testez votre classe dans du code client. 
+  
 
 Ce qu'il faut retenir
 ------------------------------------
 
-- Un conteneur est un ensemble générique d’objets.  
+- Un conteneur est un ensemble générique d'objets.  
 
 - On distingue deux types: 
 

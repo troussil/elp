@@ -24,12 +24,11 @@ ELP-JAVA
 
   - Questions/Réponses. 
   - :doc:`TD1. Reflexivité <TDReflect>` 
-  - TD2. Conteneurs
+  - :doc:`TD2. Conteneurs <TD5Conteneurs>`
   - TD3. Entrées/Sorties
   - TD4. Threads
   
 ..
-  - :doc:`TD1. Conteneurs et exceptions <TD5Conteneurs>`
   - :doc:`TD2. Entrées/Sorties <TD6Flux>`
   - :doc:`TD3. Threads <TD7Threads>`
 
