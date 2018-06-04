@@ -2,10 +2,26 @@
 Fonctions récursives et modèles de traitement
 ================================================
 
-défi 4. ``compress``
+Avant-propos
+========================
+
+Pourquoi Haskell ?
+------------------------
+
+- Haskell est très formateur car purement fonctionnel : on ne peut faire autrement que coder dans un style fonctionnel. 
+- La programmation fonctionnelle, ancienne, explose de nouveau dans le web (python, js). 
+- Les concepts de Haskell sont en train de faire leur chemin dans d'autres langages plus populaires
+  (list comprehension de python, generics de java, etc.).
+
+  
+Fonctions récursives
+========================
+
+
+Défi 1. ``compress``
 -----------------------
 
-A l'aide de gardes et d'une case expression, définissez la fonction
+Définissez la fonction
 
 .. literalinclude:: code/compress.hs
    :language: haskell
@@ -19,22 +35,45 @@ qui supprime les copies consécutives des éléments d'une liste.
     "abcade"
 
     
-Let expression et where clause
---------------------------------------
+``Let-expression``
+---------------------------
 
 Parfois on a besoin de localement se référer à une valeur intermédiaire.
-C'est ce que permettent la *let expression* et la clause *where*
-(qui fait partie de la syntaxe des *case expression*). 
 
-.. literalinclude:: code/split1.hs
-   :language: haskell
-   :emphasize-lines: 3
-		  
-.. literalinclude:: code/split2.hs
-   :language: haskell
-   :emphasize-lines: 6
+Une ``let-expression`` (``let var = expr1 in expr2``)  peut 
+être utilisée partout où une expression est requise. 
 
-défi 5. ``encode``
+.. code-block:: haskell
+
+   (let x = 2 in x*2) + 3
+
+Dans certains cas (dans le REPL par exemple), un
+``let-statement`` (``let var = expr``)  peut 
+être utilisé.  
+
+.. code-block:: none
+
+   Prelude> let x = 2
+   Prelude> x*2 + 3
+   7
+
+
+Clause ``where``
+--------------------------
+
+La clause ``where`` permet de partager une variable entre des parties
+d'une définition qui ne forme pas syntaxiquement une expression.  
+
+.. code-block:: haskell
+
+   f x
+       | cond x   = a
+       | otherwise = g a
+     where
+       a = w x
+       
+   
+Défi 2. ``encode``
 -----------------------
 
 Définissez la fonction
@@ -54,44 +93,6 @@ de ``n`` éléments égaux à ``x`` soit remplaçée par le tuple ``(n,x)``.
 Astuce : on suppose qu'on connaît le résultat pour une liste ``xs``.
 Comment construire incrémentalement le résultat pour ``x:xs`` ?
    
-défi bonus. ``group``
--------------------------
-
-Définissez la fonction
-
-.. literalinclude:: code/group.hs
-   :language: haskell
-   :lines: 1
-
-qui regroupe les éléments égaux consécutifs en une sous-liste. 
-Par exemple :
-
-.. code-block:: none
-
-   *Main> group "aaaabccaadeeee"
-   ["aaaa","b","cc","aa","d","eeee"]
-
-Astuce : ``head lst`` fournit le premier élément de ``lst``. 
-   
-défi bonus. ``slice``
---------------------------
-
-Définissez la fonction 
-
-.. literalinclude:: code/slice.hs
-   :language: haskell
-   :lines: 1
-
-qui extrait d'une liste donnée, une sous-liste déterminée par deux indices.
-Par exemple :
-
-.. code-block:: none
-
-    *Main> slice "abcdefghij" 3 7
-    "cdefg"
-
-Astuce : quand le premier indice est ``1``, ``slice`` se comporte comme ``split``.
-    
 
 
 Modèles de traitement
@@ -101,10 +102,14 @@ Récursion
 ------------------
 
 - Vous imaginez peut-être qu'on définit toujours une fonction de manière récursive en Haskell. 
-- Mais comme le suggère le dernier exemple, les programmeurs expérimentés ne le font que rarement.
+- Mais en fait, les programmeurs expérimentés ne le font que rarement.
 - En pratique, il y a des *modèles de traitement* très fréquents qu'implémentent certaines fonctions.
-- Le programmeur peut alors rester sur un plus haut niveau en combinant ces fonctions.   
+- Le programmeur peut alors rester sur un plus haut niveau en combinant ces fonctions avec
+  l'opérateur de composition ``.`` (``f (g x)`` est équivalent à ``(f . g) x``). 
 
+.. head (reverse "qmlsdjf") et (head . reverse) "qmslkdfj"
+
+  
 Prélude
 -------------------------
 
@@ -140,19 +145,8 @@ Par exemple, l'expression ``filter (\x -> x < 10) [9,10,11,12]`` est évaluée
 Défi 3 : ``filter``
 -------------------------
 
-En utilisant la fonction ``filter``, ainsi que les opérateurs ``==`` (égalité)
-et ``/=`` (différence), définissez récursivement la fonction  
-
-.. literalinclude:: code/group2.hs
-   :language: haskell
-   :lines: 1
-
-qui retourne une liste regroupant tous les éléments égaux dans des sous-listes. 
-
-.. code-block:: none
-
-   *Main> group "banana"
-   ["b","aaa","nn"]
+En utilisant les fonctions ``filter`` et ``length``, donnez l'expression
+qui retourne le nombre de 'a' dans la chaîne de caractère "aaaabccaadeeee".  
 
 ``map``
 -------------------------
@@ -202,35 +196,13 @@ En Haskell, une *section* est l'application partielle d'un opérateur infixe
     
 Donc on peut aussi écrire ``map (+1) [1,2,3]``
 
+
 Défi 4 : ``map``
----------------------------------
+-------------------------
 
-En utilisant votre fonction précédente ``group``,
-ainsi que la fonction ``map``, définissez la fonction  
-
-.. literalinclude:: code/encode2.hs
-   :language: haskell
-   :lines: 1
-
-qui retourne la liste des différents éléments et de leur répétition
-dans une liste donnée.
-	   
-.. code-block:: none
-
-   *Main> encode "banana"
-   [('b',1),('a',3),('n',2)]
-
-..  Défi 4 : ``map``
-    -------------------------
-
-    En utilisant la fonction ``map``,
-
-    - définissez une fonction qui, à partir d'une liste de chaîne de caractères,
-      renvoie la liste de leur longueur.
-    - définissez une fonction qui, à partir d'une liste de chaîne de caractères non vides,
-      renvoie la liste de leur première lettre. 
-
-    Astuce : pensez aussi aux fonctions ``length`` et ``head``. 
+En utilisant la fonction ``addElemInList`` et ``map``, donnez l'expression qui
+transforme le codage ``[(4,'a'),(1,'b'),(2,'c'),(2,'a'),(1,'d'),(4,'e')]`` en
+``["aaaa","b","cc","aa","d","eeee"]``. 
 
    
 Définition de liste en extension
@@ -294,10 +266,6 @@ Soit la définition (légèrement différente de celle du Prélude)
 La premier argument est une fonction qui combine un ``a`` et un ``b`` et retourne une valeur de type ``b``.
 Le deuxième est une valeur initiale de type ``b``. Le troisième une liste de ``a``.
 
-.. code-block:: Haskell
-
-   foldr f z []     = z
-   foldr f z (x:xs) = f x (foldr z f xs)
 
 La fonction de combinaison va être d'abord appliquée à la valeur initiale ``z``
 et à l'élément de fin de liste (le plus à droite). 
@@ -307,30 +275,9 @@ La dernière application de la fonction de combinaison retournera la valeur fina
 Défi 6 : reverse par foldl 
 ----------------------------
 
-Définissez la fonction
+En utilisant la fonction ``foldr``, donnez l'expression qui transforme la liste
+``["aaaa","b","cc","aa","d","eeee"]`` en la chaîne ``"aaaabccaadeeee"``
 
-.. literalinclude:: code/reverse3.hs
-   :language: haskell
-   :lines: 1
-
-en utilisant la fonction ``foldl`` (une ligne de code).
-
-
-.. Défi 6 : sommation 
-   -----------------------
-
-   Définissez la fonction
-
-   .. literalinclude:: code/mySum.hs
-      :language: haskell
-      :lines: 1
-
-   en utilisant la fonction ``foldr``.
-
-   .. code-block:: none
-
-      *Main> mySum [1..10]
-      55
 
 
 Point-free style
@@ -378,90 +325,46 @@ Capacités/Connaissances
 - Utiliser à bon escient les fonctions ``filter``, ``map``, ``foldr`` ou ``foldl``, etc.
 - Définir une fonction sur les listes par une syntaxe en extension ou par des fonctions usuelles.   
   
-défi 4. ``compress``
+
+Défi 1. ``compress``
 -----------------------
 
 
 .. literalinclude:: code/compress.hs
    :language: haskell
 
-défi 5. ``encode``
+Défi 2. ``encode``
 -----------------------
-
 
 .. literalinclude:: code/encode.hs
    :language: haskell
 
-défi bonus. ``group``
--------------------------
-
-.. literalinclude:: code/group.hs
-   :language: haskell
-
-défi bonus. ``slice``
--------------------------
-
-.. literalinclude:: code/slice.hs
-   :language: haskell
-
-
-  
-Défi 1 : tracer une évaluation (aussi `là <http://www.cis.upenn.edu/~cis194/spring13/lectures/06-laziness.html>`_)
----------------------------------------------------------------------------------------------------------------------
-
-.. code-block:: none
-
-
-      take 3 (repeat 7)
-          { 3 <= 0 is False, so we proceed to the second clause, which
-	    needs to match on the second argument. So we must expand
-	    repeat 7 one step. }
-    = take 3 (7 : repeat 7)
-          { the second clause does not match but the third clause
-            does. Note that (3-1) does not get evaluated yet! }
-    = 7 : take (3-1) (repeat 7)
-          { In order to decide on the first clause, we must test (3-1)
-            <= 0 which requires evaluating (3-1). }
-    = 7 : take 2 (repeat 7)
-          { 2 <= 0 is False, so we must expand repeat 7 again. }
-    = 7 : take 2 (7 : repeat 7)
-          { The rest is similar. }
-    = 7 : 7 : take (2-1) (repeat 7)
-    = 7 : 7 : take 1 (repeat 7)
-    = 7 : 7 : take 1 (7 : repeat 7)
-    = 7 : 7 : 7 : take (1-1) (repeat 7)
-    = 7 : 7 : 7 : take 0 (repeat 7)
-    = 7 : 7 : 7 : [] = [7,7,7]
-		
-
-Défi 2 : complexité en :math:`O(n)`
----------------------------------------
-
-.. code-block:: none
-
-    myReverse [1,2,3,4] 
-    = rev [1,2,3,4] [] {motif 2 de rev...}
-    = rev [2,3,4] 1:[]
-    = rev [3,4] 2:1:[]
-    = rev [4] 3:2:1:[]
-    = rev [] 4:3:2:1:[] {motif 1 de rev}
-    = 4:3:2:1:[] {(:) est associatif à droite}
-    = 4:3:2:[1]
-    = 4:3:[2,1]
-    = 4:[3,2,1]
-    = [4,3,2,1]
 
 Défi 3 : ``filter``
 ------------------------
 
-.. literalinclude:: code/group2.hs
-   :language: haskell
+.. code-block:: none
 
+   Prelude> length (filter (\x -> x == 'a') "aaaabccaadeeee")
+   6
+	       
+.. code-block:: none
+
+   Prelude> ( length . filter (\x -> x == 'a') ) "aaaabccaadeeee"
+   6
+
+   
 Défi 4 : ``map``
 ---------------------------------
 
-.. literalinclude:: code/encode2.hs
-   :language: haskell
+.. code-block:: none
+
+   *Main> :l addElemInList.hs 
+   [1 of 1] Compiling Main             ( addElemInList.hs, interpreted )
+   Ok, modules loaded: Main.
+   *Main> let f t = case t of (nb, elem) -> addElemInList elem nb []
+   *Main> map f [(4,'a'),(1,'b'),(2,'c'),(2,'a'),(1,'d'),(4,'e')]
+   ["aaaa","b","cc","aa","d","eeee"]
 
 Défi 5 : ``comprehension list``
 ---------------------------------
@@ -469,12 +372,15 @@ Défi 5 : ``comprehension list``
 .. literalinclude:: code/quicksort.hs
    :language: haskell
 	      
-Défi 6 : reverse par foldl 
-----------------------------
+Défi 6 : ``foldr``
+---------------------
 
-.. literalinclude:: code/reverse3.hs
-   :language: haskell
+.. code-block:: none
 
+   Prelude> foldr (++) [] ["aaaa","b","cc","aa","d","eeee"]
+   "aaaabccaadeeee"
+
+		
 Défi bonus : définir quelques fonctions
 -------------------------------------------
 

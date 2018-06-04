@@ -328,10 +328,9 @@ Remarque : *layout*
 
 Haskell évite l'utilisation de point-virgule
 en utilisant l'alignement en colonne. 
+Une ligne indentée plus à droite que la précédente est la suite de la ligne précédente.
 
-- Le caractère suivant un mot-clé ou un caractère spécial comme ``|``
-  détermine la colonne par où commence la déclaration.
-- Cette colonne doit être plus à droite que la colonne de départ du bloc environnant.
+Ci-dessous, il y a une erreur car aucune expression ne peut commencer par ``|``.
 
 .. literalinclude:: code/layout.hs
    :language: haskell
@@ -440,7 +439,7 @@ est équivalent à
 Mais c'est une bonne habitude de choisir la première version, car une case expression peut être utilisée
 aussi en dehors du contexte de la définition d'une fonction. 
     
-défi 3. ``repli`` 
+Bonus. ``repli`` 
 --------------------------
 
 A l'aide de la fonction ``addElemInList``, définissez la fonction    
@@ -457,20 +456,6 @@ qui réplique un nombre de fois donné, les éléments d'une liste donnée.
     "aaazzzeeerrrtttyyy"
 
 NB. Ecrire les deux fonctions dans le même fichier. 
-
-défi 4 : tracer une évaluation
--------------------------------------
-
-Soient les fonctions suivantes : 
-
-.. literalinclude:: code/take-repeat.hs
-   :language: haskell
-
-Tracez (sur papier) l'évaluation de : 
-
-.. code-block:: haskell
-
-    take 3 (repeat 7)
 
 
 Conclusion
@@ -500,37 +485,10 @@ défi 2. ``dupli``
 .. literalinclude:: code/duplicate.hs
    :language: haskell
 
-défi 3. ``repli`` 
+Bonus. ``repli`` 
 --------------------------
 
     
 .. literalinclude:: code/replicate.hs
    :language: haskell
-
-défi 4 : tracer une évaluation (aussi `là <http://www.cis.upenn.edu/~cis194/spring13/lectures/06-laziness.html>`_)
----------------------------------------------------------------------------------------------------------------------
-
-.. code-block:: none
-
-
-      take 3 (repeat 7)
-          { 3 <= 0 is False, so we proceed to the second clause, which
-	    needs to match on the second argument. So we must expand
-	    repeat 7 one step. }
-    = take 3 (7 : repeat 7)
-          { the second clause does not match but the third clause
-            does. Note that (3-1) does not get evaluated yet! }
-    = 7 : take (3-1) (repeat 7)
-          { In order to decide on the first clause, we must test (3-1)
-            <= 0 which requires evaluating (3-1). }
-    = 7 : take 2 (repeat 7)
-          { 2 <= 0 is False, so we must expand repeat 7 again. }
-    = 7 : take 2 (7 : repeat 7)
-          { The rest is similar. }
-    = 7 : 7 : take (2-1) (repeat 7)
-    = 7 : 7 : take 1 (repeat 7)
-    = 7 : 7 : take 1 (7 : repeat 7)
-    = 7 : 7 : 7 : take (1-1) (repeat 7)
-    = 7 : 7 : 7 : take 0 (repeat 7)
-    = 7 : 7 : 7 : [] = [7,7,7]
 

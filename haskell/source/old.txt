@@ -19,10 +19,166 @@ sont considérées comme du code Haskell.
 Ils sont compilés comme ceux d'extension ``.hs``, car Haskell supporte nativement cette convention. 
 Essayez cet :download:`exemple<download/isSorted.lhs>`. 
 
+défi 4 : tracer une évaluation
+-------------------------------------
+
+Soient les fonctions suivantes : 
+
+.. literalinclude:: code/take-repeat.hs
+   :language: haskell
+
+Tracez (sur papier) l'évaluation de : 
+
+.. code-block:: haskell
+
+    take 3 (repeat 7)
+
+défi 4 : tracer une évaluation (aussi `là <http://www.cis.upenn.edu/~cis194/spring13/lectures/06-laziness.html>`_)
+---------------------------------------------------------------------------------------------------------------------
+
+.. code-block:: none
+
+
+      take 3 (repeat 7)
+          { 3 <= 0 is False, so we proceed to the second clause, which
+	    needs to match on the second argument. So we must expand
+	    repeat 7 one step. }
+    = take 3 (7 : repeat 7)
+          { the second clause does not match but the third clause
+            does. Note that (3-1) does not get evaluated yet! }
+    = 7 : take (3-1) (repeat 7)
+          { In order to decide on the first clause, we must test (3-1)
+            <= 0 which requires evaluating (3-1). }
+    = 7 : take 2 (repeat 7)
+          { 2 <= 0 is False, so we must expand repeat 7 again. }
+    = 7 : take 2 (7 : repeat 7)
+          { The rest is similar. }
+    = 7 : 7 : take (2-1) (repeat 7)
+    = 7 : 7 : take 1 (repeat 7)
+    = 7 : 7 : take 1 (7 : repeat 7)
+    = 7 : 7 : 7 : take (1-1) (repeat 7)
+    = 7 : 7 : 7 : take 0 (repeat 7)
+    = 7 : 7 : 7 : [] = [7,7,7]
 
 
 
+défi bonus. ``group``
+-------------------------
+
+Définissez la fonction
+
+.. literalinclude:: code/group.hs
+   :language: haskell
+   :lines: 1
+
+qui regroupe les éléments égaux consécutifs en une sous-liste. 
+Par exemple :
+
+.. code-block:: none
+
+   *Main> group "aaaabccaadeeee"
+   ["aaaa","b","cc","aa","d","eeee"]
+
+Astuce : ``head lst`` fournit le premier élément de ``lst``. 
+   
+défi bonus. ``slice``
+--------------------------
+
+Définissez la fonction 
+
+.. literalinclude:: code/slice.hs
+   :language: haskell
+   :lines: 1
+
+qui extrait d'une liste donnée, une sous-liste déterminée par deux indices.
+Par exemple :
+
+.. code-block:: none
+
+    *Main> slice "abcdefghij" 3 7
+    "cdefg"
+
+Astuce : quand le premier indice est ``1``, ``slice`` se comporte comme ``split``.
     
+défi bonus. ``group``
+-------------------------
+
+.. literalinclude:: code/group.hs
+   :language: haskell
+
+défi bonus. ``slice``
+-------------------------
+
+.. literalinclude:: code/slice.hs
+   :language: haskell
+
+
+Défi 3 : ``filter``
+-------------------------
+
+En utilisant la fonction ``filter``, ainsi que les opérateurs ``==`` (égalité)
+et ``/=`` (différence), définissez récursivement la fonction  
+
+.. literalinclude:: code/group2.hs
+   :language: haskell
+   :lines: 1
+
+qui retourne une liste regroupant tous les éléments égaux dans des sous-listes. 
+
+.. code-block:: none
+
+   *Main> group "banana"
+   ["b","aaa","nn"]
+
+Défi 4 : ``map``
+---------------------------------
+
+En utilisant la fonction ``map``, définissez la fonction  
+
+.. literalinclude:: code/encode2.hs
+   :language: haskell
+   :lines: 1
+
+qui retourne la liste des différents éléments et de leur répétition
+dans une liste donnée.
+	   
+.. code-block:: none
+
+   *Main> encode "banana"
+   [('b',1),('a',3),('n',2)]
+
+Défi 6 : reverse par foldl 
+----------------------------
+
+Définissez la fonction
+
+.. literalinclude:: code/reverse3.hs
+   :language: haskell
+   :lines: 1
+
+en utilisant la fonction ``foldl`` (une ligne de code).
+
+Défi 6 : reverse par foldl 
+----------------------------
+
+.. literalinclude:: code/reverse3.hs
+   :language: haskell
+
+.. Défi 6 : sommation 
+   -----------------------
+
+   Définissez la fonction
+
+   .. literalinclude:: code/mySum.hs
+      :language: haskell
+      :lines: 1
+
+   en utilisant la fonction ``foldr``.
+
+   .. code-block:: none
+
+      *Main> mySum [1..10]
+      55
 
 
 
