@@ -2,39 +2,32 @@
 Définition des types et des classes
 ====================================
 
-Plan
+A quoi sert Haskell ?
 =========================
 
-.. Typage statique
-   ---------------------------      
-      
-   - Chaque valeur à un type associé.
-   - Les types sont vérifiés à la compilation.
+Compilation
+-------------------------
 
-   .. figure:: figs/type.svg
-      :width: 80%
-      :alt: types et typage
-      :align: center
+Comme tous les langages fonctionnels, Haskell
+est particulièrement adapté aux tâches de compilation
+nécessitant une structure d'arbre récursive fixe, mais
+une diversité croissante d'opérations pour ajouter
+de nouvelles transformations.  
 
+Voir par exemple `Pandoc <https://github.com/jgm/pandoc>`_,
+un convertisseur entre formats de fichier à balise. 
 
-Déclarations
--------------------
+Domain-specific language
+----------------------------
 
-On a vu pour l'instant deux sortes de déclarations :
+Haskell est particulièrement adapté pour accueillir des
+langages dédiés à des tâches précises.
 
-- *equation*
-- *type signature*
+Par exemple `diagrams <https://hackage.haskell.org/package/diagrams>`_
+un `langage déclaratif <http://ozark.hendrix.edu/~yorgey/pub/diagrams-FARM.pdf>`_
+en Haskell pour les graphiques vectoriels.
 
-On va maintenant en voir d'autres : 
-  
-- ``data`` declaration (créer un type)
-- ``type`` declaration (créer un synonyme de type)
-
-  .. - ``newtype`` declaration (créer un type à partir d'un autre)
-
-- ``class`` declaration (créer un groupe de type)
-- ``instance`` declaration (déclarer un type comme appartenant à un groupe donné) 
-    
+Il existe pleins d'autres exemples : Fran, Haskore, Yesod, Elm, orc, etc.
  
 Type défini par le développeur
 =================================

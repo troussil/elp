@@ -353,3 +353,34 @@ de composition : :math:`f \circ g` s'écrit ``f . g`` en Haskell.
 Bien que le programme ne soit qu'une suite de compositions, l'affichage commence avant que toutes les lignes soient lues.
 En effet, grâce à l'évaluation paresseuse, dès qu'une ligne est lue, sa taille est aussitôt affichée. A essayer!
 
+
+.. Typage statique
+   ---------------------------      
+      
+   - Chaque valeur à un type associé.
+   - Les types sont vérifiés à la compilation.
+
+   .. figure:: figs/type.svg
+      :width: 80%
+      :alt: types et typage
+      :align: center
+
+
+Déclarations
+-------------------
+
+On a vu pour l'instant deux sortes de déclarations :
+
+- *equation*
+- *type signature*
+
+On va maintenant en voir d'autres : 
+  
+- ``data`` declaration (créer un type)
+- ``type`` declaration (créer un synonyme de type)
+
+  .. - ``newtype`` declaration (créer un type à partir d'un autre)
+
+- ``class`` declaration (créer un groupe de type)
+- ``instance`` declaration (déclarer un type comme appartenant à un groupe donné) 
+    
