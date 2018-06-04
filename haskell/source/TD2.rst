@@ -1,179 +1,97 @@
 ================================================
-Evaluation paresseuse et modèles de traitement
+Fonctions récursives et modèles de traitement
 ================================================
 
+défi 4. ``compress``
+-----------------------
 
-Evaluation paresseuse
-========================
+A l'aide de gardes et d'une case expression, définissez la fonction
 
-Qu'est-ce que la paresse ? 
-----------------------------
+.. literalinclude:: code/compress.hs
+   :language: haskell
+   :lines: 1
 
-En Haskell, les expressions ne sont pas évaluées tant que leur valeur n'est pas requise.
-Quand une expression est donnée en argument à une fonction, celle-ci est simplement mémorisée
-dans une structure dédiée aux expressions non évaluées, sans aucun traitement supplémentaire. 
+qui supprime les copies consécutives des éléments d'une liste.
+      
+.. code-block:: none
 
-- Les expressions sont évaluées lors d'une mise en correspondance avec un motif. 
-- Mais elles ne sont pas évaluées complètement, seulement du minimum requis pour la mise en correspondance.
+    *Main> compress "aaaabccaadeeee"
+    "abcade"
 
-Exemple
+    
+Let expression et where clause
+--------------------------------------
+
+Parfois on a besoin de localement se référer à une valeur intermédiaire.
+C'est ce que permettent la *let expression* et la clause *where*
+(qui fait partie de la syntaxe des *case expression*). 
+
+.. literalinclude:: code/split1.hs
+   :language: haskell
+   :emphasize-lines: 3
+		  
+.. literalinclude:: code/split2.hs
+   :language: haskell
+   :emphasize-lines: 6
+
+défi 5. ``encode``
+-----------------------
+
+Définissez la fonction
+
+.. literalinclude:: code/encode.hs
+   :language: haskell
+   :lines: 1
+
+qui encode une liste donnée de façon à ce que toute suite
+de ``n`` éléments égaux à ``x`` soit remplaçée par le tuple ``(n,x)``.
+	   
+.. code-block:: none
+
+   *Main> encode "aaaabccaadeeee"
+   [(4,'a'),(1,'b'),(2,'c'),(2,'a'),(1,'d'),(4,'e')]
+
+Astuce : on suppose qu'on connaît le résultat pour une liste ``xs``.
+Comment construire incrémentalement le résultat pour ``x:xs`` ?
+   
+défi bonus. ``group``
 -------------------------
 
-Soit la fonction suivante :
+Définissez la fonction
 
-.. code-block:: haskell
-
-    f x _ = x + 2		
-
-NB. ``_`` est un *joker* qui évite de conserver la valeur associée
-quand on en n'a pas besoin dans la partie droite.
-
-Les évaluations suivantes seront immédiates car le second argument
-ne sera jamais évalué : 
-    
-.. code-block:: haskell
-
-    f 5 (29^35792)		
-    f 5 (1/0)		
-
-Paresse implique pureté
----------------------------
-    
-Un langage pur est un langage sans effet de bord.
-Les effets de bord sont des effets de l'évaluation d'une expression sur l'extérieur. 
-Or ces effets surviennent dans un ordre temporel qui a de l'importance
-pour le bon fonctionnement du programme.
-
-Par exemple : 
-
-- le moment auquel on modifie une variable globale importe, car cela pourrait affecter l'évaluation d'autres expressions.
-- le moment auquel on écrit à l'écran importe, car cela pourrait affecter l'ordre d'affichage des messages.  
-
-La paresse, qui gomme l'ordre temporel des traitements, requière donc l'absence d'effet de bord. 
-
-Défi 1 : tracer une évaluation
--------------------------------------
-
-Soient les fonctions suivantes : 
-
-.. literalinclude:: code/take-repeat.hs
+.. literalinclude:: code/group.hs
    :language: haskell
+   :lines: 1
 
-Tracez (sur papier) l'évaluation de : 
-
-.. code-block:: haskell
-
-    take 3 (repeat 7)
-
-Complexité
----------------------------
-
-Soit la fonction suivante
-
-.. literalinclude:: code/reverse1.hs
-   :language: haskell
-
-où
-
-.. literalinclude:: code/concat.hs
-   :language: haskell
-
-Pour avoir une idée de la complexité
-de ce code, nous allons tracer l'évaluation
-de ``myReverse [1,2,3,4]``.  
-	      
-Trace 
----------------------------
+qui regroupe les éléments égaux consécutifs en une sous-liste. 
+Par exemple :
 
 .. code-block:: none
 
-    myReverse [1,2,3,4] {second motif de myReverse}
-    = myReverse [2,3,4] ++ [1]
-    {le premier argument de (++) est évalué pour le matching}
-    = (myReverse [3,4] ++ [2]) ++ [1] {même chose...}
-    = ((myReverse [4] ++ [3]) ++ [2]) ++ [1]		
-    = (((myReverse [] ++ [4]) ++ [3]) ++ [2]) ++ [1] {premier motif}		
-    = ((([] ++ [4]) ++ [3]) ++ [2]) ++ [1] {premier motif de (++)}
-    = (([4] ++ [3]) ++ [2]) ++ [1] {second motif de (++)}
-    = ((4 : [] ++ [3]) ++ [2]) ++ [1] 
-    {le second motif de (++) est immédiatement choisi,
-    car (4 : [] ++ [3]) correspond clairement à (x:xs)}
-    = (4 : ([] ++ [3]) ++ [2]) ++ [1] {même chose...}
-    = 4 : (([] ++ [3]) ++ [2]) ++ [1] 
-    {il reste à évaluer le second argument de (:) pour obtenir la liste,
-    donc pour chaque élément on remonte la suite de concaténations...}
+   *Main> group "aaaabccaadeeee"
+   ["aaaa","b","cc","aa","d","eeee"]
 
-    
-Défi 2 : complexité
-----------------------------
-
-Pour la version suivante, tracez (sur papier) l'évaluation de ``myReverse [1,2,3,4]``.
-D'après vous, quelle est la complexité de cette version de ``myReverse`` ?
-
-.. _reversecode:
-
-.. literalinclude:: code/reverse2.hs
-   :language: haskell
-
-
-Conséquence 1 : structures de contrôle 
-----------------------------------------
-
-.. code-block:: haskell
-
-    myBinaryAnd e1 e2 = case (e1, e2) of
-		(False, _) -> False
-		(True, x) -> x
-		
-.. code-block:: haskell
-
-    myIf cond e1 e2 = case (cond, e1, e2) of
-		       (True, e1, _) -> e1
-		       (False, _, e2) -> e2
-
-Grâce à la paresse, les deux appels suivants retournent immédiatement.  
-
-.. code-block:: haskell
-
-    myBinaryAnd False (head [] == 'x')
-    myIf True 2 (34^9784346 > 34987345) 		
-
-
-
-Conséquence 2 : structures de données infinies
------------------------------------------------
-
-.. literalinclude:: code/numsFrom.hs
-   :language: haskell
-		
-.. code-block:: none
-
-   *Main> numsFrom 1
-   [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,
-   27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,
-   50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,
-   73,74,75,76,77,78,79,80,81Interrupted.
-
-.. code-block:: none
-
-   *Main> take 5 (numsFrom 1)
-   [1,2,3,4,5]
-
+Astuce : ``head lst`` fournit le premier élément de ``lst``. 
    
-Conséquence 3 : pipeline par composition
-------------------------------------------
+défi bonus. ``slice``
+--------------------------
 
-.. literalinclude:: code/pipelines.hs
+Définissez la fonction 
+
+.. literalinclude:: code/slice.hs
    :language: haskell
+   :lines: 1
 
-Ce programme d'une ligne compte et affiche sur la sortie standard la taille des lignes lues sur l'entrée standard.
-A ce stade, vous n'avez pas besoin de comprendre chaque fonction (cf. `Hoogle <https://www.haskell.org/hoogle/>`_
-pour en savoir plus), seulement que l'opérateur ``.`` est l'opérateur
-de composition : :math:`f \circ g` s'écrit ``f . g`` en Haskell. 
+qui extrait d'une liste donnée, une sous-liste déterminée par deux indices.
+Par exemple :
 
-Bien que le programme ne soit qu'une suite de compositions, l'affichage commence avant que toutes les lignes soient lues.
-En effet, grâce à l'évaluation paresseuse, dès qu'une ligne est lue, sa taille est aussitôt affichée. A essayer!
+.. code-block:: none
 
+    *Main> slice "abcdefghij" 3 7
+    "cdefg"
+
+Astuce : quand le premier indice est ``1``, ``slice`` se comporte comme ``split``.
+    
 
 
 Modèles de traitement
@@ -456,13 +374,38 @@ Conclusion
 Capacités/Connaissances
 -----------------------------
 
-- Expliquer le mécanisme de l'évalution paresseuse
-- Tracer l'évaluation d'expressions données
 - Citer des exemples où une fonction est passée en argument à une autre fonction.   
 - Utiliser à bon escient les fonctions ``filter``, ``map``, ``foldr`` ou ``foldl``, etc.
 - Définir une fonction sur les listes par une syntaxe en extension ou par des fonctions usuelles.   
   
+défi 4. ``compress``
+-----------------------
 
+
+.. literalinclude:: code/compress.hs
+   :language: haskell
+
+défi 5. ``encode``
+-----------------------
+
+
+.. literalinclude:: code/encode.hs
+   :language: haskell
+
+défi bonus. ``group``
+-------------------------
+
+.. literalinclude:: code/group.hs
+   :language: haskell
+
+défi bonus. ``slice``
+-------------------------
+
+.. literalinclude:: code/slice.hs
+   :language: haskell
+
+
+  
 Défi 1 : tracer une évaluation (aussi `là <http://www.cis.upenn.edu/~cis194/spring13/lectures/06-laziness.html>`_)
 ---------------------------------------------------------------------------------------------------------------------
 

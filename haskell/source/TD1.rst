@@ -36,10 +36,10 @@ Pureté
 ------------------------
 
 - Les structures de données sont toujours figées (*immutable*).  
-- Les expressions n'ont jamais d'effets de bord (comme modifier des variables globales ou effectuer des entrées-sorties)
+- Les expressions n'ont jamais d'effets de bord (comme modifier des variables globales ou effectuer des entrées-sorties).
   Leur évaluation mènera toujours au même résultat. 
 
-- Le parallélisme est plus direct quand l'évaluation des expressions sont indépendantes les unes des autres.
+- Le parallélisme est plus direct quand l'évaluation d'une expression est indépendante des autres.
 - La forme équationnelle permet de mieux raisonner sur les programmes.
   Comme en algèbre, on peut toujours remplacer la partie gauche d'une equation par
   sa partie droite dans une seconde équation :
@@ -57,8 +57,9 @@ Par exemple, ``v = 1/0`` ne produit aucune erreur, car cela signifie `v est déf
 plutôt que `calculer 1/0 et stocker le résultat dans v`. Ce n'est que lorsque ``v`` sera utilisé
 (test d'égalité, affichage, etc.) que l'erreur surviendra.
 
-Par conséquent, il est possible de définir ses propres structures de contrôle (`if`, `switch`, etc.)
-ou de manipuler des structures de données infinies ou de taille exponentielle.
+Par conséquent, il est possible :
+- de définir ses propres structures de contrôle (`if` par exemple)
+- de manipuler des structures de données infinies ou de taille exponentielle.
     
 Typage statique fort
 ---------------------------      
@@ -89,26 +90,6 @@ GHC
   ``-outputdir build`` pour mettre les fichiers intermédiaires dans un répertoire séparé ``build``
   (voir ``man ghc`` ou ``ghc --help``). 
 
-Exemple
------------------
-
-.. literalinclude:: code/isSorted.hs
-   :language: haskell
-
-
-Literate programming
-------------------------------
-
-Donald Knuth (1938-) est à l'origine de cette pratique appelée *literate programming*. L'idée est de concevoir un programme informatique comme un texte écrit en langue naturelle dans lequel on insère des portions de code.
-
-.. premier outil (CWEB) pour désemmeler les portions de code et
-   reconstruire le programme source
-   (car le meilleur ordre de présentation n'est pas forcément l'ordre imposé par le langage choisi).
-   
-Dans les fichiers d'extension ``.lhs``, seules les lignes précédées par ``>`` et espace (*Bird style*)
-sont considérées comme du code Haskell.
-Ils sont compilés comme ceux d'extension ``.hs``, car Haskell supporte nativement cette convention. 
-Essayez cet :download:`exemple<download/isSorted.lhs>`. 
 
 Mode interactif
 --------------------------
@@ -187,6 +168,7 @@ Le *contexte* qui précède le type indique quelles opérations on peut effectue
 - ``Show a`` (conversion en chaîne de caractères ``show``, ``shows``)
 - ``Num a`` (opérations arithmétiques...)
 
+
 Messages d'erreur
 --------------------------
 
@@ -218,13 +200,14 @@ dernière expression tapée dans GHCi).
       :align: center
 
 
-Définir des fonctions
-==========================
+Définition et appel de fonctions
+====================================
 
 Définitions
 --------------------------
 
-Dans un premier temps, on écrit les fonctions dans un fichier ``.hs`` qu'on charge avec ``:load``.  
+Dans un premier temps, on écrit les fonctions dans un fichier ``.hs`` qu'on charge avec ``:load``
+après avoir lancé le REPL en tapant ``ghci``. 
 
 On utilise deux sortes de définition: l'équation et la signature.
 
@@ -255,6 +238,53 @@ où la barre oblique rappelle le plus long des deux traits d'un lambda).
     inc = \x -> x + 1
     add = \x y -> x + y 
 
+Appels de fonctions
+------------------------
+
+En Haskell, il n'y a pas besoin de parenthèses pour appeler une fonction.
+Tous les arguments sont juste listés après la fonction.
+
+Schéma général : ``func arg1 arg2 arg3 ...``
+
+
+Exemple 1 : ``func arg1 (add 2 5) arg ...``.
+Le deuxième argument est ``add 2 5``.
+
+Exemple 2 : ``func arg1 add 2 5 arg ...``.
+Les arguments 2, 3, 4 sont respectivement ``add, 2`` et ``5``.
+
+
+Opérateurs et fonctions
+----------------------------
+
+Les opérateurs binaires tels que ``:`` ou ``++`` ne sont rien d'autre que des fonctions à deux paramètres.
+
+Ce sont généralement des signes qui sont placés entre les deux arguments :
+``1 : [2,3]``. Mais on peut tout aussi bien les entourer de parenthèses pour les utiliser comme des fonctions :
+``(:) 1 [2,3]``.
+
+Inversement, les fonctions peuvent être placées entre quotes penchées pour les utiliser comme des opérateurs infixes : 
+``take 2 "abc"`` est equivalent à ``2 `take` "abc"`` .
+
+Premières définitions
+------------------------------
+
+- Ajoutez les définitions de ``inc`` et ``add`` dans un fichier appelé ``ex.hs``. 
+- Dans GHCI, chargez votre fichier avec ``:load ex.hs``.
+- Que font les appels suivants ?
+
+  - ``add 2 5``
+  - ``3 `add` 6``
+  - ``4 + 7``
+  - ``(+) 4 7``
+  - ``inc 3``
+  - ``(add 1) 3``
+  - ``add (1 3)``
+  
+Distinction des cas
+================================
+
+    
 Stratégie récursive
 -----------------------------
 
@@ -268,12 +298,20 @@ Stratégie récursive
 Gardes
 ----------------
 
-Un garde est une expression de type booléen. La branche en question est choisie quand elle est évaluée à vrai.
+Les équations peuvent contenir des *gardes*. 
+Etant donnée une equation de la forme ``func arg | predicat = expr``, l'appel ``func value`` est évalué à ``expr`` si ``predicat`` est évalué à vrai. 
+
+Un prédicat est une expression de type booléen comme ``arg > 0``.
+
+Gardes multiples
+--------------------
+
+Quand il y a plusieurs gardes, ils sont testés les uns à la suite des autres.
 
 .. literalinclude:: code/sign.hs
    :language: haskell
 
-Ce qui est la traduction Haskell de :
+est la traduction Haskell de :
 
 .. math::
    
@@ -302,6 +340,19 @@ en utilisant l'alignement en colonne.
 			      
    2:1: parse error on input ‘|’
 
+Remarque : commentaires
+--------------------------------
+
+.. code-block:: haskell
+
+   -- Un commentaire en une ligne commence avec deux tirets.
+   {- Un commentaire sur plusieurs lignes peut être contenu dans
+   un bloc de cette façon.
+   -}
+
+Notez que dans les fichiers d'extension ``.lhs``, seules les lignes
+précédées par ``>`` et espace (*Bird style*) sont considérées comme
+du code Haskell.
    
 défi 1. ``addElemInList`` 
 ---------------------------
@@ -382,9 +433,9 @@ est équivalent à
 		   
 .. code-block:: haskell
 
-    f p11, ..., p1k = e1
+    f p11 ... p1k = e1
     ...
-    f pn1, ..., pnk = en
+    f pn1 ... pnk = en
 
 Mais c'est une bonne habitude de choisir la première version, car une case expression peut être utilisée
 aussi en dehors du contexte de la définition d'une fonction. 
@@ -405,96 +456,22 @@ qui réplique un nombre de fois donné, les éléments d'une liste donnée.
     *Main> repli "azerty" 3
     "aaazzzeeerrrtttyyy"
 
-défi 4. ``compress``
------------------------
+NB. Ecrire les deux fonctions dans le même fichier. 
 
-A l'aide de gardes et d'une case expression, définissez la fonction
+défi 4 : tracer une évaluation
+-------------------------------------
 
-.. literalinclude:: code/compress.hs
+Soient les fonctions suivantes : 
+
+.. literalinclude:: code/take-repeat.hs
    :language: haskell
-   :lines: 1
 
-qui supprime les copies consécutives des éléments d'une liste.
-      
-.. code-block:: none
+Tracez (sur papier) l'évaluation de : 
 
-    *Main> compress "aaaabccaadeeee"
-    "abcade"
+.. code-block:: haskell
 
-    
-Let expression et where clause
---------------------------------------
+    take 3 (repeat 7)
 
-Parfois on a besoin de localement se référer à une valeur intermédiaire.
-C'est ce que permettent la *let expression* et la clause *where*
-(qui fait partie de la syntaxe des *case expression*). 
-
-.. literalinclude:: code/split1.hs
-   :language: haskell
-   :emphasize-lines: 3
-		  
-.. literalinclude:: code/split2.hs
-   :language: haskell
-   :emphasize-lines: 6
-
-défi 5. ``encode``
------------------------
-
-Définissez la fonction
-
-.. literalinclude:: code/encode.hs
-   :language: haskell
-   :lines: 1
-
-qui encode une liste donnée de façon à ce que toute suite
-de ``n`` éléments égaux à ``x`` soit remplaçée par le tuple ``(n,x)``.
-	   
-.. code-block:: none
-
-   *Main> encode "aaaabccaadeeee"
-   [(4,'a'),(1,'b'),(2,'c'),(2,'a'),(1,'d'),(4,'e')]
-
-Astuce : on suppose qu'on connaît le résultat pour une liste ``xs``.
-Comment construire incrémentalement le résultat pour ``x:xs`` ?
-   
-défi bonus. ``group``
--------------------------
-
-Définissez la fonction
-
-.. literalinclude:: code/group.hs
-   :language: haskell
-   :lines: 1
-
-qui regroupe les éléments égaux consécutifs en une sous-liste. 
-Par exemple :
-
-.. code-block:: none
-
-   *Main> group "aaaabccaadeeee"
-   ["aaaa","b","cc","aa","d","eeee"]
-
-Astuce : ``head lst`` fournit le premier élément de ``lst``. 
-   
-défi bonus. ``slice``
---------------------------
-
-Définissez la fonction 
-
-.. literalinclude:: code/slice.hs
-   :language: haskell
-   :lines: 1
-
-qui extrait d'une liste donnée, une sous-liste déterminée par deux indices.
-Par exemple :
-
-.. code-block:: none
-
-    *Main> slice "abcdefghij" 3 7
-    "cdefg"
-
-Astuce : quand le premier indice est ``1``, ``slice`` se comporte comme ``split``.
-    
 
 Conclusion
 ===================
@@ -505,9 +482,9 @@ Capacités/Connaissances
 
 - Classer Haskell parmi les langages fonctionnels purs.
 - Classer Haskell parmi les langages compilés à typage statique.
-- Distinguer types atomiques (``Char``, ``Int``) et types polymorphes (tuple, liste). 
 - Définir une fonction récursive sur des listes.
-- Expliquer le mécanisme du *pattern matching*.  
+- Expliquer le mécanisme du *pattern matching* et de l'évalution paresseuse
+- Tracer l'évaluation d'expressions données
 
 défi 1. ``addElemInList`` 
 ---------------------------
@@ -530,29 +507,30 @@ défi 3. ``repli``
 .. literalinclude:: code/replicate.hs
    :language: haskell
 
+défi 4 : tracer une évaluation (aussi `là <http://www.cis.upenn.edu/~cis194/spring13/lectures/06-laziness.html>`_)
+---------------------------------------------------------------------------------------------------------------------
 
-défi 4. ``compress``
------------------------
-
-
-.. literalinclude:: code/compress.hs
-   :language: haskell
-
-défi 5. ``encode``
------------------------
+.. code-block:: none
 
 
-.. literalinclude:: code/encode.hs
-   :language: haskell
+      take 3 (repeat 7)
+          { 3 <= 0 is False, so we proceed to the second clause, which
+	    needs to match on the second argument. So we must expand
+	    repeat 7 one step. }
+    = take 3 (7 : repeat 7)
+          { the second clause does not match but the third clause
+            does. Note that (3-1) does not get evaluated yet! }
+    = 7 : take (3-1) (repeat 7)
+          { In order to decide on the first clause, we must test (3-1)
+            <= 0 which requires evaluating (3-1). }
+    = 7 : take 2 (repeat 7)
+          { 2 <= 0 is False, so we must expand repeat 7 again. }
+    = 7 : take 2 (7 : repeat 7)
+          { The rest is similar. }
+    = 7 : 7 : take (2-1) (repeat 7)
+    = 7 : 7 : take 1 (repeat 7)
+    = 7 : 7 : take 1 (7 : repeat 7)
+    = 7 : 7 : 7 : take (1-1) (repeat 7)
+    = 7 : 7 : 7 : take 0 (repeat 7)
+    = 7 : 7 : 7 : [] = [7,7,7]
 
-défi bonus. ``group``
--------------------------
-
-.. literalinclude:: code/group.hs
-   :language: haskell
-
-défi bonus. ``slice``
--------------------------
-
-.. literalinclude:: code/slice.hs
-   :language: haskell
