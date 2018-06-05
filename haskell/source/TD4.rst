@@ -20,29 +20,16 @@ Quel est le minimum d'une liste vide ?
 
 Différentes approches :
 
-- Exception
 - Valeur sentinelle arbitraire
 - Valeur de retour par référence
+- Exception
 - Type spécifique
 
-Fonction partielle - Exception
----------------------------------------------
-
-.. code-block :: python
-
-      >>> min([1,2,3])
-      1
-      >>> min([])
-      Traceback (most recent call last):
-      File "<stdin>", line 1, in <module>
-      ValueError: min() arg is an empty sequence
-
-Bugs : cas non gérés, erreur à l'exécution
 
 Fonction partielle - Valeur sentinelle
 ---------------------------------------------
 
-.. code-block :: c++
+.. code-block :: cpp
 
    float minimum(const std::vector<float> &v)
    {
@@ -57,8 +44,9 @@ Fonction partielle - Valeur sentinelle
        return ret;
    }
 
-Bugs : la valeur sentinelle exclue des données,
-on ne teste pas la valeur de retour ou pas la bonne valeur
+   Bugs : la valeur sentinelle exclue des données.
+   Le client peut ne pas tester la valeur de retour
+   ou ne pas tester la bonne valeur. 
    
 Fonction partielle - *Flag* de réussite
 ---------------------------------------------
@@ -85,10 +73,29 @@ Bugs :
    minimum(maListe, res);
    std::cout << res << std::endl; // Non initialisé
 
+Fonction partielle - Exception
+---------------------------------------
+
+.. code-block:: python
+
+      >>> min([1,2,3])
+      1
+      >>> min([])
+      Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+      ValueError: min() arg is an empty sequence
+
+Bugs : cas non géré, erreur à l'exécution
+
 Solution : Type spécifique
 ---------------------------------------------
 
-Utilisation du type polymorphe ``Maybe a``.
+Utilisation du type polymorphe défini dans le Prélude comme :
+
+.. code-block:: haskell
+
+   data Maybe a = Just a | Nothing
+
 
 .. literalinclude:: code/minimum.hs
    :language: Haskell
@@ -101,8 +108,7 @@ Utilisation du type polymorphe ``Maybe a``.
     *Main> minimum []
     Nothing
 
-
-``Maybe a`` : usage
+Inconvénient (relatif)
 ---------------------------------------------
 
 Le typage nous empêche d'utiliser directement la valeur.
@@ -117,15 +123,14 @@ Le typage nous empêche d'utiliser directement la valeur.
       When checking that ‘it’ has the inferred type
       it :: forall a. (Num a, Num (Maybe a), Ord a) => Maybe a
 
-
 On peut néanmoins manipuler ces valeurs par des opérateurs avancés
-(``>>=``, ``return``, ``fmap``) que nous détaillerons plus loin :
+(``fmap``, ``<*>``, ``>>=``, ``return``) : 
 
 .. code-block :: none
 
-   *Main> Just 5 >>= return . (*2)
+   *Main> fmap (*2) (Just 5)
    Just 10
-   *Main> Nothing >>= return . (*2)
+   *Main> fmap (*2) Nothing
    Nothing
 
 Retour sur les listes
@@ -136,8 +141,11 @@ On pourrait utiliser ``[a]`` au lieu de ``Maybe a`` où
 - ``[]`` représente ``Nothing``,
 - ``[x]`` représente ``Just x``.
 
-  Il vaut mieux utiliser ``Maybe a`` quand il n'y a qu'une valeur à mémoriser,
-  mais ``[a]``, quand il y en a plusieurs. 
+``Maybe a`` est adapté quand il n'y a qu'une valeur à mémoriser,
+``[a]``, quand il y en a plusieurs. 
+
+Dans le module ``import Data.Maybe``, il y a d'ailleurs
+les fonctions ``listToMaybe``, ``maybeToList``. 
 
 Défi 1 : ``safeHead``
 ----------------------------------------------
@@ -159,6 +167,43 @@ encapsulé dans un ``Maybe a``
    Just 5
    *Main> 
 
+Types monadiques
+============================
+
+Monades
+---------------------------------------------
+
+Les monades sont des types polymorphes qui définissent ces deux opérations:
+
+- ``return :: a -> m a``
+  Cette opération injecte une valeur dans la monade.   
+
+- ``>>= :: m a -> (a -> m b) -> m b`` (appelé bind)
+  Cette opération combine une valeur monadique ``m a``, contenant une valeur de type ``a``
+  à une fonction qui prend une valeur de type ``a`` et retourne la valeur monadique ``m b``.
+
+  
+  Bien sûr la sémantique de ces opérations dépendent de la monade;
+  le résultat ne sera pas le même s'il s'agit de ``Maybe``, ``[]`` ou ``IO``. 
+
+
+Remarque
+--------------------------------------------
+
+La notation ``do`` n'est pas réservée aux entrées-sorties,
+mais est utilisable avec toutes les monades, puisque c'est
+une manière implicite d'utiliser ``>>=``.
+
+.. code-block:: none
+
+   *Main> safeHead [5,2,4] >>= return . (*2)
+   Just 10
+   *Main> safeHead [5,2,4] >>= (\x -> return (x*2))
+   Just 10
+   *Main> do x <- safeHead [5,2,4] ; return (x*2)
+   Just 10
+
+   
 ``String`` et ``IO a``
 ==============================
 
@@ -186,23 +231,23 @@ car le système de type n'a aucun moyen de le deviner.
    *Main> read "n'importe quoi" :: Carte
    *** Exception: Prelude.read: no parse		
 
-``getChar``, ``putChar``
+``getLine``, ``putStrLn``
 -------------------------------
 
 Tout action d'entrée-sortie retourne une valeur qui est étiquettée par le type ``IO a``.
 
-Par exemple, ``getChar`` réalise une action de lecture et retourne un caractère.
+Par exemple, ``getLine`` réalise une action de lecture et retourne un caractère.
 
 .. code-block:: Haskell
 
-   getChar :: IO Char
+   getLine :: IO String
 
 Les actions qui ne retournent aucune valeur utile prennent le type ``IO ()``.
-Par exemple, ``putChar`` prend un caractère pour l'afficher mais ne retourne rien. 
+Par exemple, ``putStrLn`` prend un caractère pour l'afficher mais ne retourne rien. 
 
 .. code-block:: Haskell
 
-   putChar :: Char -> IO ()
+   putStrLn :: String -> IO ()
 
 bind
 -------------------------------
@@ -253,25 +298,7 @@ est un ``y``.
 .. literalinclude:: code/ready.hs
    :language: Haskell
 
-Notez que le type est connue grâce à la signature de la fonction. 
-
-``getLine``, ``putStrLn``
--------------------------------
-
-Alors que ``getChar`` et ``putChar`` opérent sur des caractères (``Char``),
-``getLine`` et  ``putStrLn`` opérent sur des chaînes de caractères (``String``).
-
-Par exemple, ``getLine`` réalise une action de lecture et retourne une chaîne.
-
-.. code-block:: Haskell
-
-   getLine :: IO String
-
-A l'inverse, ``putStrLn`` prend une chaîne et l'affiche sans rien retourner.
-   
-.. code-block:: Haskell
-
-   putStrLn :: String -> IO ()
+Notez que le type est connu grâce à la signature de la fonction. 
 
 
 Défi 2 : jeu
@@ -296,39 +323,6 @@ il a le droit de proposer une nouvelle carte.
 
 Conclusion
 ==============================
-
-
-Monades
----------------------------------------------
-
-Les monades sont des types polymorphes qui définissent ces deux opérations:
-
-- ``return :: a -> m a``
-  Cette opération injecte une valeur dans la monade.   
-
-- ``>>= :: m a -> (a -> m b) -> m b`` (appelé bind)
-  Cette opération combine une valeur monadique ``m a``, contenant une valeur de type ``a``
-  à une fonction qui prend une valeur de type ``a`` et retourne la valeur monadique ``m b``.
-
-  
-  Bien sûr la sémantique de ces opérations dépendent de la monade;
-  le résultat ne sera pas le même s'il s'agit de ``Maybe``, ``[]`` ou ``IO``. 
-
-Remarque
---------------------------------------------
-
-La notation ``do`` n'est pas réservée aux entrées-sorties,
-mais est utilisable avec toutes les monades, puisque c'est
-une manière implicite d'utiliser ``>>=``.
-
-.. code-block:: none
-
-   *Main> safeHead [5,2,4] >>= return . (*2)
-   Just 10
-   *Main> safeHead [5,2,4] >>= (\x -> return (x*2))
-   Just 10
-   *Main> do x <- safeHead [5,2,4] ; return (x*2)
-   Just 10
 
 
 Capacités/Connaissances
