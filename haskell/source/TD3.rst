@@ -21,13 +21,15 @@ Domain-specific language
 ----------------------------
 
 Haskell est particulièrement adapté pour accueillir des
-langages dédiés à des tâches précises.
+langages dédiés à des tâches précises, sous la forme
+d'un ensemble de types et de fonctions à combiner pour
+résoudre un problème spécifique.
 
 Par exemple `diagrams <https://hackage.haskell.org/package/diagrams>`_
 un `langage déclaratif <http://ozark.hendrix.edu/~yorgey/pub/diagrams-FARM.pdf>`_
 en Haskell pour les graphiques vectoriels.
 
-Il existe pleins d'autres exemples : Fran, Haskore, Yesod, Elm, orc, etc.
+.. Il existe pleins d'autres exemples : Fran, Haskore, Yesod, Elm, orc, etc.
  
 Type défini par le développeur
 =================================
@@ -129,22 +131,22 @@ soit un noeud interne reliant deux sous-arbres.
    :lines: 3-9
 
 
-Liste revisitée
--------------------
+.. Liste revisitée
+   -------------------
 
-``[a]`` est en fait une notation particulière pour ``[] a``, car 
-``[]`` est un *constructeur de type* :
-à partir du type ``a``, il crée le type ``[] a``, c'est-à-dire
-une liste de ``a``. 
+   ``[a]`` est en fait une notation particulière pour ``[] a``, car 
+   ``[]`` est un *constructeur de type* :
+   à partir du type ``a``, il crée le type ``[] a``, c'est-à-dire
+   une liste de ``a``. 
 
-La définition d'une liste est récursive :
+   La définition d'une liste est récursive :
 
-.. code-block:: haskell
+   .. code-block:: haskell
+		   
+      data [a] = [] | a : [a]
 
-   data [a] = [] | a : [a]
-
-Une liste de ``a`` est soit une liste vide, soit une liste ayant au moins
-une valeur de type ``a`` en tête de liste. 
+   Une liste de ``a`` est soit une liste vide, soit une liste ayant au moins
+   une valeur de type ``a`` en tête de liste. 
 
 Défi 1 : construire un arbre
 ---------------------------------
@@ -199,29 +201,36 @@ la racine et une feuille, c'est-à-dire la hauteur de l'arbre :
       flatten' :: Tree a -> [a] -> [a] 
 
 	   
-Défi 3 : liste imbriquée
------------------------------------
+.. Défi 3 : liste imbriquée
+   -----------------------------------
 
-Après avoir défini le type adéquat, écrivez la fonction
+   Après avoir défini le type adéquat, écrivez la fonction
 
-.. literalinclude:: code/NestedList.hs
-   :language: haskell
-   :lines: 3
+   .. literalinclude:: code/NestedList.hs
+      :language: haskell
+      :lines: 3
 
-qui aplatit une liste d'élément
-pouvant contenir des listes comme élément.  
+   qui aplatit une liste d'élément
+   pouvant contenir des listes comme élément.  
 
-.. code-block:: none
+   .. code-block:: none
 
-   *Main> flatten (Elem 5)
-   [5]
-   *Main> flatten (List [Elem 1, List [Elem 2, List [Elem 3, Elem 4]]])
-   [1,2,3,4]
-   *Main> flatten (List [])
-   []
+      *Main> flatten (Elem 5)
+      [5]
+      *Main> flatten (List [Elem 1, List [Elem 2, List [Elem 3, Elem 4]]])
+      [1,2,3,4]
+      *Main> flatten (List [])
+      []
 
+Défi 3 : définir un type d'arbre 
+------------------------------------
 	   
+- Définissez le type d'un arbre binaire dans lequel chaque noeud est :
+  
+  - soit vide,
+  - soit la racine de deux sous-arbres et porteur d'une donnée de type arbitraire.
 
+- Définissez une variante de la fonction ``flatten`` pour aplatir cet arbre en une liste.      
 
 Synonymes
 ---------------------------------
@@ -229,10 +238,10 @@ Synonymes
 Il est possible de définir des synonymes de types grâce à la déclaration ``type`` :
 
 - ``type String = [Char]``
-- ``type AssociationList a b = [(a,b)]``
 - ``type PhoneNumber = String``  
 - ``type Name = String``  
 - ``type PhoneBook = [(Name,PhoneNumber)]`` 
+- ``type AssociationList a b = [(a,b)]``
 
 Classe et surcharge
 ==========================
@@ -343,6 +352,31 @@ Exemple des nombres
    :alt: différentes classes de nombre
    :align: center
 
+Conversion
+----------------------
+
+La fonction usuelle pour convertir une type entier (instance de ``Integral``)
+en un type numérique (instance de ``Num``) est :
+
+.. code-block:: haskell
+
+   fromIntegral :: (Num b, Integral a) => a -> b
+
+Si ``n`` est de type ``Int``, la conversion est nécessaire. 
+		
+.. code-block:: none
+
+   *Main> sqrt n
+
+   <interactive>:32:1:
+      No instance for (Floating Int) arising from a use of ‘sqrt’
+      In the expression: sqrt n
+      In an equation for ‘it’: it = sqrt n
+
+.. code-block:: none
+
+   *Main> sqrt (fromIntegral n)
+
 
 Clause ``deriving``
 --------------------------
@@ -374,50 +408,16 @@ Que donnent les expressions suivantes ?
 - ``[Trefle ..]``, ``[Valet ..]``, ``[Cinq .. Dix]``
 - ``toEnum 12 :: ValeurCarte``
   
-Défi 5 : carte à jouer
+
+Défi 5 : tas de cartes
 ------------------------
 
 - Définissez le type d'une carte à jouer.
-- Faites en une instance de ``Eq`` et de ``Ord``, de façon à ce que seulement la valeur compte
-  dans une comparaison.
-
-.. code-block:: none
-
-   *Main> Carte As Trefle == Carte As Pique
-   True
-   *Main> Carte As Trefle == Carte Roi Trefle
-   False
-   *Main> Carte As Trefle > Carte Roi Trefle
-   True
-   *Main> min (Carte As Trefle) (Carte Roi Trefle)
-   Carte Roi Trefle
-
-Défi 6 : tas de cartes
-------------------------
-
 - Définissez le type d'un tas de carte.
 - Créez le tas de carte à l'aide d'une *list comprehension*. 
 - Donnez l'expression indiquant le nombre de cartes se trouvant dans le tas. 
 
 
-Défi bonus. ``toIntList``
----------------------------
-
-- Créez la classe ``IntListable`` dotée de la fonction
-
-.. code-block:: haskell
-
-   toIntList :: IntListable a => a -> [Int]
-
-- Faites de
-
-  - ``Int``,
-  - ``Bool``,
-  - ``[Int]``,
-  - une paire d'élément ``IntListable``,
-  
-  des instances de cette classe. 
-   
 Comparaison avec d'autres langages
 -----------------------------------
 
@@ -465,10 +465,10 @@ Défi 2 : hauteur d'un arbre binaire
 .. literalinclude:: code/treeHeight.hs
    :language: haskell
 
-Défi 3 : liste imbriquée
------------------------------------
+Défi 3 : définir un type d'arbre
+------------------------------------------
 
-.. literalinclude:: code/NestedList.hs
+.. literalinclude:: code/tree3.hs
    :language: haskell
 
 Défi 4 : opérations habituelles
@@ -515,22 +515,11 @@ Défi 4 : opérations habituelles (suite)
 
 .. _carte-label:
    
-Défi 5 : carte à jouer
+Défi 5 : tas de cartes
 ------------------------
 
 .. literalinclude:: code/carte2.hs
    :language: haskell
-   :lines: 1-12
-
-(Inspiré de ce `tutoriel <https://wiki.haskell.org/Type>`_)
-
-
-Défi 6 : tas de cartes
-------------------------
-
-.. literalinclude:: code/carte2.hs
-   :language: haskell
-   :lines: 14-15
 
 .. code-block:: none
 
@@ -539,10 +528,3 @@ Défi 6 : tas de cartes
 
 (Inspiré de ce `tutoriel <https://wiki.haskell.org/Type>`_)
    
-Défi bonus. ``toIntList``
----------------------------
-
-.. literalinclude:: code/toIntList.hs
-   :language: haskell
-
-(Inspiré de cette `leçon <http://www.cis.upenn.edu/~cis194/spring13/lectures/05-type-classes.html>`_)

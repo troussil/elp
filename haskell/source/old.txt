@@ -383,4 +383,33 @@ On va maintenant en voir d'autres :
 
 - ``class`` declaration (créer un groupe de type)
 - ``instance`` declaration (déclarer un type comme appartenant à un groupe donné) 
-    
+
+
+
+Défi bonus. ``toIntList``
+---------------------------
+
+- Créez la classe ``IntListable`` dotée de la fonction
+
+.. code-block:: haskell
+
+   toIntList :: IntListable a => a -> [Int]
+
+- Faites de
+
+  - ``Int``,
+  - ``Bool``,
+  - ``[Int]``,
+  - une paire d'élément ``IntListable``,
+  
+  des instances de cette classe. 
+
+
+Défi bonus. ``toIntList``
+---------------------------
+
+.. literalinclude:: code/toIntList.hs
+   :language: haskell
+
+(Inspiré de cette `leçon <http://www.cis.upenn.edu/~cis194/spring13/lectures/05-type-classes.html>`_)
+

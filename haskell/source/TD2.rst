@@ -272,7 +272,7 @@ et à l'élément de fin de liste (le plus à droite).
 Le résultat sera ensuite combiné avec l'élément précédent et ainsi de suite.
 La dernière application de la fonction de combinaison retournera la valeur finale. 
 
-Défi 6 : reverse par foldl 
+Défi 6 : ``foldr`` 
 ----------------------------
 
 En utilisant la fonction ``foldr``, donnez l'expression qui transforme la liste
