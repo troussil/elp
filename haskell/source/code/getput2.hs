@@ -1,3 +1,3 @@
 main :: IO ()
-main = do c <- getChar
-          putChar c  
+main = do l <- getLine
+          putStrLn l  

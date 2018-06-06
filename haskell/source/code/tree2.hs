@@ -1,4 +1,3 @@
-
 data Tree a = Leaf a | Node (Tree a) (Tree a)
 
 flatten :: Tree a -> [a] 

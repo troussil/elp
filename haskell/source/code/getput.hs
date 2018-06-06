@@ -1,2 +1,2 @@
 main :: IO ()
-main = getChar >>= putChar  
+main = getLine >>= putStrLn  

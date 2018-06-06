@@ -400,12 +400,12 @@ Que donnent les expressions suivantes ?
 - ``show Coeur``
 - ``read "Coeur" :: CouleurCarte``   
 - ``Valet /= Dix``
-- ``Valet <= Dix``, ``Deux < As``
+- ``Valet <= Dix`` et ``Deux < As``
 - ``pred As``, ``succ As``
-- ``fromEnum Trefle``, ``fromEnum Dame``
-- ``enumFrom Valet``,  ``enumFrom Trefle``
+- ``fromEnum Trefle`` et  ``fromEnum Dame``
+- ``enumFrom Valet`` et  ``enumFrom Trefle``
 - ``enumFromTo Cinq Dix``
-- ``[Trefle ..]``, ``[Valet ..]``, ``[Cinq .. Dix]``
+- ``[Trefle ..]`` et ``[Cinq .. Dix]``
 - ``toEnum 12 :: ValeurCarte``
   
 
