@@ -2,6 +2,22 @@
 Monades : ``Maybe``, ``[]``, ``IO``
 ====================================
 
+Avant-propos
+====================================
+
+Qui utilise Haskell ?
+------------------------------------
+
+Qui utilise un langage dans lequel les variables ne varient pas,
+dans lequel on ne peut rajouter une instruction d'affichage, sans
+changer le type de la fonction ? 
+
+- Facebook (`Haxl <https://github.com/facebook/Haxl>`_),
+- Microsoft (`Bond <https://github.com/Microsoft/bond>`_),
+
+Consultez par exemple cette `liste <https://github.com/erkmos/haskell-companies>`_
+qui répertorie des entreprises qui utilisent Haskell. 
+
 ``Maybe``
 ====================================
 
