@@ -12,6 +12,7 @@ class AnimalProxyFactory {
 		 public Object invoke(Object proxy, Method method, Object[] args)
 		     throws Throwable {
 		     StringBuffer sb = new StringBuffer();
+		     sb.append(a.getClass().getName()); sb.append(".");
 		     sb.append(method.getName()); sb.append("(");
 		     for (int i=0; args != null && i<args.length; i++) {
 			 if (i != 0)
@@ -44,8 +45,8 @@ public class SimpleFrameworkMain {
 		
 		Class<?> yourClass = Class.forName(yourClassName);  
 		Animal a = AnimalProxyFactory.getAnimalProxy( (Animal) yourClass.newInstance() ); 
-		System.out.println(yourClassName + ": " + a.scream());
-
+		a.scream(); 
+		
 	    } catch (ClassNotFoundException e) {
 		System.err.println("Class called '" + yourClassName + "' not found"); 
 	    } catch (InstantiationException e) {
