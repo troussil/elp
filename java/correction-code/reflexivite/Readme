@@ -1,0 +1,11 @@
+Pour compiler (séparément des sources) : 
+
+mkdir build
+
+javac -d build/ fr/insalyon/tc/framework/*
+javac -d build/ jeux/*
+
+Pour exécuter : 
+
+java -cp build/ fr.insalyon.tc.framework.Main 
+
