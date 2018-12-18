@@ -89,8 +89,8 @@ Création d'un flux
 
 .. code-block:: java 
 
-        File f1 = new File(“/tmp/toto”);
-        File f2 = new File(“/tmp/titi”);
+        File f1 = new File("/tmp/toto");
+        File f2 = new File("/tmp/titi");
 
 2. instanciation des récepteurs (flux d'entrée) ou des émetteurs (flux de sortie) 
 
