@@ -135,22 +135,72 @@ La méthode ``newInstance()`` de la classe ``Class`` présente plusieurs contrai
 - ce constructeur doit donc être déclaré comme *public*,
 - et toutes les exceptions (*checked* et *unchecked*) levées lors de l'appel au constructeur sont propagées. 
 
-Ex.2. Framework (10 min)
------------------------------
+Ex.2. Framework / Prise en main (5 min)
+--------------------------------------------
 
-- Téléchargez :download:`Framework <download/reflection.tar.gz>`,
+- Téléchargez :download:`Framework <download/reflexivite.tar.gz>`,
   un *framework* dans lequel on peut injecter son propre code.
   
 - Ce framework est constitué d'une classe comportant un ``main``,
-  qui ne doit pas changer, et d'une interface ``Animal``, qu'il
-  s'agit d'implémenter. Ces deux classes appartiennent au package
-  ``fr.insalyon.tc.framework``. Compilez et testez. 
+  qui ne doit pas changer, et d'une interface ``JeuCombinatoire``, qu'il
+  s'agit d'implémenter pour injecter ses propres jeux dans le framework.
+  Ces deux classes appartiennent au package
+  ``fr.insalyon.tc.framework``. En plus, le framework est distribué
+  avec le jeu de Wythoff. Regardez, compilez, testez. 
 
-- A la racine du projet, ajoutez les classes ``Bee`` et ``Frog``
-  dont la méthode ``scream``, exigée par ``Animal``, retourne
-  respectivement les chaînes de caractère "buzz" et "croak".
-  Testez le framework en passant le nom de ces classes en paramètre.  
+Ex.3. Framework / Jeu de Nim (10 min)
+--------------------------------------------
+
+- Sans nécessairement fermer l'application, ajoutez dans le répertoire ``jeux``
+  une classe ``Nim`` implémentant ``JeuCombinatoire``.
+
+- NB. Le jeu de Nim est un jeu combinatoire à deux joueurs qui enlèvent
+  alternativement 1, 2 ou 3 éléments d'un tas de 15 éléments au depart.
+  Le joueur qui ne peut plus jouer car le tas est vide a perdu. 
+
+Ex.4. Framework / Ensemble de jeux (30 min)
+--------------------------------------------
+
+- Sans nécessairement fermer l'application, ajoutez dans le répertoire ``jeux``
+  une classe ``EnsembleDeJeux`` implémentant ``JeuCombinatoire``.
+
+- Il s'agit de construire un jeu combinatoire composé de tous les jeux  
+  combinatoires se trouvant dans le répertoire ``jeux``.   
+  Les deux joueurs jouent alternativement en choisissant un jeu 
+  et un coup pour ce jeu. Quand il n'y a plus la possibilité
+  de jouer dans un jeu, la partie se poursuit sur les autres
+  jeux. Le joueur qui ne peut plus jouer dans le dernier jeu
+  non fini a perdu.
+
+- Vous cherchez quelque chose ? Quelques trucs suivent. 
   
+Ex.4. Quelques trucs pour aller plus vite
+-------------------------------------------
+
+Obtenir le répertoire du classpath :  
+
+.. code-block:: java 
+
+	String nomRepertoire = System.getProperty("java.class.path");
+
+Obtenir la liste des fichiers d'un répertoire : 	
+
+.. code-block:: java 
+
+	File repertoire = new File(nomRepertoire); 
+        for (String nom : repertoire.list()) {}
+
+Traitement des chaines de caractère :
+	
+.. code-block:: java 
+
+	...
+	String[] decomposition = chaine.split(separateur);
+	boolean flag = chaine.endsWith(extension); 
+	String sousChaine = chaine.substring(pos1,pos2);
+	int n = Integer.parseInt(chaine);
+	...
+
 Note sur les paramètres
 --------------------------------
 
@@ -162,23 +212,29 @@ d'instancier la classe en fournissant la liste des arguments.
 Selon le même procédé, il est possible de récupérer une méthode, puis
 de l'appeler.
 
-		
-Ex.3. Framework (5 min)
------------------------------
-
-- Téléchargez la version 2.0 de notre :download:`Framework <download/reflectionv2.tar.gz>`
-  qui utilise un `proxy dynamique <https://docs.oracle.com/javase/7/docs/api/java/lang/reflect/Proxy.html>`_. 
-
-- Testez le framework avec vos classes. Quelle est le nouvelle fonctionnalité de ce framework ?
-
+Consultez la `documentation <https://docs.oracle.com/javase/7/docs/api/java/lang/Class.html>`_.
 
 Conclusion
 ==========================
 
+Injection de dépendances
+--------------------------
+
+Dans un projet, il y a des *dépendances statiques*, c'est-à-dire des classes (ou interfaces)
+qui apparaissent dans le code d'une classe :
+
+- par héritage (``extends NomClasse``), implémentation d'interface (``implements NomInterface``)
+- déclaration (``NomClasse nomObjet``), 
+- et surtout par création d'objets avec ``new NomClasse(...)``.
+
+L'injection de dépendances consiste principalement à supprimer ce dernier type de dépendance statique,
+très forte, en injectant à l'exécution les classes apropriées à l'aide de la réflexivité.   
+Bref, **on supprime les ``new``**.
+
 Le coût
 --------------------------
 
-La réflexivité de Java contribue à sa flexibilité et à l'usage répandu de frameworks,
+La réflexivité de Java contribue à sa flexibilité et à réduire les dépendances, 
 mais elle a un coût à prendre en compte pour envisager son usage, car
 
 - l'appel aux méthodes réflexives (``getMethod``, ``newInstance``, etc.) ont un surcoût,

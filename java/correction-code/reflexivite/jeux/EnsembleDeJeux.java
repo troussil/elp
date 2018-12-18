@@ -24,8 +24,6 @@ public class EnsembleDeJeux implements JeuCombinatoire {
 
         //on parcourt les répertoires du classpath
         String nomRepertoire = System.getProperty("java.class.path");
-        // String[] classpathEntrees = classpath.split(File.pathSeparator);
-        // for (String nomRepertoire : classpathEntrees) {
 
         //pour chaque fichier ".class"
         //(mais different du byte code de cette classe)

@@ -22,7 +22,7 @@ ELP-JAVA
 
   - :doc:`TD1. Conteneurs <TD5Conteneurs>`
   - :doc:`TD2. Entrées/Sorties <TD6Flux>`
-  - TD3. Reflexivité  
+  - :doc:`TD3. Reflexivité <TD6z5Reflect>`  
 
 - En extra: 
   
