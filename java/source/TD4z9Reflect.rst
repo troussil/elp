@@ -41,10 +41,10 @@ La classe ``Class``
 ----------------------------------------
 
 Le package ``java.lang`` comporte une classe appelée ``Class``. Au chargement d'une classe, la machine virtuelle 
-crée automatiquement un objet ``Class`` permettant d'obtenir tous les renseignements possibles concernant la 
+crée automatiquement une instance de ``Class`` permettant d'obtenir tous les renseignements possibles concernant la 
 classe chargée.  
 
-On obtient un objet ``Class`` de 3 manières différentes: 
+On obtient une instance de ``Class`` de trois manières différentes : 
 
 .. code-block:: java 
 
@@ -68,8 +68,15 @@ Comme vous le voyez, depuis java 5, la classe ``Class`` est paramétrée par un 
 Par exemple, ``Class<String>`` est le type de l'objet créé
 par la machine virtuelle au chargement de la classe ``String``. 
 
+.. code-block:: java 
+
+        Class<String> classe
+	  = (Class<String>) Class.forName("java.lang.String");
+
+	  
 Mais parfois ce type ne peut être connu lors de l'écriture du programme. Dans ce cas,
 on peut utiliser le joker ``?`` :
+
 
 .. code-block:: java 
 
@@ -82,10 +89,10 @@ Les méthodes de ``Class``
 La classe ``Class`` contient des méthodes qui retournent des instances de
 classes/interfaces définies dans le package ``java.lang.reflect``.
 
-- ``Constructor[] getDeclaredConstructors()`` 	Renvoyer tous les constructeurs de la classe
-- ``Field[] getDeclaredFields()`` 	Renvoyer un tableau de tous les attributs définis dans la classe
-- ``Method[] getDeclaredMethods()`` 	Renvoyer un tableau de toutes les méthodes
-- ``int getModifiers()`` 	Renvoyer un entier qu'il faut décoder pour connaître les modificateurs de la classe
+- ``Field[] getDeclaredFields()`` : renvoyer un tableau de tous les champs de la classe
+- ``Method[] getDeclaredMethods()`` : renvoyer un tableau de toutes les méthodes
+- ``Constructor[] getDeclaredConstructors()`` : renvoyer tous les constructeurs
+- ``int getModifiers()`` : renvoyer un entier qu'il faut décoder pour connaître les modificateurs de la classe
 
 Liste non exhaustive, consultez la `documentation <https://docs.oracle.com/javase/7/docs/api/java/lang/Class.html>`_.
 
@@ -98,7 +105,18 @@ Ex.1. Inspecteur (5 min)
 - Lisez le code de la classe. Compilez et exécutez-la en passant divers paramètres
   (par exemple, ``java.lang.String methods`` ou ``java.lang.Integer constructors``). 
 
-    
+- Note 1 : ``declared`` renvoie à tout ce qui est déclaré dans la classe, quelle que soit la visibilité. 
+  Sinon, ce sont seulement les membres publics qui sont retournés.
+
+- Note 2 : depuis java 5, vous pouvez utiliser une construction *for each* pour parcourir un tableau : 
+
+.. code-block:: java 
+
+	for (int elt: tab) { //tab est de type int[]
+	    System.out.println( elt ); 
+	}
+
+	  
 Code dynamique
 =================================
 
@@ -121,89 +139,37 @@ Ex.2. Framework (10 min)
 -----------------------------
 
 - Téléchargez :download:`Framework <download/reflection.tar.gz>`,
-  un *framework* très *bête* dans lequel on peut injecter son propre code.
-  Compilez et testez-le. 
+  un *framework* dans lequel on peut injecter son propre code.
+  
+- Ce framework est constitué d'une classe comportant un ``main``,
+  qui ne doit pas changer, et d'une interface ``Animal``, qu'il
+  s'agit d'implémenter. Ces deux classes appartiennent au package
+  ``fr.insalyon.tc.framework``. Compilez et testez. 
 
-- Ce framework est constitué d'un ``main``, qui ne doit pas changer,
-  et d'une interface ``Animal``, qu'il s'agit d'implémenter.
-  A la racine du projet, ajoutez les classes ``Bee`` et ``Frog``
+- A la racine du projet, ajoutez les classes ``Bee`` et ``Frog``
   dont la méthode ``scream``, exigée par ``Animal``, retourne
   respectivement les chaînes de caractère "buzz" et "croak".
-  Testez le framework avec vos classes.  
-
-Note: constructeurs avec paramètres
------------------------------------------
+  Testez le framework en passant le nom de ces classes en paramètre.  
+  
+Note sur les paramètres
+--------------------------------
 
 Il est possible d'instancier une classe par un constructeur possédant
 des paramètres. Dans ce cas, il s'agit de récupérer le constructeur
 qu'on souhaite utiliser à partir de sa signature et de sa classe, puis
-d'instancier en fournissant la liste des arguments. Dans l'exemple
-suivant le constructeur prend en entrée un booléen et une chaine de
-caractère. 
-
-.. code-block:: java 
-
-	//obtention du constructeur
-        Class<MaClasse> classe = (Class<MaClasse>) Class.forName(nomClasse);
-	Class<?>[] listeTypesParams
-		= new Class<?>[] { boolean.class, String.class }; 
-	Constructor<MaClasse> constructeur
-		= classe.getConstructor(listeTypesParams);
-	//instanciation
-	Object[] listeValParams = new Object[] { false, "azerty" };	
-	MaClasse instance = constructeur.newInstance(listeValParams); 
-  
-  
-Appel de méthode
--------------------
+d'instancier la classe en fournissant la liste des arguments.
 
 Selon le même procédé, il est possible de récupérer une méthode, puis
-de l'appeler. Dans l'exemple suivant la méthode visée prend en entrée
-un booléen et une chaine de caractère.
+de l'appeler.
 
-.. code-block:: java 
-
-	//obtention de la methode
-        Class<MaClasse> classe = (Class<MaClasse>) Class.forName(nomClasse);
-	Class<?>[] listeTypesParams
-		= new Class<?>[] { boolean.class, String.class }; 
-	Method methode = classe.getMethod(nomMethode, listeTypesParams);
-	//appel
-	Object[] listeValParams = new Object[] { false, "azerty" };	
-	Object retour = methode.invoke(listeValParams); 
-
-Proxy
---------------------
-
-Un `proxy dynamique <https://docs.oracle.com/javase/7/docs/api/java/lang/reflect/Proxy.html>`_
-est un objet qui implémente une liste d'interface
-et qui est associé à un gestionnaire d'appel. Un appel adressé au proxy
-sera délégué au gestionnaire qui se charge de traiter l'appel.  
-
-.. code-block:: java 
-
-	InvocationHandler gestionnaire = new MonGestionnaire(...);
-	UneInterface monProxy
-	  = (UneInterface) Proxy.newProxyInstance(
-		UneInterface.class.getClassLoader(),
-                new Class[] { UneInterface.class },
-                gestionnaire );
-
-Tout gestionnaire doit implémenter l'interface ``InvocationHandler`` et
-donc redéfinir la méthode:
-
-.. code-block:: java 
-
-	Object invoke(Object proxy, Method method, Object[] args) 
 		
 Ex.3. Framework (5 min)
 -----------------------------
 
 - Téléchargez la version 2.0 de notre :download:`Framework <download/reflectionv2.tar.gz>`
-  qui utilise un proxy dynamique. 
+  qui utilise un `proxy dynamique <https://docs.oracle.com/javase/7/docs/api/java/lang/reflect/Proxy.html>`_. 
 
 - Testez le framework avec vos classes. Quelle est le nouvelle fonctionnalité de ce framework ?
-  Comment ça fonctionne ?
 
 
 Conclusion
