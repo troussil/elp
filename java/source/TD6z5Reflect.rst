@@ -138,8 +138,8 @@ La méthode ``newInstance()`` de la classe ``Class`` présente plusieurs contrai
 Ex.2. Framework / Prise en main (5 min)
 --------------------------------------------
 
-- Téléchargez :download:`Framework <download/reflexivite.tar.gz>`,
-  un *framework* dans lequel on peut injecter son propre code.
+- Téléchargez ce :download:`framework <download/reflexivite.tar.gz>`
+  dans lequel on peut injecter son propre code.
   
 - Ce framework est constitué d'une classe comportant un ``main``,
   qui ne doit pas changer, et d'une interface ``JeuCombinatoire``, qu'il
@@ -174,7 +174,7 @@ Ex.4. Framework / Ensemble de jeux (30 min)
 
 - Vous cherchez quelque chose ? Quelques trucs suivent. 
   
-Ex.4. Quelques trucs pour aller plus vite
+Quelques trucs pour aller plus vite
 -------------------------------------------
 
 Obtenir le répertoire du classpath :  

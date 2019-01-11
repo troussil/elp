@@ -162,7 +162,7 @@ Ex.2. Etudiants (15 min)
 Ex.3. MultiMap (15 min)
 --------------------------
 
-- Créez une classe ``MultiMap<K,List<V> >`` qui associe à une clée de type ``K`` plusieurs valeurs
+- Créez une classe ``MultiMap<K,V>`` qui associe à une clée de type ``K`` plusieurs valeurs
   de type ``V`` stockées dans une liste. Elle devra implémenter l'interface ``Map<K,List<V> >``
   et posséder une méthode ``void putOneValue(K,V)`` qui s'occupe de l'insertion d'une nouvelle valeur
   et ``boolean containsOneValue(V)`` qui retourne vraie si la valeur donnée se trouve dans le conteneur,
