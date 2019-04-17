@@ -1,0 +1,80 @@
+\documentclass[a4paper,francais]{insalyon}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+
+\usepackage{graphicx}
+\graphicspath{{fig/}}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\usepackage{hyperref}
+
+\newcommand{\cad}{c.-à-d.}
+
+\title{ELP}
+\author{Tristan Roussillon}
+
+\begin{document}
+
+\maketitle
+
+L'objectif de ce document est de présenter d'une façon simple dix thèmes centraux autour desquels se déroule l'activité de programmation. L'étudiant les découvre en général à l'occasion d'un exercice et par le prisme d'un langage particulier. Il s'agit ici de les mettre en mots afin d'accompagner l'étudiant dans son apprentissage et l'aider à prendre du recul sur ces éléments importants. 
+
+\section{La programmation et les fondamentaux de l'informatique}
+
+L'informatique est une science dont l'objet d'étude est constitué de grands piliers : représentation de l'information, algorithme, language et machine
+\footnote{cf. le rapport de l'académie des sciences:
+  \href{https://www.academie-sciences.fr/pdf/rapport/rads\_0513.pdf}
+  {l'enseignement de l'informatique en France, il est urgent de ne plus attendre, mai 2013}.
+  }.
+\begin{description}
+\item[information] difficile à définir 
+\item[algorithme] (cf. \cite{knuth}[p.4]) C'est un ensemble fini de règles qui fourni une séquence d'opérations. Ces opérations permettent d'obtenir, à partir de zéro ou plusieurs données en entrée, au moins une donnée en sortie, qui est la réponse à un problème spécifique. Un algorithme doit de plus être précisément défini, sans ambiguité sur les actions à mener, et effectivement réalisable, dans le sens où l'algorithme doit terminer après un nombre fini d'étapes, chaque étape étant suffisamment élémentaire pour pouvoir, en principe, être effectuée exactement, en un temps fini, par un opérateur humain.
+  %Synonyme de recette, méthode, technique, procédure, 
+\item[langage] 
+\item[machine] 
+\end{description}
+
+La programmation consiste à écrire des programmes, {\cad} exprimer des algorithmes dans un langage spécifique permettant à certaines machines de les traduire en actions.
+Elle est au c\oe ur de l'informatique. Du fait de l'omniprésence de l'informatique dans de nombreux domaines de l'activité humaine, elle est pratiquée par de nombreux ingénieurs. 
+
+\section{Compilation}
+
+\section{Evaluation des expressions et structure de contrôle}
+
+expression (variable, valeur/littéral, opérateurs), évaluation (paresseuse), effets vs pureté, structures de contrôle
+
+\section{Fonction}
+
+- fonction, méthode=fonction avec contexte/fonction avec application partielle
+- passage de paramètre
+
+\section{Typage}
+
+\section{Polymorphisme}
+
+- polymorphisme (interface/héritage, classe de type)
+
+\section{Organisation du code source et conflits de nom}
+
+à déplacer après compilation ?
+
+\section{Erreurs et exceptions}
+
+\section{Parallélisme et concurrence}
+
+\section{Paradigmes de programmation}
+
+- impératif, (CRO)
+- fonctionnel, 
+- objet, 
+- concurrent, (PPC)
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\end{document}
+
+
