@@ -30,17 +30,41 @@ L'informatique est une science dont l'objet d'étude est constitué de grands pi
   {l'enseignement de l'informatique en France, il est urgent de ne plus attendre, mai 2013}.
   }.
 \begin{description}
-\item[information] difficile à définir 
-\item[algorithme] (cf. \cite{knuth}[p.4]) C'est un ensemble fini de règles qui fourni une séquence d'opérations. Ces opérations permettent d'obtenir, à partir de zéro ou plusieurs données en entrée, au moins une donnée en sortie, qui est la réponse à un problème spécifique. Un algorithme doit de plus être précisément défini, sans ambiguité sur les actions à mener, et effectivement réalisable, dans le sens où l'algorithme doit terminer après un nombre fini d'étapes, chaque étape étant suffisamment élémentaire pour pouvoir, en principe, être effectuée exactement, en un temps fini, par un opérateur humain.
+\item[information] (Larousse) Élément de connaissance susceptible d'être représenté à l'aide de conventions pour être conservé, traité ou communiqué. 
+\item[algorithme] (cf. \cite{knuth}[p.4]) Ensemble fini de règles qui fourni une séquence d'opérations. Ces opérations permettent d'obtenir, à partir de zéro ou plusieurs informations en entrée, au moins une information en sortie, qui est la réponse à un problème spécifique. Un algorithme doit de plus être précisément défini, sans ambiguité sur les actions à mener, et effectivement réalisable, dans le sens où l'exécution doit terminer après un nombre fini d'étapes, chaque étape étant suffisamment élémentaire pour pouvoir, en principe, être effectuée exactement, en un temps fini, par un opérateur humain.
   %Synonyme de recette, méthode, technique, procédure, 
-\item[langage] 
-\item[machine] 
+\item[langage] Dans ce contexte, on appelle \emph{langage} un système de signe capable d'exprimer un algorithme. Il est doté d'une \emph{syntaxe} (en fonction des règles de sa \emph{grammaire}, certains agencements de signe sont admissibles et d'autres non) et d'une \emph{sémantique} (tous les agencements de signe admissibles ont une signification précise). Tous les langages n'ont pas le même pouvoir expressif ; seuls ceux dits complets au sens de Turing sont capables d'exprimer n'importe quel algorithme.  
+\item[machine] Dans ce contexte, on appelle \emph{machine} tout dispositif capable de traduire un algorithme, exprimé dans un langage spécifique, en actions. L'orgue de barbarie, le métier à tisser Jacquart, l'ordinateur, le smartphone sont des exemples de machine. 
 \end{description}
 
-La programmation consiste à écrire des programmes, {\cad} exprimer des algorithmes dans un langage spécifique permettant à certaines machines de les traduire en actions.
-Elle est au c\oe ur de l'informatique. Du fait de l'omniprésence de l'informatique dans de nombreux domaines de l'activité humaine, elle est pratiquée par de nombreux ingénieurs. 
+La programmation consiste à écrire des programmes, {\cad} exprimer des algorithmes dans un langage spécifique, afin d'adapter les actions exécutées par une machine. Elle est au c\oe ur de l'informatique. Du fait de l'omniprésence de l'informatique dans de nombreux domaines de l'activité humaine, elle est pratiquée par de nombreux ingénieurs. 
+
+%https://fr.wikipedia.org/wiki/Langage
+%https://fr.wikipedia.org/wiki/Langage_informatique
+%https://fr.wikipedia.org/wiki/Langage_de_programmation
+%https://fr.wikipedia.org/wiki/Langage_formel
+
+%donnée une donnée est la représentation d'une information dans un programme : soit dans le texte du programme (code source), soit en mémoire durant l'exécution.
+%https://fr.wikipedia.org/wiki/Donn%C3%A9e_(informatique)
+
+%La machine de Turing est un modèle théorique de machine universelle, {\cad} capable d'exécuter n'importe quel algorithme.   
 
 \section{Compilation}
+
+Au sens large, la compilation consiste en la traduction d'un programme écrit dans un langage, en un programme écrit dans un autre langage. Au sens strict, ce second programme est un fichier binaire directement exécutable par l'ordinateur, voire un programme écrit dans un langage intermédiaire pouvant être exécuté par une machine virtuelle, {\cad} un logiciel émulant les fonctionnalités d'un ordinateur. Le compilateur est le logiciel qui effectue une telle traduction. Ce traitement est habituellement terminé avant toute exécution du programme obtenu. Dans d'autres cas, le programme source est analysé, traduit et exécuté petit à petit par un logiciel appelé interpréteur. En résumé, on a :
+
+TODO
+
+Même si un langage peut en théorie être aussi bien compilé ou interprété, il apparaît dans les faits avec une certaine implémentation.  
+
+TODO Exemples go, ghc, C, python, js, java
+
+%exécution
+%interpreteur
+
+%\emph{byte code}. 
+
+%REPL
 
 \section{Evaluation des expressions et structure de contrôle}
 
