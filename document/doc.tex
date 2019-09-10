@@ -24,14 +24,14 @@ L'objectif de ce document est de présenter d'une façon simple dix thèmes cent
 
 \section{La programmation et les fondamentaux de l'informatique}
 
-L'informatique est une science dont l'objet d'étude est constitué de grands piliers : représentation de l'information, algorithme, language et machine
-\footnote{cf. le rapport de l'académie des sciences:
-  \href{https://www.academie-sciences.fr/pdf/rapport/rads\_0513.pdf}
-  {l'enseignement de l'informatique en France, il est urgent de ne plus attendre, mai 2013}.
-  }.
+L'informatique est une science dont l'objet d'étude est constitué de grands piliers : représentation de l'information, algorithme, language et machine \cite{rapportacscience} : 
+%% \footnote{cf. le rapport de l'académie des sciences:
+%%   \href{https://www.academie-sciences.fr/pdf/rapport/rads\_0513.pdf}
+%%   {l'enseignement de l'informatique en France, il est urgent de ne plus attendre, mai 2013}.
+%%   }.
 \begin{description}
 \item[information] (Larousse) Élément de connaissance susceptible d'être représenté à l'aide de conventions pour être conservé, traité ou communiqué. 
-\item[algorithme] (cf. \cite{knuth}[p.4]) Ensemble fini de règles qui fourni une séquence d'opérations. Ces opérations permettent d'obtenir, à partir de zéro ou plusieurs informations en entrée, au moins une information en sortie, qui est la réponse à un problème spécifique. Un algorithme doit de plus être précisément défini, sans ambiguité sur les actions à mener, et effectivement réalisable, dans le sens où l'exécution doit terminer après un nombre fini d'étapes, chaque étape étant suffisamment élémentaire pour pouvoir, en principe, être effectuée exactement, en un temps fini, par un opérateur humain.
+\item[algorithme] (\cite[p.4]{knuth}) Ensemble fini de règles qui fourni une séquence d'opérations. Ces opérations permettent d'obtenir, à partir de zéro ou plusieurs informations en entrée, au moins une information en sortie, qui est la réponse à un problème spécifique. Un algorithme doit de plus être précisément défini, sans ambiguité sur les actions à mener, et effectivement réalisable, dans le sens où l'exécution doit terminer après un nombre fini d'étapes, chaque étape étant suffisamment élémentaire pour pouvoir, en principe, être effectuée exactement, en un temps fini, par un opérateur humain.
   %Synonyme de recette, méthode, technique, procédure, 
 \item[langage] Dans ce contexte, on appelle \emph{langage} un système de signe capable d'exprimer un algorithme. Il est doté d'une \emph{syntaxe} (en fonction des règles de sa \emph{grammaire}, certains agencements de signe sont admissibles et d'autres non) et d'une \emph{sémantique} (tous les agencements de signe admissibles ont une signification précise). Tous les langages n'ont pas le même pouvoir expressif ; seuls ceux dits complets au sens de Turing sont capables d'exprimer n'importe quel algorithme.  
 \item[machine] Dans ce contexte, on appelle \emph{machine} tout dispositif capable de traduire un algorithme, exprimé dans un langage spécifique, en actions. L'orgue de barbarie, le métier à tisser Jacquart, l'ordinateur, le smartphone sont des exemples de machine. 
@@ -44,14 +44,16 @@ La programmation consiste à écrire des programmes, {\cad} exprimer des algorit
 %https://fr.wikipedia.org/wiki/Langage_de_programmation
 %https://fr.wikipedia.org/wiki/Langage_formel
 
-%donnée une donnée est la représentation d'une information dans un programme : soit dans le texte du programme (code source), soit en mémoire durant l'exécution.
-%https://fr.wikipedia.org/wiki/Donn%C3%A9e_(informatique)
+\section{Compilation, exécution}
 
-%La machine de Turing est un modèle théorique de machine universelle, {\cad} capable d'exécuter n'importe quel algorithme.   
+En informatique, dans son acception large, la compilation consiste en la traduction d'un programme écrit dans un langage, en un programme écrit dans un autre langage. Par exemple, j'ai rédigé ce que vous lisez en {\LaTeX} et j'ai utilisé l'outil \texttt{pdflatex} pour produire ce fichier \texttt{pdf} : \texttt{pdflatex document.tex} $\leadsto$ \texttt{document.pdf}
+\footnote{Tous les exemples donnés dans ce document supposent un environnement Linux.}.  
 
-\section{Compilation}
+Au sens strict, le produit de la compilation est un fichier binaire directement exécutable par l'ordinateur, voire un programme écrit dans un langage intermédiaire pouvant être exécuté par une machine virtuelle, {\cad} un logiciel émulant les fonctionnalités d'un ordinateur. Le \emph{compilateur} est le logiciel qui effectue une telle traduction. Ce traitement est habituellement terminé avant toute exécution du programme obtenu.
 
-Au sens large, la compilation consiste en la traduction d'un programme écrit dans un langage, en un programme écrit dans un autre langage. Au sens strict, ce second programme est un fichier binaire directement exécutable par l'ordinateur, voire un programme écrit dans un langage intermédiaire pouvant être exécuté par une machine virtuelle, {\cad} un logiciel émulant les fonctionnalités d'un ordinateur. Le compilateur est le logiciel qui effectue une telle traduction. Ce traitement est habituellement terminé avant toute exécution du programme obtenu. Dans d'autres cas, le programme source est analysé, traduit et exécuté petit à petit par un logiciel appelé interpréteur. Pour synthétiser, on peut retenir ceci :
+Dans d'autres cas, le programme source est analysé, traduit et exécuté petit à petit par un logiciel appelé \emph{interpréteur}.
+
+Pour synthétiser, on peut retenir ceci :
 \begin{description}
 \item[compilé] ~\\ compilateur(programme source) $\leadsto$ fichier exécutable ; \\
   système d'exploitation(fichier exécutable) $\leadsto$ actions
@@ -60,8 +62,7 @@ Au sens large, la compilation consiste en la traduction d'un programme écrit da
 \item[interprété] ~\\ interpréteur(programme source) $\leadsto$ actions
 \end{description}
 
-Même si un langage peut en théorie être aussi bien compilé ou interprété, il apparaît dans les faits avec une certaine implémentation.  
-Voici quelques exemples\footnote{Note : tous les exemples donnés ci-dessous supposent un environnement linux}.
+Même si un langage peut en théorie être aussi bien compilé ou interprété, il apparaît dans les faits avec une certaine implémentation. Voici quelques exemples.
 
 \subsection{Exemples de programmes compilés}
 
@@ -82,6 +83,8 @@ Les fichiers produits sont directement exécutables depuis le shell :
 \item \verb! ./a.out ! $\leadsto$ actions
 \end{itemize}
 
+Ces fichiers contiennent du \emph{code natif}, {\cad} un programme écrit dans un langage machine spécifique à l'environnement utilisé, à la fois en terme de système d'exploitation et d'architecture d'ordinateur. Un code natif est exécuté très rapidemment, mais ne pourra pas être exécuté sur une machine aux caractéristiques différentes de celle sur laquelle le code natif a été produit. 
+
 \subsection{Exemple de programme semi-compilé}
 
 Les programmes écrits en Java sont généralement compilés dans un premier en temps en \emph{byte code} par la commande \texttt{javac} :
@@ -90,30 +93,96 @@ Les programmes écrits en Java sont généralement compilés dans un premier en 
 
 Dans un second temps, le \emph{byte code} est éxécuté par la machine virtuelle java, dont l'exécution est lancée par la commande \texttt{java} :
 
-\verb! java Classe ! $\leadsto$ actions \footnote{On fournit à la commande \texttt{java} le nom complet de la classe et la machine virtuelle java charge en mémoire le \emph{byte code} correspondant, contenu dans le fichier d'extension \texttt{.class}. }
+\verb! java Classe ! $\leadsto$ actions \footnote{On fournit à la commande \texttt{java} le nom complet de la classe et la machine virtuelle java charge en mémoire le byte code correspondant, contenu dans le fichier d'extension \texttt{.class}. }
+
+C'est un compromis entre
+\emph{portabilité} (le byte code produit peut être exécuté dans n'importe quel environnement pourvu qu'il y ait une machine virtuelle java\footnote{C'est ce qu'exprime le slogan ``Write once, run everywhere''.})
+et \emph{rapidité d'exécution} (le byte code est suffisamment proche d'un code natif pour être exécuté relativement rapidement, d'autant que les machines virtuelles sont maintenant dotées de mécanisme de compilation à la volée pour traduire les parties du byte code les plus sollicitées en code natif).   
 
 \subsection{Exemple de programme interprété}
 
+\texttt{Node.js} est un interpréteur de programmes écrits en JavaScript :
 
-TODO python, js
+\verb! node toto.js ! $\leadsto$ exécute ce qui est écrit dans le fichier \texttt{toto.js}
 
-%exécution
-%interpreteur
+Les programmes interprétés sont généralement appelés \emph{scripts}. Leur exécution est plus lente, puisque l'analyse du script est effectuée au cours de l'exécution. En revanche, il est généralement possible d'exécuter des scripts incomplets, ce qui facilite leur incorporation dans d'autres contextes (HTML + JavaScript interprétés par un navigateur web par exemple). Cette souplesse accélère aussi le développement de prototypes d'application.
 
-%\emph{byte code}. 
 
-%REPL
+\section{Valeur, variable, type}
 
-\section{Evaluation des expressions et structure de contrôle}
+%donnée une donnée est la représentation d'une information dans un programme : soit dans le texte du programme (code source), soit en mémoire durant l'exécution.
+%https://fr.wikipedia.org/wiki/Donn%C3%A9e_(informatique)
+Une \emph{valeur} est une donnée, {\cad} la représentation d'une information, aussi bien dans le texte du programme source, qu'en mémoire durant l'exécution. 
+Un \emph{littéral} est une valeur écrite explicitement dans le programme source, comme 2, 5.7, True, "Alice" ou encore
+\begin{verbatim}
+{
+    "menu": {
+        "id": "file",
+        "value": "File",
+        "popup": {
+            "menuitem": [
+                { "value": "New", "onclick": "CreateNewDoc()" },
+                { "value": "Open", "onclick": "OpenDoc()" },
+                { "value": "Close", "onclick": "CloseDoc()" }
+            ]
+        }
+    }
+}
+\end{verbatim}
+\'Evidemment, un programme ne contenant que des valeurs littérales ne serait pas très intéressant, car il ne serait pas capable d'adapter les actions de la machine en fonction d'informations données. Ce qui rend intéressant les programmes sont leurs variables. 
 
-expression (variable, valeur/littéral, opérateurs), évaluation (paresseuse), effets vs pureté, structures de contrôle
+Une \emph{variable} représente une donnée susceptible de changer au cours de l'exécution ou d'une exécution à l'autre. Elle possède un nom, appelé aussi \emph{identifiant}, une \emph{valeur} stockée en mémoire au cours de l'exécution (et qui peut changer ou non), ainsi qu'un \emph{type} caractérisant les valeurs admissibles. Les variables ont également une durée de vie, appelée aussi \emph{portée}, en général limitée (pour ne pas conserver en mémoire une valeur qui serait devenue inutile).  
+%compliqué à précisé. 
+%qui peut être restreinte qui est le bloc, {\cad} la portion de programme bien délimitée, dans laquelle elle est déclarée ou utilisée pour la première fois.
+
+%dessin ?
+
+TODO typage
+- implicite/explicite
+- statique/dynamique
+
+TODO type personnalisé (tableau, liste, struct/tuple/type algébriques, classe)
 
 \section{Fonction}
 
-- fonction, méthode=fonction avec contexte/fonction avec application partielle
+Une \emph{routine} représente un sous-programme qui, à partir d'informations données, effectue un traitement spécifique, relativement indépendant du reste du programme dans lequel il peut être réutilisé plusieurs fois. Les routines permettent de décomposer un programme en parties plus faciles à écrire, modifier, tester, réutiliser. Parmi les routines, on distingue historiquement la \emph{procédure} qui déclenche une action mais ne retourne aucune valeur, de la \emph{fonction}, qui retourne une valeur et, éventuellement, réalise une opération. On emploiera ci-dessous indifférement le mot "fonction", comme c'est le cas dans de nombreux langages.    
+
+Une fonction possède non-seulement un sous-programme, appelé \emph{corps}, mais aussi une \emph{signature}, composée d'au moins un nom et de la liste des \emph{paramètres}, {\cad} les variables dont les valeurs devront être transmises au sous-programme. A cela, s'ajoute éventuellement un type, correspondant généralement au type de la valeur de retour. 
+
+TODO exemple
+
 - passage de paramètre
 
-\section{Typage}
+- fonction, méthode=fonction avec contexte/fonction avec application partielle
+
+- dans certains langages comme Haskell, une fonction est une valeur comme une autre
+
+
+\section{Expression, structure de contrôle}
+
+expression, évaluation (paresseuse), effets vs pureté, structures de contrôle
+
+
+Une \emph{expression} est un agencement de signe syntaxiquement correct (littéraux, variables, opérateurs, fonctions)
+\begin{itemize}
+\item qui produit éventuellement une action, qu'on appelle \emph{effet}, comme le changement de la valeur de variables en mémoire ou une opération d'entrée-sortie, 
+\item et qui est \emph{évalué} en une valeur. 
+\end{itemize}
+Le terme \emph{instruction} est généralement employé dans le cas où le résultat est ignoré et seul l'effet compte.
+Voici des exemples d'expression. 
+
+\verb! (i >= 0) && (i < 10) !, \verb! c = pgcd(a,b) !, \verb! print("hello") !
+
+%% \subsection{Interpréteur intéractif}
+%% Un \emph{REPL} (pour \emph{Read-Eval-Print Loop}) est un interpréteur intéractif dans lequel l'utilisateur est invité à taper une expression (\emph{Read}). Quand celle-ci est écrite, elle est évaluée (\emph{Eval}) en un résultat, qui est ensuite affiché à l'écran (\emph{Print}), avant que l'utilisateur soit de nouveau invité à taper une expression (\emph{Loop}). C'est très pratique pour jouer avec un langage ou inspecter ce que fait certaines parties d'un programme. 
+
+
+Il existe quelques langages, dont Haskell, dits \emph{purs}, {\cad} pour lesquels il n'y a jamais d'effets.
+Dans ce type de langage, une expression donnée est toujours évaluée en une et une seule valeur, sans aucun autre effet. C'est un avantage indéniable pour comprendre ce que fait une partie isolée d'un programme. En revanche, les effets sont souvent très pratiques et essentiels pour atteindre une complexité algorithmique optimale, ce qui explique qu'ils sont admis et exploités par la majorité des langages de programmation.    
+
+pure permet paresseux
+
+paresseux permet structure de contrôle comme fonction
 
 \section{Polymorphisme}
 
