@@ -51,13 +51,51 @@ La programmation consiste à écrire des programmes, {\cad} exprimer des algorit
 
 \section{Compilation}
 
-Au sens large, la compilation consiste en la traduction d'un programme écrit dans un langage, en un programme écrit dans un autre langage. Au sens strict, ce second programme est un fichier binaire directement exécutable par l'ordinateur, voire un programme écrit dans un langage intermédiaire pouvant être exécuté par une machine virtuelle, {\cad} un logiciel émulant les fonctionnalités d'un ordinateur. Le compilateur est le logiciel qui effectue une telle traduction. Ce traitement est habituellement terminé avant toute exécution du programme obtenu. Dans d'autres cas, le programme source est analysé, traduit et exécuté petit à petit par un logiciel appelé interpréteur. En résumé, on a :
-
-TODO
+Au sens large, la compilation consiste en la traduction d'un programme écrit dans un langage, en un programme écrit dans un autre langage. Au sens strict, ce second programme est un fichier binaire directement exécutable par l'ordinateur, voire un programme écrit dans un langage intermédiaire pouvant être exécuté par une machine virtuelle, {\cad} un logiciel émulant les fonctionnalités d'un ordinateur. Le compilateur est le logiciel qui effectue une telle traduction. Ce traitement est habituellement terminé avant toute exécution du programme obtenu. Dans d'autres cas, le programme source est analysé, traduit et exécuté petit à petit par un logiciel appelé interpréteur. Pour synthétiser, on peut retenir ceci :
+\begin{description}
+\item[compilé] ~\\ compilateur(programme source) $\leadsto$ fichier exécutable ; \\
+  système d'exploitation(fichier exécutable) $\leadsto$ actions
+\item[semi-compilé] ~\\ compilateur(programme source) $\leadsto$ programme intermédiaire ; \\
+  machine virtuelle(programme intermédiaire) $\leadsto$ actions
+\item[interprété] ~\\ interpréteur(programme source) $\leadsto$ actions
+\end{description}
 
 Même si un langage peut en théorie être aussi bien compilé ou interprété, il apparaît dans les faits avec une certaine implémentation.  
+Voici quelques exemples\footnote{Note : tous les exemples donnés ci-dessous supposent un environnement linux}.
 
-TODO Exemples go, ghc, C, python, js, java
+\subsection{Exemples de programmes compilés}
+
+Les programmes écrits en Haskell, Go, C peuvent être compilés respectivement avec les compilateurs ghc, golang-go, gcc.
+Dans les exemples suivants, la commande de compilation, à laquelle on indique éventuellement le nom du programme source, est à gauche,
+le nom du fichier exécutable produit est à droite :
+\begin{itemize}
+  \item \verb! ghc main.ghc ! $\leadsto$ \texttt{main}
+  \item \verb! go build ! $\leadsto$ \texttt{hello}
+    \footnote{ Le programme source, appelé obligatoirement \texttt{main.go}, se trouve dans un dossier appelé \texttt{hello} (nom donné au projet dans cet exemple ; le fichier exécutable prend le nom du projet), lui-même contenu dans un dossier \texttt{src} (car l'environnement Go suppose que tous les projets se trouvent dans un dossier appelé \texttt{src}. La commande de compilation \texttt{go build} est exécutée à la racine du projet, {\cad} dans le dossier \texttt{hello/src}. On voit ici qu'il y a toujours de nombreuses \emph{conventions} à connaître. }
+  \item \verb! gcc main.c ! $\leadsto$ \texttt{a.out}
+\end{itemize}
+
+Les fichiers produits sont directement exécutables depuis le shell : 
+\begin{itemize}
+\item \verb! ./main ! $\leadsto$ actions
+\item \verb! ./hello ! $\leadsto$ actions
+\item \verb! ./a.out ! $\leadsto$ actions
+\end{itemize}
+
+\subsection{Exemple de programme semi-compilé}
+
+Les programmes écrits en Java sont généralement compilés dans un premier en temps en \emph{byte code} par la commande \texttt{javac} :
+
+\verb! javac Classe.java ! $\leadsto$ \texttt{Classe.class}
+
+Dans un second temps, le \emph{byte code} est éxécuté par la machine virtuelle java, dont l'exécution est lancée par la commande \texttt{java} :
+
+\verb! java Classe ! $\leadsto$ actions \footnote{On fournit à la commande \texttt{java} le nom complet de la classe et la machine virtuelle java charge en mémoire le \emph{byte code} correspondant, contenu dans le fichier d'extension \texttt{.class}. }
+
+\subsection{Exemple de programme interprété}
+
+
+TODO python, js
 
 %exécution
 %interpreteur
