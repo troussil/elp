@@ -20,9 +20,9 @@
 
 \maketitle
 
-L'objectif de ce document est de présenter d'une façon simple dix thèmes centraux autour desquels se déroule l'activité de programmation. L'étudiant les découvre en général à l'occasion d'un exercice et par le prisme d'un langage particulier. Il s'agit ici de les mettre en mots afin d'accompagner l'étudiant dans son apprentissage et l'aider à prendre du recul sur ces éléments importants. 
+L'objectif de ce document est de présenter d'une façon simple dix thèmes centraux autour desquels se déroule l'activité de programmation. L'étudiant les découvre en général à l'occasion d'un projet ou d'un exercice et par le prisme d'un langage particulier. Il s'agit ici de les mettre en mots afin de l'aider à nommer et prendre conscience de ces éléments importants. 
 
-\section{La programmation et les fondamentaux de l'informatique}
+\section{Les fondamentaux de l'informatique et la programmation}
 
 L'informatique est une science dont l'objet d'étude est constitué de grands piliers : représentation de l'information, algorithme, language et machine \cite{rapportacscience} : 
 %% \footnote{cf. le rapport de l'académie des sciences:
@@ -108,7 +108,9 @@ et \emph{rapidité d'exécution} (le byte code est suffisamment proche d'un code
 Les programmes interprétés sont généralement appelés \emph{scripts}. Leur exécution est plus lente, puisque l'analyse du script est effectuée au cours de l'exécution. En revanche, il est généralement possible d'exécuter des scripts incomplets, ce qui facilite leur incorporation dans d'autres contextes (HTML + JavaScript interprétés par un navigateur web par exemple). Cette souplesse accélère aussi le développement de prototypes d'application.
 
 
-\section{Valeur, variable, type}
+\section{Données}
+
+\subsection{Valeur}
 
 %donnée une donnée est la représentation d'une information dans un programme : soit dans le texte du programme (code source), soit en mémoire durant l'exécution.
 %https://fr.wikipedia.org/wiki/Donn%C3%A9e_(informatique)
@@ -135,7 +137,9 @@ Une \emph{variable} représente une donnée susceptible de changer au cours de l
 %compliqué à précisé. 
 %qui peut être restreinte qui est le bloc, {\cad} la portion de programme bien délimitée, dans laquelle elle est déclarée ou utilisée pour la première fois.
 
-%dessin ?
+TODO figure 
+
+\subsection{Typage}
 
 TODO typage
 - implicite/explicite
@@ -158,9 +162,9 @@ TODO exemple
 - dans certains langages comme Haskell, une fonction est une valeur comme une autre
 
 
-\section{Expression, structure de contrôle}
+\section{\'Evaluation des expressions, structures de contrôle}
 
-expression, évaluation (paresseuse), effets vs pureté, structures de contrôle
+%expression, évaluation (paresseuse), effets vs pureté, structures de contrôle
 
 
 Une \emph{expression} est un agencement de signe syntaxiquement correct (littéraux, variables, opérateurs, fonctions)
@@ -177,12 +181,15 @@ Voici des exemples d'expression.
 %% Un \emph{REPL} (pour \emph{Read-Eval-Print Loop}) est un interpréteur intéractif dans lequel l'utilisateur est invité à taper une expression (\emph{Read}). Quand celle-ci est écrite, elle est évaluée (\emph{Eval}) en un résultat, qui est ensuite affiché à l'écran (\emph{Print}), avant que l'utilisateur soit de nouveau invité à taper une expression (\emph{Loop}). C'est très pratique pour jouer avec un langage ou inspecter ce que fait certaines parties d'un programme. 
 
 
-Il existe quelques langages, dont Haskell, dits \emph{purs}, {\cad} pour lesquels il n'y a jamais d'effets.
-Dans ce type de langage, une expression donnée est toujours évaluée en une et une seule valeur, sans aucun autre effet. C'est un avantage indéniable pour comprendre ce que fait une partie isolée d'un programme. En revanche, les effets sont souvent très pratiques et essentiels pour atteindre une complexité algorithmique optimale, ce qui explique qu'ils sont admis et exploités par la majorité des langages de programmation.    
+Il existe quelques langages, dont Haskell, dits \emph{purs}, {\cad} pour lesquels il n'y a pas d'effets (ou plutôt, ils interviennent de manière restreinte et de telle sorte qu'ils ne remettent pas fondamentalement en cause la pureté du langage). Dans ce type de langage, une expression donnée est toujours évaluée en une et une seule valeur, sans aucun autre effet. C'est un avantage indéniable pour comprendre, à sa simple lecture, ce que fait une partie isolée d'un programme. En revanche, les effets sont pratiques et souvent nécessaires pour atteindre une complexité algorithmique optimale, ce qui explique qu'ils sont admis et exploités par la majorité des langages de programmation.    
 
-pure permet paresseux
+Cependant, la pureté offre un autre avantage. En effet, elle rend possible \emph{l'évaluation paresseuse} \cite[Lecture 6: Lazy Evaluation]{coursHaskell}, qui désigne une stratégie d'évaluation des expressions dans laquelle l'évaluation est repoussée aussi longtemps que possible. Les expressions ne sont pas évaluées tant qu'il n'est pas absolument nécessaire de le faire. Les expressions sont conservées en mémoire sous forme symbolique sans autre traitement. Par exemple, supposons que nous ayons défini en Haskell la fonction \texttt{f} telle que \verb! f x y = x + 2 !, ce qui signifie que \texttt{f} retourne la valeur de son premier paramètre augmentée de 2 (et ignore le second). L'évaluation paresseuse de l'expression \verb! f 5 (29^35792) ! n'implique pas l'évaluation de l'expression \verb! (29^35792) ! qui sera simplement stockée en mémoire sans aucun calcul et \texttt{f} sera appelée immédiatement. Puisque \texttt{f} retourne \texttt{5} sans utiliser le second argument, l'expression \verb! (29^35792) ! sera finalement supprimée sans avoir été évaluée. Au contraire, dans un langage à \emph{évaluation stricte}, évaluer \verb! f 5 (29^35792) ! exige l'évaluation de \texttt{5} (immédiate) et \verb! 29^35792 ! (ce qui nécessite un calcul coûteux) avant de passer les résultats à \texttt{f}. Dans cet exemple, le calcul coûteux s'avère finalement inutile. Mais l'avantage de l'évaluation stricte, c'est de pouvoir prédire exactement dans quel ordre les traitements se feront, ce qui est crucial quand les expressions ont des effets. C'est pourquoi l'évaluation paresseuse n'est possible qu'en l'absence d'effet.
 
-paresseux permet structure de contrôle comme fonction
+Enfin, l'évaluation paresseuse permet de définir des \emph{structures de contrôle} comme de simples fonctions. Par exemple, la structure de contrôle \texttt{if} évalue ou exécute, parmi deux alternatives, seulement l'une d'elles, selon la valeur d'une condition. En Haskell, l'évaluation paresseuse permet de définir cette structure de contrôle à l'aide d'une simple fonction. La fonction \texttt{if} est définie de telle sorte que pour évaluer \verb! if condition a b !, seulement l'expression \texttt{a} est évaluée si \texttt{condition} est évaluée à vrai, tandis que l'expression \texttt{b} n'est pas utilisée, et inversement si \texttt{condition} est évaluée à faux. Au contraire, dans les langages à évaluation stricte, tous les arguments d'une telle fonction serait évalués, ce qui serait absurde. C'est pourquoi, il existe dans ces langages des constructions spécifiques pour les structures de contrôle qui fonctionnent et sont nommées à peu près toujours de la même manière :
+\begin{description}
+\item[branchement] \verb! if / then / else / elif !, \verb! switch / case / break !, 
+\item[boucle] \verb! for / break / continue !, \verb! while !, \verb! do while !.
+\end{description}
 
 \section{Polymorphisme}
 
@@ -190,11 +197,15 @@ paresseux permet structure de contrôle comme fonction
 
 \section{Organisation du code source et conflits de nom}
 
-à déplacer après compilation ?
+A FAIRE
 
 \section{Erreurs et exceptions}
 
+A FAIRE
+
 \section{Parallélisme et concurrence}
+
+A FAIRE
 
 \section{Paradigmes de programmation}
 
