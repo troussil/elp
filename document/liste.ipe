@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70107" creator="Ipe 7.1.10">
-<info created="D:20190912101917" modified="D:20190912134208"/>
+<info created="D:20190912134725" modified="D:20190912134725"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -220,13 +220,13 @@ h
 <dashstyle name="dash dotted" value="[4 2 1 2] 0"/>
 <dashstyle name="dash dot dotted" value="[4 2 1 2 1 2] 0"/>
 <textsize name="large" value="\large"/>
-<textsize name="small" value="\small"/>
-<textsize name="tiny" value="\tiny"/>
 <textsize name="Large" value="\Large"/>
 <textsize name="LARGE" value="\LARGE"/>
 <textsize name="huge" value="\huge"/>
 <textsize name="Huge" value="\Huge"/>
+<textsize name="small" value="\small"/>
 <textsize name="footnote" value="\footnotesize"/>
+<textsize name="tiny" value="\tiny"/>
 <textstyle name="center" begin="\begin{center}" end="\end{center}"/>
 <textstyle name="itemize" begin="\begin{itemize}" end="\end{itemize}"/>
 <textstyle name="item" begin="\begin{itemize}\item{}" end="\end{itemize}"/>
@@ -253,60 +253,56 @@ h
 </ipestyle>
 <page>
 <layer name="alpha"/>
-<layer name="beta"/>
-<layer name="gamma"/>
-<view layers="alpha beta gamma" active="beta"/>
-<group layer="beta">
-<text matrix="1 0 0 1 12 12" transformations="translations" pos="128 704" stroke="black" type="label" width="4.981" height="6.42" depth="0" valign="baseline">2</text>
-<path matrix="1 0 0 1 16 16" stroke="black">
-112 720 m
-112 688 l
-144 688 l
-144 720 l
+<view layers="alpha" active="alpha"/>
+<path layer="alpha" stroke="black">
+128 672 m
+128 640 l
+160 640 l
+160 672 l
 h
 </path>
-</group>
-<text layer="gamma" matrix="1 0 0 1 0 16" transformations="translations" pos="160 672" stroke="black" type="label" width="72.312" height="6.918" depth="0" valign="baseline">tableau d&apos;entiers</text>
-<text transformations="translations" pos="80 720" stroke="black" type="label" width="45.662" height="6.918" depth="0" valign="baseline">unTableau</text>
-<path stroke="black" cap="1">
-320 736 m
-320 736 l
+<path stroke="black">
+192 720 m
+192 688 l
+224 688 l
+224 720 l
+h
 </path>
-<path layer="beta" stroke="black" dash="dotted">
-256 736 m
-320 736 l
+<path matrix="1 0 0 1 16 0" stroke="black">
+224 624 m
+224 592 l
+256 592 l
+256 624 l
+h
 </path>
-<path matrix="1 0 0 1 0 -32" stroke="black" dash="dotted">
-256 736 m
-320 736 l
+<path stroke="black">
+288 672 m
+288 640 l
+320 640 l
+320 672 l
+h
+</path>
+<text matrix="1 0 0 1 32 0" transformations="translations" pos="48 656" stroke="black" type="label" width="36.723" height="6.808" depth="0" valign="baseline">uneListe</text>
+<text matrix="1 0 0 1 -16 32" transformations="translations" pos="208 544" stroke="black" type="label" width="77.653" height="6.918" depth="0" valign="baseline">liste de caract\`eres</text>
+<text matrix="1 0 0 1 0 4" transformations="translations" pos="140 648" stroke="black" type="label" width="11.07" height="6.918" depth="0" valign="baseline">&apos;h&apos;</text>
+<text matrix="1 0 0 1 64 52" transformations="translations" pos="140 648" stroke="black" type="label" width="9.963" height="6.918" depth="0" valign="baseline">&apos;e&apos;</text>
+<text matrix="1 0 0 1 112 -44" transformations="translations" pos="140 648" stroke="black" type="label" width="8.302" height="6.918" depth="0" valign="baseline">&apos;l&apos;</text>
+<text matrix="1 0 0 1 160 4" transformations="translations" pos="140 648" stroke="black" type="label" width="8.302" height="6.918" depth="0" valign="baseline">&apos;l&apos;</text>
+<path stroke="black" arrow="normal/normal">
+160 656 m
+192 704 l
+</path>
+<path stroke="black" arrow="normal/normal">
+224 704 m
+240 608 l
+</path>
+<path stroke="black" arrow="normal/normal">
+272 608 m
+288 656 l
 </path>
 <path stroke="black" dash="dotted">
-288 736 m
-288 704 l
-</path>
-<text matrix="1 0 0 1 44 12" transformations="translations" pos="128 704" stroke="black" type="label" width="4.981" height="6.42" depth="0" valign="baseline">5</text>
-<path matrix="1 0 0 1 48 16" stroke="black">
-112 720 m
-112 688 l
-144 688 l
-144 720 l
-h
-</path>
-<text matrix="1 0 0 1 76 12" transformations="translations" pos="128 704" stroke="black" type="label" width="4.981" height="6.42" depth="0" valign="baseline">1</text>
-<path matrix="1 0 0 1 80 16" stroke="black">
-112 720 m
-112 688 l
-144 688 l
-144 720 l
-h
-</path>
-<text matrix="1 0 0 1 108 12" transformations="translations" pos="128 704" stroke="black" type="label" width="4.981" height="6.42" depth="0" valign="baseline">0</text>
-<path matrix="1 0 0 1 112 16" stroke="black">
-112 720 m
-112 688 l
-144 688 l
-144 720 l
-h
+320 656 m
+336 672 l
 </path>
 </page>
 </ipe>

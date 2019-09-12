@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70107" creator="Ipe 7.1.10">
-<info created="D:20190912101917" modified="D:20190912134208"/>
+<info created="D:20190912134958" modified="D:20190912135028"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -220,13 +220,13 @@ h
 <dashstyle name="dash dotted" value="[4 2 1 2] 0"/>
 <dashstyle name="dash dot dotted" value="[4 2 1 2 1 2] 0"/>
 <textsize name="large" value="\large"/>
-<textsize name="small" value="\small"/>
-<textsize name="tiny" value="\tiny"/>
 <textsize name="Large" value="\Large"/>
 <textsize name="LARGE" value="\LARGE"/>
 <textsize name="huge" value="\huge"/>
 <textsize name="Huge" value="\Huge"/>
+<textsize name="small" value="\small"/>
 <textsize name="footnote" value="\footnotesize"/>
+<textsize name="tiny" value="\tiny"/>
 <textstyle name="center" begin="\begin{center}" end="\end{center}"/>
 <textstyle name="itemize" begin="\begin{itemize}" end="\end{itemize}"/>
 <textstyle name="item" begin="\begin{itemize}\item{}" end="\end{itemize}"/>
@@ -253,60 +253,26 @@ h
 </ipestyle>
 <page>
 <layer name="alpha"/>
-<layer name="beta"/>
-<layer name="gamma"/>
-<view layers="alpha beta gamma" active="beta"/>
-<group layer="beta">
-<text matrix="1 0 0 1 12 12" transformations="translations" pos="128 704" stroke="black" type="label" width="4.981" height="6.42" depth="0" valign="baseline">2</text>
-<path matrix="1 0 0 1 16 16" stroke="black">
-112 720 m
-112 688 l
-144 688 l
-144 720 l
+<view layers="alpha" active="alpha"/>
+<path layer="alpha" stroke="black">
+192 672 m
+192 640 l
+224 640 l
+224 672 l
 h
 </path>
-</group>
-<text layer="gamma" matrix="1 0 0 1 0 16" transformations="translations" pos="160 672" stroke="black" type="label" width="72.312" height="6.918" depth="0" valign="baseline">tableau d&apos;entiers</text>
-<text transformations="translations" pos="80 720" stroke="black" type="label" width="45.662" height="6.918" depth="0" valign="baseline">unTableau</text>
-<path stroke="black" cap="1">
-320 736 m
-320 736 l
-</path>
-<path layer="beta" stroke="black" dash="dotted">
-256 736 m
-320 736 l
-</path>
-<path matrix="1 0 0 1 0 -32" stroke="black" dash="dotted">
-256 736 m
-320 736 l
-</path>
-<path stroke="black" dash="dotted">
-288 736 m
-288 704 l
-</path>
-<text matrix="1 0 0 1 44 12" transformations="translations" pos="128 704" stroke="black" type="label" width="4.981" height="6.42" depth="0" valign="baseline">5</text>
-<path matrix="1 0 0 1 48 16" stroke="black">
-112 720 m
-112 688 l
-144 688 l
-144 720 l
+<text matrix="1 0 0 1 -9.88711 -4.79375" transformations="translations" pos="208 656" stroke="black" type="label" width="20.23" height="6.808" depth="0" valign="baseline">True</text>
+<path matrix="1 0 0 1 0 -32" stroke="black">
+192 672 m
+192 640 l
+224 640 l
+224 672 l
 h
 </path>
-<text matrix="1 0 0 1 76 12" transformations="translations" pos="128 704" stroke="black" type="label" width="4.981" height="6.42" depth="0" valign="baseline">1</text>
-<path matrix="1 0 0 1 80 16" stroke="black">
-112 720 m
-112 688 l
-144 688 l
-144 720 l
-h
-</path>
-<text matrix="1 0 0 1 108 12" transformations="translations" pos="128 704" stroke="black" type="label" width="4.981" height="6.42" depth="0" valign="baseline">0</text>
-<path matrix="1 0 0 1 112 16" stroke="black">
-112 720 m
-112 688 l
-144 688 l
-144 720 l
-h
-</path>
+<text matrix="1 0 0 1 -9.88711 -36.7938" transformations="translations" pos="208 656" stroke="black" type="label" width="20.23" height="6.808" depth="0" valign="baseline">True</text>
+<text matrix="1 0 0 1 0 -4.19453" transformations="translations" pos="128 656" stroke="black" type="label" width="50.837" height="6.926" depth="1.93" valign="baseline">estExplicite</text>
+<text matrix="1 0 0 1 0 -4.19453" transformations="translations" pos="128 624" stroke="black" type="label" width="48.485" height="6.815" depth="1.93" valign="baseline">estStatique</text>
+<text transformations="translations" pos="192 592" stroke="black" type="label" width="32.102" height="6.815" depth="1.93" valign="baseline">Typage</text>
+<text matrix="1 0 0 1 -112 47.4008" transformations="translations" pos="192 592" stroke="black" type="label" width="49.26" height="6.815" depth="1.93" valign="baseline">unTypage .</text>
 </page>
 </ipe>

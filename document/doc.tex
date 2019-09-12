@@ -110,8 +110,6 @@ Les programmes interprétés sont généralement appelés \emph{scripts}. Leur e
 
 \section{Données}
 
-\subsection{Valeur}
-
 %donnée une donnée est la représentation d'une information dans un programme : soit dans le texte du programme (code source), soit en mémoire durant l'exécution.
 %https://fr.wikipedia.org/wiki/Donn%C3%A9e_(informatique)
 Une \emph{valeur} est une donnée, {\cad} la représentation d'une information, aussi bien dans le texte du programme source, qu'en mémoire durant l'exécution. 
@@ -132,7 +130,6 @@ Un \emph{littéral} est une valeur écrite explicitement dans le programme sourc
 }
 \end{verbatim}
 \'Evidemment, un programme ne contenant que des valeurs littérales ne serait pas très intéressant, car il ne serait pas capable d'adapter les actions de la machine en fonction d'informations données. Ce qui rend intéressant les programmes sont leurs variables. 
-
 Une \emph{variable} représente une donnée susceptible de changer au cours de l'exécution ou d'une exécution à l'autre. Elle possède un nom, appelé aussi \emph{identifiant}, une \emph{valeur} stockée en mémoire au cours de l'exécution (et qui peut changer ou non), ainsi qu'un \emph{type} caractérisant les valeurs admissibles et les opérations pouvant leur être appliquées. Les variables ont également une durée de vie, appelée aussi \emph{portée}, en général limitée (pour ne pas conserver en mémoire une valeur qui serait devenue inutile).  
 %compliqué à précisé. 
 %qui peut être restreinte qui est le bloc, {\cad} la portion de programme bien délimitée, dans laquelle elle est déclarée ou utilisée pour la première fois.
@@ -147,9 +144,7 @@ Comme sur la \textsc{Figure}~\ref{fig:var}, la métaphore de la boite est largem
   \label{fig:var}
 \end{figure}
 
-\subsection{Typage}
-
-Le type définit la nature des valeurs qu'une variable peut contenir, ainsi que les opérations qui peuvent être appliquées. 
+\subsection{Types de base}
 
 La plupart des langages offrent plusieurs types prédéfinis pour des valeurs élémentaires :
 \begin{itemize}
@@ -159,23 +154,41 @@ La plupart des langages offrent plusieurs types prédéfinis pour des valeurs é
 \item le type caractère selon le standard \href{https://fr.wikipedia.org/wiki/American_Standard_Code_for_Information_Interchange}{ASCII} ou \href{https://fr.wikipedia.org/wiki/Unicode}{Unicode}, sur lequel agissent par exemple des opérateurs de comparaison (\verb!egalite, <, >,! \ldots).
 \end{itemize}
 
-La plupart des langages de programmation proposent également des types complexes, pouvant être paramétrés ou personnalisés, pour des valeurs structurées :
+\subsection{Types composés}
+
+La plupart des langages de programmation proposent également des types composés, pouvant être paramétrés ou personnalisés, pour des valeurs structurées :
 \begin{itemize}
 \item Les types \emph{tableau} et \emph{liste}, sont paramétrés par un type \texttt{t} et acceptent une séquence de valeurs de type \texttt{t} (\texttt{t} est arbitraire, avec parfois des restrictions). L'opérateur d'accès à une valeur de la séquence est souvent noté par des crochets : \verb! unTableau[5] ! retourne la valeur de rang 5 dans la séquence. Les valeurs sont stockées en mémoire les unes à côtés des autres dans le cas des tableaux, tandis qu'elles peuvent être dispersées dans le cas des listes. Cela à un impact sur la rapidité des traitements : l'accès est garanti en un nombre constant d'opérations élémentaires dans le cas des tableaux, alors qu'il peut nécessiter la visite de toutes les valeurs, l'une après l'autre, dans le cas d'une liste, ce qui implique un nombre d'opérations élémentaires proportionnel à la taille de la liste.
-\item Les \emph{types composites}, appelés aussi \emph{tuple} (Haskell, Python), \emph{struct} (C, Go), \emph{record} (Pascal), acceptent une collection de valeurs, appelées \emph{champs}, de types possiblement distincts. 
-\item En programmation orientée-objet (en Java par exemple), les \emph{classes} ne sont rien d'autres que des types composites, définissant donc une collection de \emph{champs}, enrichis des fonctions, appelés dans ce contexte des \emph{méthodes}, qui agissent sur cette collection. Les concepts de fonction et méthode seront détaillées dans la section~\ref{sec:fonction}.
-\item Les \emph{types algébriques}, présents par exemple dans Haskell, mais aussi implémentables en C, sont des unions disjointes de types composites.   
+\item Les \emph{types produits} acceptent une collection de valeurs, appelées \emph{champs}, de types possiblement distincts. Ils sont généralement appelés \emph{tuple} quand les champs ne sont pas nommés (Haskell, Python) et \emph{struct} quand ils le sont (C, Go). Le terme "produit" (utilisé notamment en Haskell) vient de ce que l'ensemble des valeurs admises par un tel type est égal au produit cartésien des ensembles de valeurs représentés par les types des champs. Par exemple, le type \texttt{Typage}, défini en Go par 
+\begin{verbatim}
+type Typage struct {
+    estExplicite bool
+    estStatique bool
+}
+\end{verbatim}
+et en Haskell par l'une de ces deux lignes
+\begin{verbatim}
+data Typage = CtorTypage Bool Bool --def type produit
+type Typage = (Bool, Bool)         --synonyme de tuple
+\end{verbatim}
+représente le produit cartésien $\{True, False\}$ (pour le premier champs) $\times$ $\{True, False\}$ (pour le second), soit $\{ (True, True), (True, False), (False, True), (False, False) \}$.   
+\item Les \emph{classes}, en programmation orientée-objet (en Java par exemple), représentent aussi une collection de \emph{champs} (comme des \emph{struct}), mais possiblement enrichies des fonctions, appelés dans ce contexte \emph{méthodes}, qui agissent sur cette collection. Les concepts de fonction et méthode seront détaillés dans la section~\ref{sec:fonction}.
+\item Les \emph{types algébriques}, en référence aux structures algébriques mathématiques, sont des unions disjointes de types produits. Une présentation détaillée des types algébriques en Haskell se trouve par exemple dans \cite[chapitre 3]{haskell}.    
 \end{itemize}
 
 %% La plupart des langages offrent également la possibilité au programmeur de définir un type, dit \emph{énuméré}, en donnant explicitement toutes les valeurs possibles (en général automatiquement mises en correspondance avec des entiers). Le type \texttt{JourDeLaSemaine}, par exemple, pourrait être défini comme n'acceptant que les valeurs \verb!Lundi, Mardi,! \ldots \verb!, Dimanche!.
+
+%% En Haskell, par exemple, une fonction est une valeur comme une autre et un type lui est associé. TODO dans fonction ? 
+
+\subsection{Pointeurs}
 
 Enfin, certains langages de bas niveau, comme C ou Go, donnent la possibilité à un programme de manipuler finement la mémoire, par l'intermédiaire de \emph{pointeurs}, {\cad} de variables stockant l'adresse d'un octet en mémoire. Même si cette adresse est un entier, son utilisation particulière est facilitée par l'introduction d'un type spécifique. Le type pointeur est paramétré par un type \texttt{t} correspondant au type de la valeur localisée en mémoire à l'adresse contenue dans le pointeur. La connaissance du type \texttt{t} ne sert pas à dimensionner la boite du pointeur, qui contient une adresse codée sur 32 ou 64 bits selon l'architecture de l'ordinateur, mais sert à lire la valeur, se trouvant à l'adresse mémorisée, ou à lire d'autres valeurs adjacentes, en prenant en compte le nombre d'octets sur lesquels sont stockées ces valeurs.
 
 TODO figure
 
-%En Haskell, par exemple, une fonction est une valeur comme une autre et un type lui est associé. TODO dans fonction ? 
+\subsection{Typage}
 
-Le typage consiste à faire correspondre un type à une variable. Il peut être \emph{explicite} (le typage doit être impérativement donné dans le programme) ou \emph{implicite} (le typage n'est pas obligatoirement requis et les types possibles sont déduits automatiquement lors de la compilation ou de l'exécution). Il peut être \emph{statique} (quand le typage est établi et vérifié à la compilation) ou \emph{dynamique} (quand le typage peut être établi au cours de l'exécution). Enfin, la force du typage fait référence à la sévérité du langage quant à la combinaison de valeurs de différents types, mais cette notion est floue et il n'y a pas de définition communément admise de ce qu'est un typage fort ou faible. La \textsc{Table}~\ref{tab:typage} positionne quelques langages par rapport au typage. 
+Le \emph{typage} consiste à faire correspondre un type à une variable. Il peut être \emph{explicite} (le typage doit être impérativement donné dans le programme) ou \emph{implicite} (le typage n'est pas obligatoirement requis et les types possibles sont déduits automatiquement lors de la compilation ou de l'exécution). Il peut être \emph{statique} (quand le typage est établi et vérifié à la compilation) ou \emph{dynamique} (quand le typage peut être établi au cours de l'exécution). Enfin, la force du typage fait référence à la sévérité du langage quant à la combinaison de valeurs de différents types, mais cette notion est floue et il n'y a pas de définition communément admise de ce qu'est un typage fort ou faible. La \textsc{Table}~\ref{tab:typage} positionne quelques langages par rapport au typage. 
 %Même si on peut dire que Haskell est fortement typé au sens où il n'y a aucune conversion implicite de type possible, alors que Javascript est faiblement typé au sens où un tout opérateur renvoie un résultat, quitte à modifier le type de l'un des opérandes.    
 
 \begin{table}[htbp]
