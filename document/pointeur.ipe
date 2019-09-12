@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70107" creator="Ipe 7.1.10">
-<info created="D:20190912134958" modified="D:20190912155052"/>
+<info created="D:20190912164020" modified="D:20190912173206"/>
+<preamble>\usepackage{rotating}</preamble>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -254,37 +255,76 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<path layer="alpha" stroke="black">
-192 672 m
-192 640 l
-224 640 l
-224 672 l
+<path layer="alpha" matrix="1 0 0 1 64 0" stroke="black">
+128 640 m
+128 672 l
+160 672 l
+160 640 l
 h
 </path>
-<text matrix="1 0 0 1 -9.88711 -4.79375" transformations="translations" pos="208 656" stroke="black" type="label" width="17.739" height="6.128" depth="0" valign="baseline">true</text>
-<path matrix="1 0 0 1 0 -32" stroke="black">
-192 672 m
-192 640 l
-224 640 l
-224 672 l
+<text matrix="1 0 0 1 88.568 -2.99609" transformations="translations" pos="80 656" stroke="black" type="label" width="13.311" height="6.135" depth="1.93" valign="baseline">ptr</text>
+<text matrix="1 0 0 1 39.7316 0.898828" transformations="translations" pos="128 624" stroke="black" type="label" width="85.098" height="6.661" depth="1.93" valign="baseline">pointeur vers entier</text>
+<path stroke="black">
+320 680 m
+320 672 l
+</path>
+<path stroke="black">
+328 680 m
+328 672 l
+</path>
+<path stroke="black">
+336 680 m
+336 672 l
+</path>
+<path stroke="black">
+344 680 m
+344 672 l
+</path>
+<path stroke="black">
+352 680 m
+352 672 l
+</path>
+<text matrix="1 0 0 1 -2.90664 0.299609" transformations="translations" pos="328 624" stroke="black" type="label" width="24.658" height="6.654" depth="0" valign="baseline">entier</text>
+<text matrix="1 0 0 1 -4.79375 3.2957" transformations="translations" pos="320 608" stroke="black" type="label" width="41.843" height="7.473" depth="2.49" valign="baseline">(4 octets)</text>
+<path stroke="black" dash="dashed">
+352 672 m
+352 640 l
+384 640 l
+384 672 l
 h
 </path>
-<text matrix="1 0 0 1 -9.88711 -36.7938" transformations="translations" pos="208 656" stroke="black" type="label" width="17.739" height="6.128" depth="0" valign="baseline">true</text>
-<text matrix="1 0 0 1 0 -4.19453" transformations="translations" pos="128 656" stroke="black" type="label" width="50.837" height="6.926" depth="1.93" valign="baseline">estExplicite</text>
-<text matrix="1 0 0 1 0 -4.19453" transformations="translations" pos="128 624" stroke="black" type="label" width="48.485" height="6.815" depth="1.93" valign="baseline">estStatique</text>
-<text transformations="translations" pos="192 592" stroke="black" type="label" width="32.102" height="6.815" depth="1.93" valign="baseline">Typage</text>
-<text matrix="1 0 0 1 -124.179 44.2996" transformations="translations" pos="192 592" stroke="black" type="label" width="49.26" height="6.815" depth="1.93" valign="baseline">unTypage .</text>
 <path stroke="black">
-120 636 m
-124 636 l
-124 652 l
-128 652 l
+320 672 m
+320 640 l
+352 640 l
+352 672 l
+h
 </path>
-<path stroke="black">
-120 636 m
-124 636 l
-124 620 l
-128 620 l
+<text matrix="1 0 0 1 60.4047 -75.8055" transformations="translations" pos="136 728" stroke="black" type="label" width="23.523" height="6.42" depth="0" valign="baseline">0x...5</text>
+<text matrix="0.999484 0.0321071 -0.0321071 0.999484 208.514 -55.9918" transformations="translations" pos="136 728" stroke="black" type="label" width="6.42" height="23.523" depth="0" valign="baseline">\rotatebox{90}{0x...5}</text>
+<text matrix="0.999484 0.0321071 -0.0321071 0.999484 216.514 -55.9918" transformations="translations" pos="136 728" stroke="black" type="label" width="6.42" height="23.523" depth="0" valign="baseline">\rotatebox{90}{0x...6}</text>
+<text matrix="0.999484 0.0321071 -0.0321071 0.999484 224.514 -55.9918" transformations="translations" pos="136 728" stroke="black" type="label" width="6.42" height="23.523" depth="0" valign="baseline">\rotatebox{90}{0x...7}</text>
+<text matrix="0.999484 0.0321071 -0.0321071 0.999484 232.514 -55.9918" transformations="translations" pos="136 728" stroke="black" type="label" width="6.42" height="23.523" depth="0" valign="baseline">\rotatebox{90}{0x...8}</text>
+<text matrix="0.999484 0.0321071 -0.0321071 0.999484 240.514 -55.9918" transformations="translations" pos="136 728" stroke="black" type="label" width="6.42" height="23.523" depth="0" valign="baseline">\rotatebox{90}{0x...9}</text>
+<group>
+<text matrix="1 0 0 1 -1.79766 -2.99609" transformations="translations" pos="336 656" stroke="black" type="label" width="5.853" height="7.704" depth="0" valign="baseline" size="large">2</text>
+</group>
+<text matrix="1 0 0 1 4.79375 4.40469" pos="304 648" stroke="black" type="label" width="6.178" height="5.147" depth="0" valign="baseline" size="large">x</text>
+<path stroke="black" dash="dotted">
+328 672 m
+328 640 l
+</path>
+<path stroke="black" dash="dotted">
+336 672 m
+336 640 l
+</path>
+<path stroke="black" dash="dotted">
+344 672 m
+344 640 l
+</path>
+<path stroke="black" dash="dotted">
+360 672 m
+360 640 l
 </path>
 </page>
 </ipe>
