@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70107" creator="Ipe 7.1.10">
-<info created="D:20190912134958" modified="D:20190912155052"/>
+<info created="D:20190912134958" modified="D:20190917145702"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -254,26 +254,26 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<path layer="alpha" stroke="black">
+<path layer="alpha" matrix="1 0 0 1 -32 0" stroke="black">
+192 672 m
+192 640 l
+256 640 l
+256 672 l
+h
+</path>
+<text matrix="1 0 0 1 -34.5121 -2.25859" transformations="translations" pos="208 656" stroke="black" type="label" width="30.441" height="6.918" depth="0" valign="baseline">&quot;Sean&quot;</text>
+<path matrix="1 0 0 1 -32 -32" stroke="black">
 192 672 m
 192 640 l
 224 640 l
 224 672 l
 h
 </path>
-<text matrix="1 0 0 1 -9.88711 -4.79375" transformations="translations" pos="208 656" stroke="black" type="label" width="17.739" height="6.128" depth="0" valign="baseline">true</text>
-<path matrix="1 0 0 1 0 -32" stroke="black">
-192 672 m
-192 640 l
-224 640 l
-224 672 l
-h
-</path>
-<text matrix="1 0 0 1 -9.88711 -36.7938" transformations="translations" pos="208 656" stroke="black" type="label" width="17.739" height="6.128" depth="0" valign="baseline">true</text>
-<text matrix="1 0 0 1 0 -4.19453" transformations="translations" pos="128 656" stroke="black" type="label" width="50.837" height="6.926" depth="1.93" valign="baseline">estExplicite</text>
-<text matrix="1 0 0 1 0 -4.19453" transformations="translations" pos="128 624" stroke="black" type="label" width="48.485" height="6.815" depth="1.93" valign="baseline">estStatique</text>
-<text transformations="translations" pos="192 592" stroke="black" type="label" width="32.102" height="6.815" depth="1.93" valign="baseline">Typage</text>
-<text matrix="1 0 0 1 -124.179 44.2996" transformations="translations" pos="192 592" stroke="black" type="label" width="49.26" height="6.815" depth="1.93" valign="baseline">unTypage .</text>
+<text matrix="1 0 0 1 -36.8168 -35.1805" transformations="translations" pos="208 656" stroke="black" type="label" width="9.963" height="6.42" depth="0" valign="baseline">50</text>
+<text matrix="1 0 0 1 4.19453 -6.5914" transformations="translations" pos="128 656" stroke="black" type="label" width="23.246" height="4.289" depth="0" valign="baseline">name</text>
+<text matrix="1 0 0 1 5.30078 -4.65547" transformations="translations" pos="128 624" stroke="black" type="label" width="14.391" height="4.297" depth="1.93" valign="baseline">age</text>
+<text matrix="1 0 0 1 -32 0" transformations="translations" pos="192 592" stroke="black" type="label" width="29.279" height="6.808" depth="0" valign="baseline">Person</text>
+<text matrix="1 0 0 1 -84.0895 43.1012" transformations="translations" pos="192 592" stroke="black" type="label" width="10.018" height="4.289" depth="0" valign="baseline">s .</text>
 <path stroke="black">
 120 636 m
 124 636 l
