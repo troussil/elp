@@ -172,9 +172,9 @@
 	  <section>
 	    <h2>Main concepts</h2>
 	    <ul>
-	      <li>value, variable, data type...</li>
-	      <li>function (evaluation strategy, partial application, function vs method...),</li>
-	      <li>polymorphism,</li>
+	      <li><strong>value, variable, data type...</strong></li>
+	      <li><strong>function (evaluation strategy, function vs method...)</strong>,</li>
+	      <li><strong>polymorphism</strong>,</li>
 	      <li>package/module,</li>
 	      <li>error/exception,</li>
 	      <li>concurrency vs parallelism</li>
@@ -192,15 +192,17 @@
 	</section>
 
 	<section>
-	  <h2>Data</h2>
-	  <p>Data = piece of information in source code or memory during exection</p>
-	  <p><pre>2, 5.7, True, "hello", { "nom" : "roussillon", "age" : 35 }</pre></p>
-	  <p>What is interesting is the variable part of a program!</p>
-	</section>
-	<section>
-	  <h2>Variable as a box</h2>
-	  <img src="img/box.jpg" class="stretch"  />
-	  <p>name, value, type, scope</p>
+	  <section>
+	    <h2>Data</h2>
+	    <p>Data = piece of information in source code or memory during exection</p>
+	    <p><pre>2, 5.7, True, "hello", { "nom" : "roussillon", "age" : 35 }</pre></p>
+	    <p>What is interesting is the variable part of a program!</p>
+	  </section>
+	  <section>
+	    <h2>Variable as a box</h2>
+	    <img src="img/box.jpg" class="stretch"  />
+	    <p>name, value, type, scope</p>
+	  </section>
 	</section>
 	<section>
 	  <section>
@@ -238,14 +240,15 @@
 	  </section>
 	  <section>
 	    <h2>Pointers</h2>
-	    <img src="img/pointeur.pdf.svg" class="stretch" />
+	    <img src="img/pointeur.svg" class="stretch" style="background-color:#222;border:0px" />
+	    <p>Used in many language implementations!</p>
 	  </section>
 	  <section>
-	    <h2>Array</h2>
+	    <h2>Array (hidden pointer?)</h2>
 	    <img src="img/array.jpg" class="stretch"  />
 	  </section>
 	  <section>
-	    <h2>List</h2>
+	    <h2>List (hidden pointers/records?)</h2>
 	    <img src="img/train.jpg" />
 	  </section>
 	  <section>
@@ -280,7 +283,7 @@
 	<section>
 	  <section>
 	    <h2>Function</h2>
-	    <p>great to divide and reuse</p>
+	    <p>Great to divide and reuse!</p>
 	    <img src="img/origami.jpg" width="250" /> <img src="img/kite-base.svg" width="303" />
 	  </section>
 	  <section>
@@ -303,7 +306,7 @@
 	    <ul>
 	      <li><pre><code>add(42,13)</code></pre><i class="fas fa-long-arrow-alt-right"></i> 55  </li>
 	      <li><pre><code>add 42 13 </code></pre><i class="fas fa-long-arrow-alt-right"></i> 55  </li>
-	      <li>parameter passing = how to match 42 and 13 to x and y? </li>
+	      <li>parameter passing = how to map 42 and 13 to x and y? </li>
 	    </ul>
 	  </section>
 
@@ -319,41 +322,79 @@
 	    <p><pre><code>c = add(a,b)</code></pre></p>
 	  </section>
 	  
+	  <!-- <section> -->
+	  <!--   <h2>Evaluation strategy</h2> -->
+	  <!--   <ul> -->
+	  <!--     <li>strict</li> -->
+	  <!--     <ul> -->
+	  <!-- 	<li> call by value </li> -->
+	  <!-- 	<li> call by reference </li> -->
+	  <!--     </ul> -->
+	  <!--     <li>non-strict = lazy</li> -->
+	  <!--     <ul> -->
+	  <!-- 	<li> call by need </li> -->
+	  <!--     </ul> -->
+	  <!--   </ul> -->
+	  <!-- </section> -->
+
 	  <section>
-	    <h2>Evaluation strategy</h2>
-	    <pre><code data-trim data-noescape>
-		f x y = x + 2
-	    </code></pre>	    
-	    <pre><code data-trim data-noescape>
-	    f 5 (29^35792)
-	    </code></pre>
-	    <ul>
-	      <li>strict</li>
-	      <ul>
-		<li> call by value </li>
-		<li> call by reference </li>
-	      </ul>
-	      <li>non-strict = lazy</li>
-	      <ul>
-		<li> call by need </li>
-	      </ul>
-	    </ul>
+	    <h2>Strict evaluation</h2>
+	    <pre><code>add(a,b)</code></pre>
+	    <style>
+	      .container{
+	      display: flex;
+	      }
+	      .col{
+	      flex: 1;
+	      }
+	    </style>
+
+	    <div class="container">
+	      <div class="col">
+		<p>call by value</p>
+		<img src="img/callByValue.svg" width="300" style="background-color:#222;border:0px" />
+	      </div>
+	      <div class="col">
+		<p> call by reference </p>
+		<img src="img/callByRef.svg" width="300" style="background-color:#222;border:0px" />
+	      </div>
+	    </div>
+	    <p>Warning: values can be (kinds of) pointers!</p>
 	  </section>
 
 	  <section>
-	    <h2>NB: Strictness implies specific statements</h2>
-	    <p>Control flow
-	    <ul>
-	      <li>choice: if / then / else / elif, switch / case / break</li>
-	      <li>loop: for / break / continue, while, do while</li> 
-	    </ul>
-	    </p>
+	    <h2>Lazy evaluation</h2>
+	    <pre><code data-trim data-noescape>
+		f x y = x + 2
+	    </code></pre>  
+	    <pre><code data-trim data-noescape>
+	    f 5 (29^35792)
+	    </code></pre>
+	    is evaluated into 
+	    <pre><code data-trim data-noescape>
+	    5 + 2
+	    </code></pre>
+	    then into
+	    <pre><code data-trim data-noescape>
+	    7
+	    </code></pre>
 	  </section>
+
+	  <!-- <section> -->
+	  <!--   <h2>NB: Strictness implies specific statements</h2> -->
+	  <!--   <p>Control flow -->
+	  <!--   <ul> -->
+	  <!--     <li>choice: if / then / else / elif, switch / case / break</li> -->
+	  <!--     <li>loop: for / break / continue, while, do while</li>  -->
+	  <!--   </ul> -->
+	  <!--   </p> -->
+	  <!-- </section> -->
 	</section>
 
 	<section>
 	  <section>
 	    <h2>Functions as fields = methods</h2>
+	    <p>Gather functions that are applied on the same thing</p>
 	    <pre><code data-trim data-noescape>
 		void push(Stack aStack, Value aValue){} 
 		Value pop(Stack aStack){} 
@@ -373,40 +414,80 @@
 	    </code></pre>
 	  </section>	  
 	  <section>
-	    <h2>Class (python)</h2>
+	    <h2>Classes in Python</h2>
 	    <pre><code data-trim data-noescape>
 		class Human(object):
 		  def __init__(self, name):
 		    self.name = name
-		  def say(self, msg):
-		    print(self.name + " say : " + msg)
+		  def says(self, msg):
+		    print(self.name + " says " + msg)
 	    </code></pre>
 	    <pre><code data-trim data-noescape>
 		me = Human("Tristan")
-		Human.say(me, "hello")
-		me.say("hello")
+		Human.says(me, "hello") #Tristan says hello
+		me.says("hello")        #Tristan says hello
 	    </code></pre>
 	  </section>
-	  <!-- <section> TODO -->
-	  <!--   <h2>Hierarchy of classes and dynamic linking</h2> -->
-	  <!--   <pre><code data-trim data-noescape> -->
-	  <!-- 	class ShopKeeper(Human): -->
-	  <!-- 	  def askPaiement(self, x): -->
-	  <!-- 	    print("give me " + str(x) + " euros, please") -->
-	  <!--   </code></pre> -->
-	  <!--   <pre><code data-trim data-noescape> -->
-	  <!-- 	fred = ShopKeeper() -->
-	  <!-- 	fred.sayHello() -->
-	  <!-- 	fred.askPaiement(10) -->
-	  <!--   </code></pre> -->
-	  <!--   <pre><code data-trim data-noescape> -->
-	  <!--   >>> me.askPaiement(10) -->
-	  <!--   Traceback (most recent call last): -->
-	  <!--   File "<stdin>", line 1, in <module> -->
-	  <!--   AttributeError: 'Human' object has no attribute 'askPaiement' -->
-	  <!--   </code></pre> -->
-	  <!-- </section> -->
+	  <section> 
+	    <h2>Hierarchy of classes and dynamic linking</h2>
+	    <pre><code data-trim data-noescape>
+	  	class Dentist(Human):
+	  	  def removes(self, tooth):
+	  	    print(self.name + " removes " + tooth)
+	    </code></pre>
+	    <pre><code data-trim data-noescape>
+	  	aDentist = Dentist("Fred")
+	  	aDentist.says("I see")        #Fred says I see
+	  	aDentist.removes("tooth #42") #Fred removes tooth #42
+	    </code></pre>
+	    <pre><code data-trim data-noescape>
+	    me.removes("tooth #42")
+	    Traceback (most recent call last):
+	    File "<stdin>", line 1, in <module>
+	    AttributeError: 'Human' object has no attribute 'removes'
+	    </code></pre>
+	  </section>
+
+	<section>
+	  <h2>Class inheritance in Java</h2>
+	  <pre><code data-trim data-noescape>
+	  abstract class Animal { abstract String talk(); }
+	  class Cat extends Animal {
+	    String talk() { return "Meow!"; }
+	  }
+	  class Dog extends Animal {
+	    String talk() { return "Woof!"; }
+	  }
+	  </code></pre>
+	  <pre><code data-trim data-noescape>
+	  static void letsHear(final Animal a) {
+	    System.out.println(a.talk());
+	  }	  
+	  static void main(String[] args) {
+	    letsHear(new Cat());
+	    letsHear(new Dog());
+	  }
+	  </code></pre>
 	</section>
+	  
+	</section>
+
+	
+	<section>
+	  <h2>Polymorphism in a nutshell</h2>
+	  <p>A single name to represent multiple different types</p>
+	  <ul>
+	    <li>for any type</li>
+	    <ul>
+	      <li>parametric/generic polymorphism (list length)</li>
+	    </ul>
+	    <li>for a constrained set of types</li>
+	    <ul>
+	      <li>ad hoc polymorphism or overloading (==)</li>
+	      <li>subtype/inclusion polymorphism (see previous example)</li>
+	    </ul>
+	  </ul>
+	</section>	
 	
       </div>
     </div>
