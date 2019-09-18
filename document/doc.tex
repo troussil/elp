@@ -239,7 +239,7 @@ Une \emph{expression} est un agencement de signe syntaxiquement correct (littér
 \item qui produit éventuellement une action, qu'on appelle \emph{effet}, comme le changement de la valeur de variables en mémoire ou une opération d'entrée-sortie, 
 \item et qui est \emph{évaluée} en une valeur. 
 \end{itemize}
-Le terme \emph{instruction} est généralement employé dans le cas où le résultat est ignoré et seul l'effet compte. Concrètement, \verb!add(42,13)! est un exemple d'expression, tandis que \verb!c = add(42,13)! est un exemple d'instruction, car l'effet est la mise à jour de la valeur de \texttt{c} et non la valeur renvoyée par l'opérateur d'affectation. 
+Le terme \emph{instruction} est généralement employé dans le cas où le résultat est ignoré et seul l'effet compte. Concrètement, \verb!5 + 2 * add(a,b)! est un exemple d'expression, tandis que \verb!c = add(a,b)! est un exemple d'instruction, car la valeur renvoyée par l'opérateur d'affectation est ignorée et seul l'effet, {\cad} la mise à jour de la valeur de \texttt{c}, importe.   
 
 
 
@@ -259,15 +259,15 @@ TODO exemple
 %expression, évaluation (paresseuse), effets vs pureté, structures de contrôle
 
 
-Une \emph{expression} est un agencement de signe syntaxiquement correct (littéraux, variables, opérateurs, fonctions)
-\begin{itemize}
-\item qui produit éventuellement une action, qu'on appelle \emph{effet}, comme le changement de la valeur de variables en mémoire ou une opération d'entrée-sortie, 
-\item et qui est \emph{évaluée} en une valeur. 
-\end{itemize}
-Le terme \emph{instruction} est généralement employé dans le cas où le résultat est ignoré et seul l'effet compte.
-Voici des exemples d'expression. 
+%% Une \emph{expression} est un agencement de signe syntaxiquement correct (littéraux, variables, opérateurs, fonctions)
+%% \begin{itemize}
+%% \item qui produit éventuellement une action, qu'on appelle \emph{effet}, comme le changement de la valeur de variables en mémoire ou une opération d'entrée-sortie, 
+%% \item et qui est \emph{évaluée} en une valeur. 
+%% \end{itemize}
+%% Le terme \emph{instruction} est généralement employé dans le cas où le résultat est ignoré et seul l'effet compte.
+%% Voici des exemples d'expression. 
 
-\verb! (i >= 0) && (i < 10) !, \verb! c = pgcd(a,b) !, \verb! print("hello") !
+%% \verb! (i >= 0) && (i < 10) !, \verb! c = pgcd(a,b) !, \verb! print("hello") !
 
 %% \subsection{Interpréteur intéractif}
 %% Un \emph{REPL} (pour \emph{Read-Eval-Print Loop}) est un interpréteur intéractif dans lequel l'utilisateur est invité à taper une expression (\emph{Read}). Quand celle-ci est écrite, elle est évaluée (\emph{Eval}) en un résultat, qui est ensuite affiché à l'écran (\emph{Print}), avant que l'utilisateur soit de nouveau invité à taper une expression (\emph{Loop}). C'est très pratique pour jouer avec un langage ou inspecter ce que fait certaines parties d'un programme. 
