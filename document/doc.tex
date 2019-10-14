@@ -143,7 +143,7 @@ La plupart des langages offrent plusieurs types prédéfinis pour des valeurs é
 \item le type caractère selon le standard \href{https://fr.wikipedia.org/wiki/American_Standard_Code_for_Information_Interchange}{ASCII} ou \href{https://fr.wikipedia.org/wiki/Unicode}{Unicode}, sur lequel agissent par exemple des opérateurs de comparaison (\verb!egalite, <, >,! \ldots).
 \end{itemize}
 
-Il est aussi souvent possible de définir de nouveaux \emph{types énumérés} pour lesquels on donne explicitement toutes les valeurs possibles. Ces valeurs sont en général automatiquement mises en correspondance avec des entiers naturels, mais les nommer permet d'ajouter de la sémantique. Le type \texttt{JourDeLaSemaine}, par exemple, pourrait être défini comme n'acceptant que les valeurs \verb!Lundi, Mardi,! \ldots \verb!, Dimanche!. Les valeurs \verb!1, 2,! \ldots \verb!, 7! d'un type entier, même accompagnées de documentation, ne porteraient pas une signifation aussi transparente.    
+Il est aussi souvent possible de définir de nouveaux \emph{types énumérés} pour lesquels on donne explicitement toutes les valeurs possibles. Ces valeurs sont en général automatiquement mises en correspondance avec des entiers naturels, mais les nommer permet d'ajouter de la sémantique. Le type \texttt{JourDeLaSemaine}, par exemple, pourrait être défini comme n'acceptant que les valeurs \verb!Lundi, Mardi,! \ldots \verb!, Dimanche!. Les valeurs \verb!1, 2,! \ldots \verb!, 7! d'un type entier, même accompagnées de documentation, ne porteraient pas une signification aussi transparente.    
 
 \subsection{Types composés}
 
@@ -213,9 +213,7 @@ Une \emph{routine} représente un sous-programme qui, à partir d'informations d
 
 Une fonction possède non-seulement un sous-programme, appelé \emph{corps}, mais aussi le plus souvent une \emph{signature}, composée d'un nom et de la liste des \emph{paramètres}, {\cad} les variables dont les valeurs devront être transmises au sous-programme. A cela, s'ajoute éventuellement un type, correspondant au type de la valeur de retour, éventuellement combiné aux types des paramètres.
 
-\subsection{Exemples}
-
-Qu'elle soit définie en Go par 
+Voici un exemple. Qu'elle soit définie en Go par 
 \begin{verbatim}
 func add(x int, y int) int {
 	return x + y
@@ -234,44 +232,18 @@ add x y = x + y
 
 Les appels sont notés sans parenthèse : \verb!add 42 13! $\leadsto$ \texttt{55}. 
 
-Une \emph{expression} est un agencement de signe syntaxiquement correct (littéraux, variables, opérateurs, fonctions)
-\begin{itemize}
-\item qui produit éventuellement une action, qu'on appelle \emph{effet}, comme le changement de la valeur de variables en mémoire ou une opération d'entrée-sortie, 
-\item et qui est \emph{évaluée} en une valeur. 
-\end{itemize}
-Le terme \emph{instruction} est généralement employé dans le cas où le résultat est ignoré et seul l'effet compte. Concrètement, \verb!5 + 2 * add(a,b)! est un exemple d'expression, tandis que \verb!c = add(a,b)! est un exemple d'instruction, car la valeur renvoyée par l'opérateur d'affectation est ignorée et seul l'effet, {\cad} la mise à jour de la valeur de \texttt{c}, importe.   
-
-
-
-  %noter- dans certains langages comme Haskell, une fonction est une valeur comme une autre
-
-
-TODO exemple
-
-- passage de paramètre
-
-- fonction, méthode=fonction avec contexte/fonction avec application partielle
-
-
-
-\section{\'Evaluation des expressions, structures de contrôle}
+\subsection{\'Evaluation des expressions paresseuse et stricte}
 
 %expression, évaluation (paresseuse), effets vs pureté, structures de contrôle
 
-
-%% Une \emph{expression} est un agencement de signe syntaxiquement correct (littéraux, variables, opérateurs, fonctions)
-%% \begin{itemize}
-%% \item qui produit éventuellement une action, qu'on appelle \emph{effet}, comme le changement de la valeur de variables en mémoire ou une opération d'entrée-sortie, 
-%% \item et qui est \emph{évaluée} en une valeur. 
-%% \end{itemize}
-%% Le terme \emph{instruction} est généralement employé dans le cas où le résultat est ignoré et seul l'effet compte.
-%% Voici des exemples d'expression. 
-
-%% \verb! (i >= 0) && (i < 10) !, \verb! c = pgcd(a,b) !, \verb! print("hello") !
-
-%% \subsection{Interpréteur intéractif}
-%% Un \emph{REPL} (pour \emph{Read-Eval-Print Loop}) est un interpréteur intéractif dans lequel l'utilisateur est invité à taper une expression (\emph{Read}). Quand celle-ci est écrite, elle est évaluée (\emph{Eval}) en un résultat, qui est ensuite affiché à l'écran (\emph{Print}), avant que l'utilisateur soit de nouveau invité à taper une expression (\emph{Loop}). C'est très pratique pour jouer avec un langage ou inspecter ce que fait certaines parties d'un programme. 
-
+Une \emph{expression} est un agencement de signe syntaxiquement correct (littéraux, variables, opérateurs, fonctions)
+\begin{itemize}
+\item qui produit éventuellement une action, qu'on appelle \emph{effet}, comme le changement de la valeur de variables en mémoire ou une opération d'entrée-sortie, 
+\item et qui est \emph{évaluée} en une valeur. \footnote{
+Un \emph{REPL} (pour \emph{Read-Eval-Print Loop}) est un interpréteur intéractif dans lequel l'utilisateur est invité à taper une expression (\emph{Read}). Quand celle-ci est écrite, elle est évaluée (\emph{Eval}) en un résultat, qui est ensuite affiché à l'écran (\emph{Print}), avant que l'utilisateur soit de nouveau invité à taper une expression (\emph{Loop}). C'est très pratique pour jouer avec un langage ou inspecter ce que fait certaines parties d'un programme. 
+}
+\end{itemize}
+Le terme \emph{instruction} est généralement employé dans le cas où le résultat est ignoré et seul l'effet compte. Concrètement, \verb!2 * add(a,b+5)! est un exemple d'expression, tandis que \verb!c = add(a,b)! est un exemple d'instruction, car la valeur renvoyée par l'opérateur d'affectation est ignorée et seul l'effet, {\cad} la mise à jour de la valeur de \texttt{c}, importe.   
 
 Il existe quelques langages, dont Haskell, dits \emph{purs}, {\cad} pour lesquels il n'y a pas d'effets (ou plutôt, ils interviennent de manière restreinte et de telle sorte qu'ils ne remettent pas fondamentalement en cause la pureté du langage). Dans ces langages, une expression donnée est toujours évaluée en une et une seule valeur, sans aucun autre effet. C'est un avantage indéniable pour comprendre, à sa simple lecture, ce que fait une partie isolée d'un programme. En revanche, les effets sont pratiques et souvent nécessaires pour atteindre une complexité algorithmique optimale, ce qui explique qu'ils sont admis et exploités par la majorité des langages de programmation.    
 
@@ -282,6 +254,30 @@ Enfin, l'évaluation paresseuse permet de définir des \emph{structures de contr
 \item[branchement] \verb! if / then / else / elif !, \verb! switch / case / break !, 
 \item[boucle] \verb! for / break / continue !, \verb! while !, \verb! do while !.
 \end{description}
+
+\subsection{\'Evaluation stricte et modalité de passage de paramètre}
+
+Reprenons l'exemple de la fonction \texttt{add} définie précédemment. L'évaluation de \verb!add(a,b+5)! nécessite deux actions. D'une part, mettre en correspondance les \emph{paramètres effectifs} (ou encore \emph{arguments}) \texttt{a} et \texttt{b+5} aux \emph{paramètres formels} de la définition (ou plus simplement paramètre), \texttt{x} et \texttt{y}. Le i-ème argument de la liste d'appel est toujours associé au i-ème paramètre de la signature. D'autre part, pour chaque couple argument et paramètre, s'arranger pour que le paramètre représente une variable contenant le résultat de l'évaluation de l'argument. Il existe différentes possibilités, mais on n'en côtoie couramment que deux, la première est largement majoritaire : il s'agit du passage de paramètre par copie (\emph{call-by-value}) et du passage de paramètre par référence (\emph{call-by-reference}).
+
+Le passage de paramètre par copie consiste, pour chaque couple argument et paramètre, à créer une variable contenant une copie de la valeur de l'argument et à lui donner le nom du paramètre (\textsc{Figure}~\ref{fig:passage}(a)). Le passage de paramètre par référence consiste tout simplement à ajouter le nom du paramètre à la variable contenant la valeur de l'argument (\textsc{Figure}~\ref{fig:passage}(b)). La différence est déterminante dans la façon de programmer puisque dans le second cas, une instruction du corps de la fonction peut modifier la valeur d'un argument (par exemple \texttt{a}, via \texttt{x}), alors que c'est impossible dans le premier cas du fait de la copie. 
+
+\begin{figure}[htbp]
+  \centering
+  \subfloat[]{\includegraphics[width=4cm]{callByValue}} \hspace{1cm}
+  \subfloat[]{\includegraphics[width=4cm]{callByRef}} 
+  \caption{Passage de paramètre par copie et par référence.}  
+  \label{fig:passage}
+\end{figure}
+
+Ce qui est trompeur, c'est que les arguments peuvent être des pointeurs ou assimilés. L'utilisation de pointeurs dans le cas d'un passage de paramètre par copie donne l'illusion d'un passage de paramètre par référence, car des instructions du corps de la fonction pourront modifiées des valeurs pointées. Un test imparable consiste à vérifier s'il est possible de permuter les valeurs des arguments (annexe~\ref{a:passage}). 
+
+
+\subsection{TODO}
+
+- méthode=fonction avec contexte/fonction avec application partielle
+
+  %noter- dans certains langages comme Haskell, une fonction est une valeur comme une autre
+ % lambda-foncction, fonction d'ordre supérieur, curryfication, application partielle 
 
 \section{Polymorphisme}
 
@@ -375,11 +371,61 @@ function Person (givenName, givenAge) {
 }
 let s = new Person("Sean", 50)
 \end{verbatim}
-L'appel à cet opérateur implique la création d'un nouvel objet en mémoire et sa mise en correspondance avec un autre objet, son \emph{prototype}, qui est par défaut \verb!{}!. Les prototypes sont chainés jusqu'à la valeur spéciale \texttt{null}. Au nouvel objet, désigné par \texttt{this}, sont ajoutés dynamiquement de nouveaux champs. La valeur renvoyée par \texttt{new}, n'est pas l'objet lui-même, mais un identifiant pour accéder à celui-ci. Attention, malgré la similarité syntaxique avec Java, Javascript est très différent dans son fonctionnement.
+L'appel à cet opérateur implique la création d'un nouvel objet en mémoire et sa mise en correspondance avec un autre objet, son \emph{prototype}, qui est par défaut \verb!{}!. Les prototypes sont chainés jusqu'à la valeur spéciale \texttt{null}. Au nouvel objet, désigné par \texttt{this}, sont ajoutés dynamiquement de nouveaux champs. La valeur renvoyée par \texttt{new}, n'est pas l'objet lui-même, mais un identifiant pour accéder à celui-ci.
+%Attention, malgré la similarité syntaxique avec Java, Javascript est très différent dans son fonctionnement.
 
 %cf. 
 %https://blog.xebia.fr/2013/06/10/javascript-retour-aux-bases-constructeur-prototype-et-heritage/
 %https://developer.mozilla.org/fr/docs/Web/JavaScript/H%C3%A9ritage_et_cha%C3%AEne_de_prototypes
+
+
+\section{Passage de paramètre et objets}
+\label{a:passage}
+
+Prenons l'exemple du langage Java pour voir ce que donne le passage de paramètre par copie dans le cas de variables assimilables à des pointeurs. 
+
+La classe \texttt{A} ci-dessous est dotée d'un champs entier, nommé \texttt{myA} :
+\begin{verbatim}
+class A {
+  public int content;
+  public A(int a) {
+    content = a;
+  }
+  @Override
+  public String toString() {
+    return super.toString() + " contient " + content; 
+  }
+}
+\end{verbatim}
+
+Dans le code ci-dessous, nous créons deux objets de type \texttt{A} contenant respectivement \texttt{1} et \texttt{2}. Les deux variables \texttt{unA1} et \texttt{unA2}, comme des pointeurs, sont des intermédiaires procurant un accès aux objets créés, mais non les objets eux-mêmes. Pour l'observer, nous appelons la méthode \texttt{foo}, qui fait deux actions : elle permute les valeurs de ses deux paramètres, puis remplace le contenu du premier paramètre (donc du second à cause de l'échange) par \texttt{5}. 
+
+\begin{verbatim}
+public class CallByValueWithObj {
+  public static void foo(A a1, A a2) {
+    A tmp = a1;
+    a1 = a2;
+    a2 = tmp;
+    a1.content = 5;
+  }
+  public static void main(String args[]) {
+    A unA1 = new A(1);
+    A unA2 = new A(2);
+    System.out.println(unA1 + " " + unA2);
+    foo(unA1, unA2);	
+    System.out.println(unA1 + " " + unA2);	
+  }
+}
+\end{verbatim}
+
+\`A l'exécution, voici ce qu'on peut lire :
+
+\begin{verbatim}
+A@15db9742 contient 1 A@6d06d69c contient 2
+A@15db9742 contient 1 A@6d06d69c contient 5
+\end{verbatim}
+
+Les deux objets n'ont pas été échangés, ce qui signifie qu'il s'agit bien d'un passage par copie. Cependant, il est à tout à fait possible de modifier le contenu des objets car ce sont les intermédiaires vers les objets créés et non les objets eux-mêmes qui sont copiés. 
 
 \bibliographystyle{plain}
 \bibliography{refs}
