@@ -12,6 +12,8 @@
 
 \usepackage{hyperref}
 
+\usepackage{cprotect} %verbatim in footnote
+
 \newcommand{\cad}{c.-à-d.}
 
 \title{ELP}
@@ -146,13 +148,14 @@ La plupart des langages offrent plusieurs types prédéfinis pour des valeurs é
 Il est aussi souvent possible de définir de nouveaux \emph{types énumérés} pour lesquels on donne explicitement toutes les valeurs possibles. Ces valeurs sont en général automatiquement mises en correspondance avec des entiers naturels, mais les nommer permet d'ajouter de la sémantique. Le type \texttt{JourDeLaSemaine}, par exemple, pourrait être défini comme n'acceptant que les valeurs \verb!Lundi, Mardi,! \ldots \verb!, Dimanche!. Les valeurs \verb!1, 2,! \ldots \verb!, 7! d'un type entier, même accompagnées de documentation, ne porteraient pas une signification aussi transparente.    
 
 \subsection{Types composés}
+\label{sec:types-composes}
 
 La plupart des langages de programmation proposent également des types composés, pouvant être paramétrés ou personnalisés, pour des valeurs structurées :
 \begin{itemize}
 \item Les types \emph{tableau} et \emph{liste}, sont paramétrés par un type \texttt{t} et acceptent une séquence de valeurs du même type \texttt{t} (\texttt{t} est arbitraire, avec parfois des restrictions). L'opérateur d'accès à une valeur de la séquence est souvent noté par des crochets : \verb! unTableau[3] ! retourne la valeur de rang 3 dans la séquence. Les valeurs sont stockées en mémoire les unes à côtés des autres dans le cas des tableaux, tandis qu'elles peuvent être dispersées dans le cas des listes (\textsc{Figure}~\ref{fig:types}(a) et (b)). Cela à un impact sur la rapidité des traitements : l'accès est garanti en un nombre constant d'opérations élémentaires dans le cas des tableaux, alors qu'il peut nécessiter la visite de toutes les valeurs, l'une après l'autre, dans le cas d'une liste, ce qui implique un nombre d'opérations élémentaires proportionnel à la taille de la liste.
 \item Il existe aussi des types composés non homogènes qui acceptent une collection de valeurs, appelées \emph{champs}, de types possiblement différents les uns des autres (voir la \textsc{Figure}~\ref{fig:types}(c), ainsi que l'annexe~\ref{a:enregistrement}). Ils sont généralement appelés \emph{tuple} quand les champs ne sont pas nommés (Haskell, Python), \emph{struct} ou \emph{enregistrement} quand ils le sont (C, Go, Haskell). L'appelation \emph{type produit} aussi utilisée en Haskell vient de ce que l'ensemble des valeurs admises par un tel type sont composées des valeurs des types de ses champs selon le produit cartésien. Par exemple, le type \verb!(booléen, booléen)! représente toutes les combinaisons de deux valeurs de type booléen, soit l'ensemble $\{ (vrai, vrai), (vrai, faux), (faux, vrai), (faux, faux) \}$\footnote{J'ai volontairement choisi deux champs de type booléen pour aisément énumérer l'ensemble des valeurs possibles du type produit, mais le principe est le même pour un nombre arbitraire de champs de type différent. Il est par exemple tout à fait possible d'avoir un premier champs de type entier, un deuxième de type caractère, voire un troisième de type liste, \ldots}   
 \item Les \emph{types algébriques}, en référence aux structures algébriques mathématiques, sont des unions disjointes de types produits. Une présentation détaillée des types algébriques en Haskell se trouve par exemple dans \cite[chapitre 3]{haskell}.    
-\item Les \emph{classes} (en Java par exemple, mais plus généralement en programmation orientée-objet) représentent aussi une collection de \emph{champs} (comme des enregistrements), mais possiblement enrichies des fonctions, appelés dans ce contexte \emph{méthodes}, qui agissent sur cette collection. Les concepts de fonction et méthode sont revues dans la section~\ref{sec:fonction}.
+\item Les \emph{classes} (en Java par exemple, mais plus généralement en programmation orientée objet) représentent aussi une collection de \emph{champs} (comme des enregistrements), mais possiblement enrichies des fonctions, appelés dans ce contexte \emph{méthodes}, qui agissent sur cette collection. Les concepts de fonction et méthode sont comparés dans la section~\ref{sec:fonction-methode}.
 \end{itemize}
 
 \captionsetup[subfigure]{labelformat=empty}
@@ -211,7 +214,7 @@ Le \emph{typage} consiste à faire correspondre un type à une variable. Il peut
 
 Une \emph{routine} représente un sous-programme qui, à partir d'informations données, effectue un traitement spécifique, relativement indépendant du reste du programme dans lequel il peut être réutilisé plusieurs fois. Les routines permettent de décomposer un programme en parties plus faciles à écrire, modifier, tester, réutiliser. Parmi les routines, on distingue historiquement la \emph{procédure} qui déclenche une action mais ne retourne aucune valeur, de la \emph{fonction}, qui retourne une valeur et, éventuellement, réalise une opération. On emploiera ci-dessous indifférement le mot "fonction", comme c'est le cas dans de nombreux langages.    
 
-Une fonction possède non-seulement un sous-programme, appelé \emph{corps}, mais aussi le plus souvent une \emph{signature}, composée d'un nom et de la liste des \emph{paramètres}, {\cad} les variables dont les valeurs devront être transmises au sous-programme. A cela, s'ajoute éventuellement un type, correspondant au type de la valeur de retour, éventuellement combiné aux types des paramètres.
+Une fonction possède non-seulement un sous-programme, appelé \emph{corps} ou \emph{définition}, mais aussi le plus souvent une \emph{signature}, composée d'un nom et de la liste des \emph{paramètres}, {\cad} les variables dont les valeurs devront être transmises au sous-programme \cprotect\footnote{Dans un certain nombre de langages de programmation, il actuellement possible de définir des fonctions qui n'ont pas de nom, appelées \emph{fonctions anonymes} ou \emph{fonction lambda}. C'est très pratique pour définir rapidemment de petites fonctions très spécifiques à un besoin particulier. En Haskell, par exemple, pour appliquer la fonction \texttt{f(x) = 2x + 5} à tous les éléments d'une liste, on écrit \verb!map [1,2,3,4] (\x -> 2*x + 5)!, qui est évalué en \verb![7,9,11,13]!.}. A cela, s'ajoute éventuellement un type, correspondant au type de la valeur de retour, éventuellement combiné aux types des paramètres.
 
 Voici un exemple. Qu'elle soit définie en Go par 
 \begin{verbatim}
@@ -232,7 +235,7 @@ add x y = x + y
 
 Les appels sont notés sans parenthèse : \verb!add 42 13! $\leadsto$ \texttt{55}. 
 
-\subsection{\'Evaluation des expressions paresseuse et stricte}
+\subsection{\'Evaluation stricte et paresseuse}
 
 %expression, évaluation (paresseuse), effets vs pureté, structures de contrôle
 
@@ -259,25 +262,84 @@ Enfin, l'évaluation paresseuse permet de définir des \emph{structures de contr
 
 Reprenons l'exemple de la fonction \texttt{add} définie précédemment. L'évaluation de \verb!add(a,b+5)! nécessite deux actions. D'une part, mettre en correspondance les \emph{paramètres effectifs} (ou encore \emph{arguments}) \texttt{a} et \texttt{b+5} aux \emph{paramètres formels} de la définition (ou plus simplement paramètre), \texttt{x} et \texttt{y}. Le i-ème argument de la liste d'appel est toujours associé au i-ème paramètre de la signature. D'autre part, pour chaque couple argument et paramètre, s'arranger pour que le paramètre représente une variable contenant le résultat de l'évaluation de l'argument. Il existe différentes possibilités, mais on n'en côtoie couramment que deux, la première est largement majoritaire : il s'agit du passage de paramètre par copie (\emph{call-by-value}) et du passage de paramètre par référence (\emph{call-by-reference}).
 
-Le passage de paramètre par copie consiste, pour chaque couple argument et paramètre, à créer une variable contenant une copie de la valeur de l'argument et à lui donner le nom du paramètre (\textsc{Figure}~\ref{fig:passage}(a)). Le passage de paramètre par référence consiste tout simplement à ajouter le nom du paramètre à la variable contenant la valeur de l'argument (\textsc{Figure}~\ref{fig:passage}(b)). La différence est déterminante dans la façon de programmer puisque dans le second cas, une instruction du corps de la fonction peut modifier la valeur d'un argument (par exemple \texttt{a}, via \texttt{x}), alors que c'est impossible dans le premier cas du fait de la copie. 
+Le passage de paramètre par copie consiste, pour chaque couple argument et paramètre, à créer une variable contenant une copie de la valeur de l'argument et à lui donner le nom du paramètre (\textsc{Figure}~\ref{fig:passage} (a)). Le passage de paramètre par référence consiste tout simplement à enregistrer le nom du paramètre comme désignant la variable contenant la valeur de l'argument (\textsc{Figure}~\ref{fig:passage} (b)). La différence est déterminante dans la façon de programmer puisque dans le second cas, une instruction du corps de la fonction peut modifier la valeur d'un argument (par exemple \texttt{a}, via \texttt{x}), alors que c'est impossible dans le premier cas du fait de la copie. 
 
+\captionsetup[subfigure]{labelformat=parens}
 \begin{figure}[htbp]
   \centering
   \subfloat[]{\includegraphics[width=4cm]{callByValue}} \hspace{1cm}
   \subfloat[]{\includegraphics[width=4cm]{callByRef}} 
-  \caption{Passage de paramètre par copie et par référence.}  
+  \caption{Passage de paramètre par copie en (a) et par référence en (b).}  
   \label{fig:passage}
 \end{figure}
 
-Ce qui est trompeur, c'est que les arguments peuvent être des pointeurs ou assimilés. L'utilisation de pointeurs dans le cas d'un passage de paramètre par copie donne l'illusion d'un passage de paramètre par référence, car des instructions du corps de la fonction pourront modifiées des valeurs pointées. Un test imparable consiste à vérifier s'il est possible de permuter les valeurs des arguments (annexe~\ref{a:passage}). 
+Ce qui est trompeur, c'est que les arguments peuvent être des pointeurs ou assimilés. L'utilisation de pointeurs dans le cas d'un passage de paramètre par copie donne l'illusion d'un passage de paramètre par référence, car des instructions du corps de la fonction pourront modifiées des valeurs pointées. Un test imparable consiste à vérifier s'il est possible de permuter les valeurs des arguments (un exemple est détaillée en annexe~\ref{a:passage}). 
+
+\subsection{\'Evaluation partielle}
+
+La programmation fonctionnelle propose une série de concepts très puissants qui découlent pourtant de cette simple posture : la fonction est considérée comme une valeur comme une autre. En conséquence, une fonction peut avoir des fonctions comme paramètres ou retourner une fonction. Dans ce cas, elle est qualifiée \emph{d'ordre supérieur}. Il s'ensuit qu'une fonction à plusieurs paramètres peut de manière equivalente être considérée comme une fonction à un paramètre, qui retourne une fonction paramétrée uniquement par les paramètres suivants. C'est ce qu'on appelle la \emph{curryfication}, en référence au logicien Haskell Curry. Une conséquence directe est qu'il est possible d'évaluer \emph{partiellement} une fonction à plusieurs paramètres en ne donnant que le premier argument. Dans ce cas, on obtient une fonction avec un paramètre de moins, comme si, dans le corps de la fonction de départ, le premier paramètre avait été remplacé par la valeur fournie. La capture de valeurs accompagnant une fonction, comme c'est le cas lors d'une évaluation partielle, est appelée \emph{fermeture} (ou \emph{closure} en anglais). 
+
+En Haskell, nous pouvons par exemple écrire
+\begin{verbatim}
+add x y = x + y
+add42 = add 42 -- évaluation partielle 
+\end{verbatim}
+\'Evidemment \verb!add42 5! est évalué en \texttt{47}. En revanche \verb!add 42! est évaluée en une fonction qui prend en entrée une valeur pour son paramètre \texttt{y} et retourne la somme de cette valeur et de celle mémorisée pour \texttt{x}, {\cad} \texttt{42}. Nous avons donc l'égalité suivante : \verb!add42 = \y -> 42 + y!. 
 
 
-\subsection{TODO}
+\subsection{Fonction vs méthode}
+\label{sec:fonction-methode}
 
-- méthode=fonction avec contexte/fonction avec application partielle
+Classiquement en programmation orientée objet, une \emph{classe} décrit à la fois la structure d'une variable composée, ainsi que les opérations possibles sur cette variable. La structure est définie par un ensemble de \emph{champs}, comme dans un type composé (section~\ref{sec:types-composes}). Les opérations sont définies par un ensemble de fonctions, appelées \emph{méthodes} dans ce contexte. Une telle variable est appelée \emph{objet}. Son \emph{état} est donné par les valeurs de ses champs, tandis que son \emph{comportement} est codé par les méthodes.   
 
-  %noter- dans certains langages comme Haskell, une fonction est une valeur comme une autre
- % lambda-foncction, fonction d'ordre supérieur, curryfication, application partielle 
+L'intérêt de cette approche est principalement de regrouper toutes les opérations qui s'appliquent à un même type de valeur. Prenons l'exemple de la modélisation d'une file. Plusieurs opérations s'appliquent à une file, notamment ajouter un élément en dernière position, au bout de la file (\texttt{enfiler}), supprimer le premier élément de la file et le retourner (\texttt{sortir}). Au lieu d'écrire deux fonctions indépendantes requérant chacune une variable de type \texttt{File} comme paramètre, la programmation orientée objet propose d'attacher ces fonctions au type \texttt{File} en sachant que leur appel aura lieu dans un contexte contenant une variable de type \texttt{File}. Concrètement, voici une comparaison de ces deux stratégies en Python.
+
+~
+
+\begin{minipage}[c]{0.45\textwidth}
+\begin{verbatim}
+#fonctions indépendantes
+class File:
+  ...
+
+def enfiler(uneFile, unElt):
+  ...
+def sortir(uneFile):
+  ...
+\end{verbatim}
+\begin{verbatim}
+f = File()
+...
+enfiler(f, 5)
+premier = sortir(f)
+\end{verbatim}
+\end{minipage}
+%
+\hfill\vline\hfill
+%
+\begin{minipage}[c]{0.45\textwidth}
+\begin{verbatim}
+#méthodes de File
+class File(object):
+  def enfiler(self, unElt):
+    ...
+  def sortir(self):
+    ...
+\end{verbatim}
+
+\vspace{0.4cm}
+
+\begin{verbatim}
+f = File()
+...
+f.enfiler(5)
+premier = f.sortir()
+\end{verbatim}
+\end{minipage}
+
+~
+
+Bien que fonction et méthode soient presques synonymes, il y a cependant deux différences entre ces deux concepts. La première différence, c'est que la méthode s'applique toujours sur au moins une variable, qui est en général un objet. La seconde différence, c'est que l'action déclenchée par l'appel à une méthode depuis un objet dépend de la catégorie de l'objet en question. Ce mécanisme est détaillé dans la section suivante. 
 
 \section{Polymorphisme}
 
