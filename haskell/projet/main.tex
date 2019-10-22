@@ -1,0 +1,119 @@
+\documentclass [oneside,11pt]{article}
+\usepackage{fancyhdr}
+\usepackage[francais]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ifthen}
+\usepackage{version}
+\usepackage{boxedminipage}
+\usepackage{moreverb}
+\usepackage{graphicx}
+\graphicspath{{fig/}}
+%pdf
+\usepackage[
+pdfauthor={Tritan Roussillon},
+pdftitle={TP - LOGO},
+pdfcreator={pdftex},
+pdfsubject={TP-LOGO}
+]{hyperref}
+ 
+%Titre
+\title{TP-AGP}
+\author{Tritan Roussillon}
+
+%en têtes
+\lhead{Département Télécommunications, Services et Usages}
+\rhead{}
+\lfoot{AGP-TP}
+\cfoot{Tanguy Risset, François Lesueur, Tritan Roussillon}
+\renewcommand{\footrulewidth}{0.5pt}
+\renewcommand{\headheight}{15pt}
+\rfoot{\thepage}
+
+%Marges
+\setlength{\oddsidemargin}{-0cm}
+\setlength{\textwidth}{15cm}
+\setlength{\topmargin}{-0cm}
+\setlength{\textheight}{20cm}
+
+\begin{document}
+
+\newcommand{\logo}{LOGO}
+\newcommand{\tclogo}{TC-LOGO}
+% TITRE
+\begin{center}
+	\huge 
+	\textbf{AGP - TP}\\
+	\Huge
+	\textbf{Compilation de programmes LOGO}\\
+	\large 
+	\vspace{0.5cm}
+	\textit{Durée encadrée : 12 heures} \\
+\end{center}
+
+\label{TPLOGO}
+
+\section{Objectif}
+Le but de ce projet est de développer en Haskell un outil qui transforme un programme écrit dans un langage inspiré des langages Logo et Haskell en un programme écrit en SVG. 
+
+\section{Le langage {\tclogo}}
+Le langage {\tclogo} (version 1.0) est à exprimer le chemin que va suivre un crayon pour dessiner un graphique. Il comporte 4 instructions, toutes avec paramètres: {\tt FORWARD}, {\tt LEFT}, {\tt RIGHT} et {\tt REPEAT}. L'instruction {\tt FORWARD x} fait avancer le crayon de x points dans la direction courante. L'instruction {\tt RIGHT x} (respectivement {\tt LEFT x}) fait tourner la direction courante de 5 degrés à droite (respectivement à gauche), dans le sens inverse des aiguilles d'une montre (respectivement dans le sens inverse). L'instruction {\tt REPEAT x [ yyy ]} répète x fois la suite d'instructions entre crochet. Les instructions sont séparées par des virgules et le programme entier se trouve entre crochets.
+
+\begin{figure}[h]
+\begin{tabular}{cc}
+\begin{boxedminipage}{7cm}
+\begin{verbatim}
+[ 
+FORWARD 100, 
+REPEAT  4 [FORWARD 50, LEFT 90], 
+FORWARD 100 
+]
+\end{verbatim}
+\end{boxedminipage}
+
+&
+\includegraphics{ex1.eps}
+\end{tabular}
+\caption{Un programme {\tclogo} simple et la représentation graphique décrite par le programme.}
+\label{TPLOGO-fig1}
+\end{figure}
+
+\section{Méthodologie}
+Le projet peut être décomposé en 2 étapes : 
+\begin{itemize}
+\item Développement d'une structure de données représentant un programme {\tclogo}, 
+\item Traitement de cette représentation intermédiaire pour produire un programme écrit en SVG. 
+\end{itemize}
+
+\subsection{Étape 1: Représentation intermédiaire}
+
+Vous devez proposer une structure de données pour stocker votre programme {\tclogo} en mémoire, puis pouvoir produire du code à partir de cette représentation intermédiaire. Pour commencer, vérifiez que : 
+\begin{itemize}
+\item Un programme {\tclogo} est une liste d'instructions.
+\item Chaque instruction possède un ou plusieurs paramètres.
+\item Ces paramètres peuvent être des entiers ou des programmes (voir {\tt REPEAT}). 
+\end{itemize}
+
+\section{Étape 2: génération d'un fichier SVG}
+
+Vous devez écrire une fonction qui prend en entrée une représentationo intermédiaire (ainsi qu'un crayon caractérisé par une position et une direction) et retourne un programme écrit SVG.
+\begin{figure}
+\begin{boxedminipage}{1.1\textwidth}
+\begin{verbatim}
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="200" height="200">
+<title>Exemple LOGO</title>
+<desc>Du LOGO.</desc>
+<line x1="100.000" y1="100.000" x2="200.000" y2="100.000" stroke="red" />
+<line x1="200.000" y1="100.000" x2="250.000" y2="100.000" stroke="red" />
+<line x1="250.000" y1="100.000" x2="250.000" y2="150.000" stroke="red" />
+<line x1="250.000" y1="150.000" x2="200.000" y2="150.000" stroke="red" />
+<line x1="200.000" y1="150.000" x2="200.000" y2="100.000" stroke="red" />
+<line x1="200.000" y1="100.000" x2="300.000" y2="100.000" stroke="red" />
+</svg>
+\end{verbatim}
+\end{boxedminipage}
+\caption{Exemple de code SVG pouvant correspondre au programme {\logo} de la figure~\ref{TPLOGO-fig1}}
+\end{figure} 
+
+\end{document}
