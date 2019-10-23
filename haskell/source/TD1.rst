@@ -110,6 +110,9 @@ Par exemple `diagrams <https://hackage.haskell.org/package/diagrams>`_
 un `langage déclaratif <http://ozark.hendrix.edu/~yorgey/pub/diagrams-FARM.pdf>`_
 en Haskell pour les graphiques vectoriels.
 
+Le :download:`projet <download/enonce-projet.pdf>` que vous avez à réaliser
+est un autre exemple. 
+
 Développement Web
 -----------------------------------
 
