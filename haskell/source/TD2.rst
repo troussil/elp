@@ -99,204 +99,6 @@ dernière expression tapée dans GHCi).
 Type défini par le développeur
 =================================
 
-Déclaration ``data``
-----------------------------------
-
-En Haskell, on peut définir nos propres types par des déclarations ``data`` :
-
-.. code-block:: haskell
-
-   data constructeurDeType [params] = constructeurDeValeur [params]
-
-Il est ainsi possible de définir plusieurs sortes de type :
-
-.. figure:: figs/typeDeType.svg
-   :width: 350pt 
-   :alt: différentes sortes de type
-   :align: center
-
-
-
-Type énuméré vs type tuple 
---------------------------------
-
-- Pour créer un *type énuméré*, on utilise ``|`` pour faire
-  l'union des ensembles de valeur.
-- Pour créer un *type tuple*, on utilise simplement l'espace
-  pour faire un produit cartésien des ensembles de valeur. 
-
-.. literalinclude:: code/carte.hs
-   :language: haskell
-   :lines: 1-4
-
-``CouleurCarte`` et ``ValeurCarte`` sont deux types énumérés,
-tandis que ``Carte`` est un type tuple.
-Par exemple, ``Cte As Trefle`` est une valeur de type ``Carte``. 	   
-
-
-Type tuple polymorphe
--------------------------
-
-Un *type polymorphe* est composé d'au moins une famille de type.
-
-.. code-block:: haskell
-
-   data Point a = Pt a a
-
-Par exemple, à partir de tout type ``a``, le constructeur de type ``Point``
-définit ``Point a``, le type des points cartésiens ayant ``a`` comme coordonnées. 
-
-Le constructeur de valeur ``Pt :: a -> a -> Point a`` est une manière d'obtenir
-des valeurs de type ``Point a``. Par exemple, ``Pt 2.0 3.0`` est le point :math:`(2,3)`.
-
-Avertissement
--------------------------
-
-Les constructeurs de type comme ``Point`` et les constructeurs de valeurs comme ``Pt``
-se trouvent dans des espaces de noms séparés. Il est donc possible de donner le même nom
-aux deux constructeurs, afin de rendre plus évident le lien entre un type et le constructeur
-de valeur associé. 
-
-.. literalinclude:: code/shape.hs
-   :language: haskell
-   :lines: 1
-
-Type énuméré polymorphe
---------------------------
-
-.. literalinclude:: code/shape.hs
-   :language: haskell
-   :lines: 3-4
-
-Autrement dit, le type ``Shape a`` correspond soit à un cercle
-(défini par un point de type ``Point a`` et un rayon de type ``a``),
-soit à un rectangle (défini par deux points de type ``Point a``).  
-	   
-.. literalinclude:: code/shape.hs
-   :language: haskell
-   :lines: 7-12
-
-	   
-Types récursifs
-----------------------   
-
-Il est possible de se référer au type que l'on crée
-dans un des constructeurs de valeurs. 
-
-.. literalinclude:: code/tree2.hs
-   :language: haskell
-   :lines: 1
-
-Autrement dit, une valeur de type ``Tree a`` est un arbre binaire polymorphe
-dont les éléments sont soit une feuille (contenant une valeur de type ``a``),
-soit un noeud interne reliant deux sous-arbres.      
-
-.. literalinclude:: code/tree2.hs
-   :language: haskell
-   :lines: 3-9
-
-
-.. Liste revisitée
-   -------------------
-
-   ``[a]`` est en fait une notation particulière pour ``[] a``, car 
-   ``[]`` est un *constructeur de type* :
-   à partir du type ``a``, il crée le type ``[] a``, c'est-à-dire
-   une liste de ``a``. 
-
-   La définition d'une liste est récursive :
-
-   .. code-block:: haskell
-		   
-      data [a] = [] | a : [a]
-
-   Une liste de ``a`` est soit une liste vide, soit une liste ayant au moins
-   une valeur de type ``a`` en tête de liste. 
-
-Défi 1 : construire un arbre
----------------------------------
-
-A l'aide des définitions précédentes,
-construisez l'arbre représenté ci-dessous,
-et passez-le comme argument à la fonction ``flatten`` dans GHCi. 
-
-.. figure:: figs/arbre.svg
-   :width: 250pt 
-   :alt: arbre
-   :align: center
-
-Défi 2 : hauteur d'un arbre binaire
---------------------------------------
-
-Définissez la fonction
-
-.. literalinclude:: code/treeHeight.hs
-   :language: haskell
-   :lines: 3
-
-qui, pour un arbre donné, renvoie la longueur du plus long chemin entre
-la racine et une feuille, c'est-à-dire la hauteur de l'arbre :
-
-.. code-block:: none
-
-   *Main> treeHeight (Leaf 4)
-   1
-   *Main> treeHeight (Node (Leaf 4) (Leaf 5))
-   2
-   *Main> treeHeight (Node (Leaf 4) (Node (Leaf 5) (Leaf 6)))
-   3
-
-		
-.. Défi 2 : aplatir un arbre binaire
-   -----------------------------------
-
-   Proposez une version plus efficace de ``flatten``
-   en utilisant l'opérateur ``(:)`` au lieu de l'opérateur ``(++)``. 
-
-   .. code-block:: none
-
-      *Main> flatten (Node (Node (Leaf 1) (Leaf 2)) (Leaf 3)) 
-      [1,2,3]
-
-   Astuce : comme pour :ref:`MyReverse<reversecode>`, définissez une fonction intermédiaire
-   qui prend en entrée l'arbre et une liste temporaire d'accumulation. 
-
-   .. code-block:: Haskell
-
-      flatten' :: Tree a -> [a] -> [a] 
-
-	   
-.. Défi 3 : liste imbriquée
-   -----------------------------------
-
-   Après avoir défini le type adéquat, écrivez la fonction
-
-   .. literalinclude:: code/NestedList.hs
-      :language: haskell
-      :lines: 3
-
-   qui aplatit une liste d'élément
-   pouvant contenir des listes comme élément.  
-
-   .. code-block:: none
-
-      *Main> flatten (Elem 5)
-      [5]
-      *Main> flatten (List [Elem 1, List [Elem 2, List [Elem 3, Elem 4]]])
-      [1,2,3,4]
-      *Main> flatten (List [])
-      []
-
-Défi 3 : définir un type d'arbre 
-------------------------------------
-	   
-- Définissez le type d'un arbre binaire dans lequel chaque noeud est :
-  
-  - soit vide,
-  - soit la racine de deux sous-arbres et porteur d'une donnée de type arbitraire.
-
-- Définissez une variante de la fonction ``flatten`` pour aplatir cet arbre en une liste.      
-
 Synonymes
 ---------------------------------
 
@@ -307,6 +109,192 @@ Il est possible de définir des synonymes de types grâce à la déclaration ``t
 - ``type Name = String``  
 - ``type PhoneBook = [(Name,PhoneNumber)]`` 
 - ``type AssociationList a b = [(a,b)]``
+
+
+Déclaration ``data``
+----------------------------------
+
+En Haskell, on peut définir des types *algébriques* par des déclarations ``data`` :
+
+.. code-block:: haskell
+
+   data constructeurDeType [params] = constructeurDeValeur [params]
+                           [ | constructeurDeValeur2 [params] ... ] 
+
+Ce sont des unions (récursives) de types produits :
+
+.. figure:: figs/typeDeType.svg
+   :width: 350pt 
+   :alt: différentes sortes de type
+   :align: center
+
+
+Type somme vs type produit 
+--------------------------------
+
+- Pour créer un *type somme*, on utilise ``|`` pour faire
+  l'union des ensembles de valeur.
+- Pour créer un *type produit*, on utilise simplement l'espace
+  pour faire un produit cartésien des ensembles de valeur. 
+
+.. literalinclude:: code/carte.hs
+   :language: haskell
+   :lines: 1-4
+
+``CouleurCarte`` et ``ValeurCarte`` sont deux types sommes,
+tandis que ``Carte`` est un type produit.
+Par exemple, ``DonneCarte As Trefle`` est une valeur de type ``Carte``. 	   
+
+Enregistrements
+----------------------------------
+
+Un enregistrement est un type produit dans lequel on nomme les champs ; ces noms pouvant servir d'accesseur.
+
+.. literalinclude:: code/enregistrement.hs
+   :language: haskell
+   :lines: 1-4
+
+.. code-block:: none
+		
+    *Main> nom p1
+    "Curry"
+    *Main> nom p2
+    "Church"
+
+Types récursifs
+----------------------   
+
+Il est possible de se référer au type que l'on crée
+dans un des constructeurs de valeurs. 
+
+.. literalinclude:: code/myList.hs
+   :language: haskell
+   :lines: 1
+
+Autrement dit, une valeur de type ``IntList`` est soit la valeur ``Empty`` soit la combinaison
+d'une valeur de type ``Int`` et d'une valeur de type ``IntList``, ce qui permet de représenter
+une série de valeurs entières de taille quelconque.       
+
+.. literalinclude:: code/myList.hs
+   :language: haskell
+   :lines: 3-5
+
+Types polymorphes
+-----------------------
+
+Il est possible de paramétrer le constructeur de type afin de définir un type polymorphe.
+
+.. literalinclude:: code/myList2.hs
+   :language: haskell
+   :lines: 1
+
+On obtient ainsi une série contenant un nombre quelconque de valeurs de type arbitraire (mais identique pour toutes les valeurs). 
+
+.. literalinclude:: code/myList2.hs
+   :language: haskell
+   :lines: 3-7
+
+Encore un type polymorphe
+----------------------------
+
+.. code-block:: haskell
+
+   data Point a = MakePt a a
+
+Par exemple, à partir de tout type ``a``, le constructeur de type ``Point``
+définit ``Point a``, le type des points cartésiens ayant ``a`` comme coordonnées. 
+
+Le constructeur de valeur ``MakePt :: a -> a -> Point a`` est une manière d'obtenir
+des valeurs de type ``Point a``. Par exemple, ``MakePt 2.0 3.0`` est le point :math:`(2,3)`.
+
+Avertissement
+-------------------------
+
+Les constructeurs de type comme ``Point`` et les constructeurs de valeurs comme ``MakePt``
+se trouvent dans des espaces de noms séparés. Il est donc possible de donner le même nom
+aux deux constructeurs, afin de rendre plus évident le lien entre un type et le constructeur
+de valeur associé. 
+
+.. literalinclude:: code/shape.hs
+   :language: haskell
+   :lines: 1
+
+	   
+Liste revisitée
+-------------------
+
+``[]`` désigne à la fois un constructeur de valeur (liste vide) et un
+constructeur de type qui, à partir du type ``a``, crée le type ``[] a``
+(habituellement noté ``[a]``), c-à-d. une liste de ``a``.  
+
+La définition d'une liste est récursive :
+
+.. code-block:: haskell
+
+   data [a] = [] | a : [a]
+
+Une liste de ``a`` est soit une liste vide, soit une liste ayant au moins
+une valeur de type ``a`` en tête de liste. 
+
+Tuple revisité
+-------------------
+
+Bien sûr, il est possible de définir un type polymorphe par plusieurs paramètres.
+
+.. code-block:: haskell
+
+   data Pair a b = MakePair a b
+   aPair = MakePair 5 'a' 
+		
+C'est de cette manière que sont définis les tuples pour lesquels 
+``(,)`` désigne à la fois un constructeur de valeur (à paramètres)
+et un constructeur de type qui, à partir des types ``a`` et ``b``,
+crée le type ``(,) a b`` (habituellement noté ``(a,b)``).
+
+.. code-block:: haskell
+
+   data (,) a b = (,) a b
+
+
+Autres types habituels
+----------------------------------
+
+Type ``unit``
+
+.. code-block:: haskell
+
+   data () = ()
+
+Type ``Maybe``
+
+.. code-block:: haskell
+
+   data Maybe a = Nothing | Just a
+
+Type ``Either``
+
+.. code-block:: haskell
+
+   data Either a b = Left a | Right b
+   
+   
+Derniers types pour la route
+-----------------------------------   
+
+Comparez
+
+.. code-block:: haskell
+
+    data Tree a = Leaf a | Node (Tree a) (Tree a)
+
+et
+
+.. code-block:: haskell
+
+    data Tree a = Empty | Node (Tree a) a (Tree a)
+
+Dessinez et construisez des valeurs pour ces types. 
+
 
 Classe et surcharge
 ==========================
@@ -457,7 +445,7 @@ spécifie la clause ``deriving`` comme dans l'exemple suivant :
 Les instances de ``Ord``, ``Enum``, ``Read``, ``Show`` peuvent aussi être générées automatiquement
 dans la même clause.  
 
-Défi 4 : opérations habituelles
+Opérations habituelles
 ---------------------------------
 
 Que donnent les expressions suivantes ?
@@ -474,14 +462,15 @@ Que donnent les expressions suivantes ?
 - ``toEnum 12 :: ValeurCarte``
   
 
-Défi 5 : tas de cartes
-------------------------
+Conclusion
+================
 
-- Définissez le type d'une carte à jouer.
-- Définissez le type d'un tas de carte.
-- Créez le tas de carte à l'aide d'une *list comprehension*. 
-- Donnez l'expression indiquant le nombre de cartes se trouvant dans le tas. 
+Capacités/Connaissances
+---------------------------------
 
+- Définir un type à l'aide des déclarations ``data`` et ``type``.
+- Distinguer constructeur de valeur et de type.
+- Connaître et utiliser les types et classes habituels. 
 
 Comparaison avec d'autres langages
 -----------------------------------
@@ -497,46 +486,7 @@ Comparaison avec d'autres langages
   Il n'y a pas de classe racine comme ``Object`` en Java.  
 
 
-Conclusion
-================
-
-Capacités/Connaissances
----------------------------------
-
-- Définir un type à l'aide des déclarations ``data`` et ``type``.
-- Distinguer constructeur de valeur et de type. 
-- Définir une classe à l'aide de la déclaration ``class`` et
-  surcharger une opération à l'aide de la déclaration ``instance``.
-- Citer les classes ``Eq``, ``Ord``, ``Enum``, ``Show``, ``Read``,
-  ``Num`` et leurs opérations. 
-  
-Défi 1 : construire un arbre
----------------------------------
-
-.. figure:: figs/arbre.svg
-   :width: 250pt
-   :alt: arbre
-   :align: center
-
-.. code-block:: none
-
-   *Main> flatten (Node (Node (Leaf 'a') (Leaf 'b')) (Leaf 'c'))
-   "abc"
-
-     
-Défi 2 : hauteur d'un arbre binaire
---------------------------------------
-
-.. literalinclude:: code/treeHeight.hs
-   :language: haskell
-
-Défi 3 : définir un type d'arbre
-------------------------------------------
-
-.. literalinclude:: code/tree3.hs
-   :language: haskell
-
-Défi 4 : opérations habituelles
+Opérations habituelles
 ----------------------------------
 
 .. code-block:: none
@@ -557,11 +507,10 @@ Défi 4 : opérations habituelles
    *Main> fromEnum Dame
    10
 
-Défi 4 : opérations habituelles (suite)
+Opérations habituelles (suite)
 ----------------------------------------
 
 .. code-block:: none
-
 		
    *Main> enumFrom Valet
    [Valet,Dame,Roi,As]
@@ -577,19 +526,4 @@ Défi 4 : opérations habituelles (suite)
    [Cinq,Six,Sept,Huit,Neuf,Dix]
    *Main> toEnum 12 :: ValeurCarte
    As
-
-.. _carte-label:
-   
-Défi 5 : tas de cartes
-------------------------
-
-.. literalinclude:: code/carte2.hs
-   :language: haskell
-
-.. code-block:: none
-
-   *Main> length leTas
-   52
-
-(Inspiré de ce `tutoriel <https://wiki.haskell.org/Type>`_)
    

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
-<ipe version="70107" creator="Ipe 7.1.10">
-<info created="D:20180214152408" modified="D:20180214152552"/>
+<ipe version="70206" creator="Ipe 7.2.7">
+<info created="D:20180214152408" modified="D:20191023100319"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -220,13 +220,13 @@ h
 <dashstyle name="dash dotted" value="[4 2 1 2] 0"/>
 <dashstyle name="dash dot dotted" value="[4 2 1 2 1 2] 0"/>
 <textsize name="large" value="\large"/>
+<textsize name="small" value="\small"/>
+<textsize name="tiny" value="\tiny"/>
 <textsize name="Large" value="\Large"/>
 <textsize name="LARGE" value="\LARGE"/>
 <textsize name="huge" value="\huge"/>
 <textsize name="Huge" value="\Huge"/>
-<textsize name="small" value="\small"/>
 <textsize name="footnote" value="\footnotesize"/>
-<textsize name="tiny" value="\tiny"/>
 <textstyle name="center" begin="\begin{center}" end="\end{center}"/>
 <textstyle name="itemize" begin="\begin{itemize}" end="\end{itemize}"/>
 <textstyle name="item" begin="\begin{itemize}\item{}" end="\end{itemize}"/>
@@ -254,8 +254,8 @@ h
 <page>
 <layer name="alpha"/>
 <view layers="alpha" active="alpha"/>
-<text layer="alpha" transformations="translations" pos="192 704" stroke="black" type="label" width="58.697" height="6.926" depth="1.93" valign="baseline">type \&apos;enum\&apos;er\&apos;e</text>
-<text transformations="translations" pos="192 688" stroke="black" type="label" width="44.555" height="6.926" depth="1.93" valign="baseline">type tuple</text>
+<text layer="alpha" transformations="translations" pos="192 704" stroke="black" type="label" width="52.359" height="6.135" depth="1.93" valign="baseline">type somme</text>
+<text transformations="translations" pos="192 688" stroke="black" type="label" width="54.822" height="6.926" depth="1.93" valign="baseline">type produit</text>
 <path stroke="black">
 176 720 m
 176 672 l
@@ -263,7 +263,7 @@ h
 272 720 l
 h
 </path>
-<text transformations="translations" pos="176 656" stroke="black" type="label" width="73.917" height="6.926" depth="1.93" valign="baseline">type polymorphe</text>
+<text transformations="translations" pos="176 656" stroke="black" type="label" width="45.219" height="6.918" depth="0" valign="baseline">r\&apos;ecursivit\&apos;e</text>
 <path stroke="black">
 160 736 m
 160 640 l
@@ -271,7 +271,7 @@ h
 288 736 l
 h
 </path>
-<text transformations="translations" pos="160 624" stroke="black" type="label" width="54.352" height="6.926" depth="1.93" valign="baseline">type r\&apos;ecursif</text>
+<text transformations="translations" pos="160 624" stroke="black" type="label" width="66.999" height="6.926" depth="1.93" valign="baseline">type alg\&apos;ebrique</text>
 <path stroke="black">
 144 752 m
 144 608 l
