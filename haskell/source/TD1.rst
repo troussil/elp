@@ -94,7 +94,7 @@ une diversité croissante d'opérations pour ajouter
 de nouvelles transformations.  
 
 - `Pandoc <https://github.com/jgm/pandoc>`_, un convertisseur entre formats de fichier à balise, 
-- compiliateur de `Bond <https://github.com/Microsoft/bond>`_, framework de manipulation de données structurées utilisé par Microsoft,
+- compilateur de `Bond <https://github.com/Microsoft/bond>`_, framework de manipulation de données structurées utilisé par Microsoft,
 - `Pugs <https://github.com/perl6/Pugs.hs>`_, premier compilateur Perl 6 (maintenant supplanté par `Rakudo Perl <https://rakudo.org/>`_).
   
 

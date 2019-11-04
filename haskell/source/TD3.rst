@@ -1,3 +1,6 @@
+==============================
+Fonctions
+==============================
 
 
 Définition et appel de fonctions
@@ -42,7 +45,7 @@ Appels de fonctions
 ------------------------
 
 En Haskell, il n'y a pas besoin de parenthèses pour appeler une fonction.
-Tous les arguments sont juste listés après la fonction.
+Tous les arguments sont listés après la fonction.
 
 Schéma général : ``func arg1 arg2 arg3 ...``
 
@@ -83,7 +86,6 @@ Premières définitions
   
 Distinction des cas
 ================================
-
     
 Stratégie récursive
 -----------------------------
@@ -93,25 +95,32 @@ Stratégie récursive
 - Il est donc nécessaire de distinguer le cas de base, du cas récursif.
     
   - soit par des gardes (*guards*) pour distinguer des intervalles de valeurs.
-  - soit par une *case expression* pour brancher selon la structure d'une valeur.
+  - soit par une *case-expression* pour brancher selon la structure d'une valeur.
 
 Gardes
 ----------------
 
 Les équations peuvent contenir des *gardes*. 
-Etant donnée une equation de la forme ``func arg | predicat = expr``, l'appel ``func value`` est évalué à ``expr`` si ``predicat`` est évalué à vrai. 
 
-Un prédicat est une expression de type booléen comme ``arg > 0``.
+- Etant donnée ``f arg = expr``,
+  l'appel ``f val`` sera toujours evalué à ``expr``,
+  
+- tandis qu'avec ``f arg | cond = expr``,
+  l'appel ``f val`` est évalué à ``expr`` si et seulement si ``cond`` est vrai,
+  où ``cond`` est une expression booléenne impliquant l'argument, comme par exemple ``arg > 0``.
 
 Gardes multiples
 --------------------
 
-Quand il y a plusieurs gardes, ils sont testés les uns à la suite des autres.
+Plusieurs gardes peuvent être chaînés. Dans ce cas, ils sont testés les uns après les autres.
+
+.. literalinclude:: code/sign1line.hs
+   :language: haskell
 
 .. literalinclude:: code/sign.hs
    :language: haskell
-
-est la traduction Haskell de :
+	      
+sont la traduction Haskell de :
 
 .. math::
    
@@ -126,8 +135,7 @@ est la traduction Haskell de :
 Remarque : *layout*
 --------------------------
 
-Haskell évite l'utilisation de point-virgule
-en utilisant l'alignement en colonne. 
+Haskell utilise l'alignement en colonne pour accroître la lisibilité. 
 Une ligne indentée plus à droite que la précédente est la suite de la ligne précédente.
 
 Ci-dessous, il y a une erreur car aucune expression ne peut commencer par ``|``.
@@ -175,18 +183,24 @@ qui ajoute un élément donné, un nombre de fois donné, dans une liste donnée
 Case expression 
 ------------------------
 
-Une *case expression* fournit le moyen de distinguer plusieurs cas
-selon la structure d'une valeur, c'est-à-dire selon la façon dont elle est construite. 
+Une *case-expression* fournit le moyen de distinguer plusieurs cas
+selon une valeur et sa structure. 
 
 .. literalinclude:: code/myLen.hs
    :language: haskell
 
-Tous les membres de gauche bien sûr, mais aussi tous les membres de droite doivent avoir le même type. 	      
+- dans le cas où ``lst`` est une liste vide, ``myLen lst`` est évaluée en ``0``,
+
+- dans le cas où ``lst`` est composé d'un élément ``x`` en tête d'une liste ``xs`` (possiblement vide)
+  ``myLen lst`` est évaluée en ``1 + myLen xs``.
+
+Tous les membres de gauche (devant les flèches) et tous les membres de droite (derrière) doivent avoir le même type,
+respectement ``[a]`` et ``Integer`` dans cet exemple. 
 
 Pattern matching
 -----------------------
 
-Dans une *case expression* les membres de gauche sont des motifs (*patterns*)
+Dans une *case-expression* les membres de gauche sont des motifs (*patterns*)
 avec lesquels est mise en correspondance (*matching*) la valeur associée au paramètre.
 
 Une mise en correspondance avec un motif peut soit
@@ -236,33 +250,15 @@ est équivalent à
     ...
     f pn1 ... pnk = en
 
-Mais c'est une bonne habitude de choisir la première version, car une case expression peut être utilisée
-aussi en dehors du contexte de la définition d'une fonction. 
+Mais une case expression peut être utilisée
+aussi dans une expression plus complexe.
     
-Bonus. ``repli`` 
---------------------------
-
-A l'aide de la fonction ``addElemInList``, définissez la fonction    
-    
-.. literalinclude:: code/replicate.hs
-   :language: haskell
-   :lines: 1
-
-qui réplique un nombre de fois donné, les éléments d'une liste donnée. 
-
-.. code-block:: none
-		
-    *Main> repli "azerty" 3
-    "aaazzzeeerrrtttyyy"
-
-NB. Ecrire les deux fonctions dans le même fichier. 
-
 
 Fonctions récursives
 ========================
 
 
-Défi 1. ``compress``
+défi 3. ``compress``
 -----------------------
 
 Définissez la fonction
@@ -279,20 +275,20 @@ qui supprime les copies consécutives des éléments d'une liste.
     "abcade"
 
     
-``Let-expression``
+Let-expression
 ---------------------------
 
 Parfois on a besoin de localement se référer à une valeur intermédiaire.
 
-Une ``let-expression`` (``let var = expr1 in expr2``)  peut 
+Une *let-expression* (``let var = expr1 in expr2``)  peut 
 être utilisée partout où une expression est requise. 
 
 .. code-block:: haskell
 
    (let x = 2 in x*2) + 3
 
-Dans certains cas (dans le REPL par exemple), un
-``let-statement`` (``let var = expr``)  peut 
+Dans certains cas (REPL ou notation ``do``), un
+*let-statement* (``let var = expr``)  peut 
 être utilisé.  
 
 .. code-block:: none
@@ -305,7 +301,7 @@ Dans certains cas (dans le REPL par exemple), un
 Clause ``where``
 --------------------------
 
-La clause ``where`` permet de partager une variable entre des parties
+La clause *where* permet de partager une variable entre des parties
 d'une définition qui ne forme pas syntaxiquement une expression.  
 
 .. code-block:: haskell
@@ -317,7 +313,7 @@ d'une définition qui ne forme pas syntaxiquement une expression.
        a = w x
        
    
-Défi 2. ``encode``
+défi 4. ``encode``
 -----------------------
 
 Définissez la fonction
@@ -386,7 +382,7 @@ dans la liste résultante (de taille plus petite ou égale).
 Par exemple, l'expression ``filter (\x -> x < 10) [9,10,11,12]`` est évaluée
 à ``[9]``. 
 
-Défi 3 : ``filter``
+défi 5 : ``filter``
 -------------------------
 
 En utilisant les fonctions ``filter`` et ``length``, donnez l'expression
@@ -441,7 +437,7 @@ En Haskell, une *section* est l'application partielle d'un opérateur infixe
 Donc on peut aussi écrire ``map (+1) [1,2,3]``
 
 
-Défi 4 : ``map``
+défi 6 : ``map``
 -------------------------
 
 En utilisant la fonction ``addElemInList`` et ``map``, donnez l'expression qui
@@ -449,10 +445,10 @@ transforme le codage ``[(4,'a'),(1,'b'),(2,'c'),(2,'a'),(1,'d'),(4,'e')]`` en
 ``["aaaa","b","cc","aa","d","eeee"]``. 
 
    
-Définition de liste en extension
+Définition de liste en intention
 ----------------------------------
 
-Il existe une syntaxe particulière permettant de définir des listes en extension (appelée *list comprehension*)  
+Il existe une syntaxe particulière permettant de définir des listes en intention (appelée *list comprehension*)  
 et qui remplace avantageusement l'utilisation de ``map`` et ``filter`` dans un grand nombre de cas.  
 
 .. code-block:: haskell
@@ -466,21 +462,6 @@ et s'inspire de la notation mathématique
 
    \{ f(x) | x \in xs, x < k \}.
 
-
-Défi 5 : ``comprehension list``
----------------------------------
-
-En utilisant la notation précédente, traduisez en Haskell l'algorithme suivant :
-
-.. code-block:: none
-
-   quicksort(l)
-     soit r une liste vide
-     si la liste l contient au moins un élément e (le premier), alors
-       soit l- (resp. l+) la liste contenant tous les éléments de l
-       étant inférieurs (resp. supérieurs ou égaux) à e
-       r <- concaténation de quicksort(l-), (e), quicksort(l+) 
-     return r
        
 ``foldr`` and co.
 ----------------------
@@ -501,8 +482,6 @@ en partant de la droite (r pour right) ou de la gauche (l pour left).
 ``foldr`` en détail
 -----------------------
 
-Soit la définition (légèrement différente de celle du Prélude)
-
 .. code-block:: Haskell
 
    foldr :: (a -> b -> b) -> b -> [a] -> b
@@ -516,7 +495,7 @@ et à l'élément de fin de liste (le plus à droite).
 Le résultat sera ensuite combiné avec l'élément précédent et ainsi de suite.
 La dernière application de la fonction de combinaison retournera la valeur finale. 
 
-Défi 6 : ``foldr`` 
+défi 7 : ``foldr`` 
 ----------------------------
 
 En utilisant la fonction ``foldr``, donnez l'expression qui transforme la liste
@@ -588,28 +567,22 @@ défi 2. ``dupli``
 .. literalinclude:: code/duplicate.hs
    :language: haskell
 
-Bonus. ``repli`` 
---------------------------
 
-    
-.. literalinclude:: code/replicate.hs
-   :language: haskell
-
-Défi 1. ``compress``
+défi 3. ``compress``
 -----------------------
 
 
 .. literalinclude:: code/compress.hs
    :language: haskell
 
-Défi 2. ``encode``
+défi 4. ``encode``
 -----------------------
 
 .. literalinclude:: code/encode.hs
    :language: haskell
 
 
-Défi 3 : ``filter``
+défi 5 : ``filter``
 ------------------------
 
 .. code-block:: none
@@ -623,7 +596,7 @@ Défi 3 : ``filter``
    6
 
    
-Défi 4 : ``map``
+défi 6 : ``map``
 ---------------------------------
 
 .. code-block:: none
@@ -635,13 +608,8 @@ Défi 4 : ``map``
    *Main> map f [(4,'a'),(1,'b'),(2,'c'),(2,'a'),(1,'d'),(4,'e')]
    ["aaaa","b","cc","aa","d","eeee"]
 
-Défi 5 : ``comprehension list``
----------------------------------
-
-.. literalinclude:: code/quicksort.hs
-   :language: haskell
-	      
-Défi 6 : ``foldr``
+     
+défi 7 : ``foldr``
 ---------------------
 
 .. code-block:: none
