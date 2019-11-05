@@ -128,7 +128,8 @@ Ce sont des unions (récursives) de types produits :
    :alt: différentes sortes de type
    :align: center
 
-
+.. _carte-label:
+  
 Type somme vs type produit 
 --------------------------------
 

@@ -43,10 +43,10 @@ Un exemple typique est la liste, dont la fonction ``map`` permet d'appliquer une
    Prelude> map (*2) [1,2,3]
    [2,4,6]
 
-Classe ``Fonctor`` et ``fmap``
+Classe ``Functor`` et ``fmap``
 -------------------------------------
 
-Le concept de foncteur généralise ``map`` à toutes les instances de la classe ``Fonctor``,
+Le concept de foncteur généralise ``map`` à toutes les instances de la classe ``Functor``,
 qui exige la définition d'une fonction ``fmap`` :
 
 .. code-block:: haskell
@@ -207,26 +207,65 @@ où chacune des fonctions est appliquée sur chacune des valeurs.
 Types monadiques
 ============================
 
-Monades
+Chaînage
 ---------------------------------------------
 
-Les monades sont des types polymorphes pour lesquels ces opérations
-sont disponibles:
+Intuitivement, les monades sont des conteneurs, comme les foncteurs,
+qui offrent une manière d'enchaîner des fonctions encapsulant leur valeur
+de retour dans une monade.
 
-- ``return :: a -> m a``. Injecte une valeur dans la monade.   
+.. literalinclude:: code/minimum.hs
+   :language: Haskell
+   :lines: 1-3
 
-- ``>>= :: m a -> (a -> m b) -> m b`` (appelé *bind*).
-  Combine une valeur monadique ``m a``, contenant une valeur de type ``a``
-  à une fonction ``a -> m b`` et retourne la valeur monadique ``m b``.
+.. code-block:: none
 
-- ``>> :: m a -> m b -> m b``, utilisée quand on n'a pas besoin de la
-  première valeur monadique. 
+    *Main> minimum' [1,3,-2,5]
+    Just (-2)
+    *Main> Just [1,3,-2,5] >>= minimum' 
+    Just (-2)
+    *Main> Nothing >>= minimum' 
+    Nothing
+    
+Comme le suggère cet exemple ``Maybe`` est une monade. 
+
+Classe ``Monad``
+---------------------------------------------
+
+Ce concept est implémenté par la classe ``Monad`` qui hérite de ``Applicative``.
+Un type qui instancie ``Monad`` doit donc instancier également ``Applicative``,
+et définir l'opérateur ``>>=`` (*bind*), le reste étant implémenté par défaut.  
+
+.. code-block:: haskell
+
+   class Applicative m => Monad m where
+     return :: a -> f a
+     return = pure
+     
+     (>>=) :: m a -> (a -> m b) -> m b
+
+     (>>) :: m a -> m b -> m b
+     m >> n = m >>= (\_ -> n)
+     
+
+*Bind*
+-----------------------------------------------
+
+L'opérateur ``>>=`` prend une monade ``m a``, contenant une valeur de type ``a``,
+applique une fonction ``(a -> m b)`` sur celle-ci et retourne la monade
+qui en résulte ``m b``. L'opérateur ``>>`` est une version particulière où la valeur
+de la première monade n'est pas transmise à la seconde.
   
-Bien sûr la sémantique de ces opérations dépend de la monade;
-le résultat ne sera pas le même s'il s'agit de ``Maybe``, ``[]`` ou ``IO``,
-qui sont tous trois des monades. 
+La sémantique de ces opérateurs doit respecter les lois monadiques : 
 
-Défi 2 : opérations monadiques
+.. code-block:: haskell
+
+   return a >>= k           = k a
+   m >>= return             = m
+   xs >>= return . f        = fmap f xs
+   m >>= (\x -> k x >>= h)  = (m >>= k) >>= h
+
+défi 1 : opérations monadiques
 -----------------------------------
 
 Que donnent les expressions suivantes ?
@@ -241,18 +280,6 @@ Que donnent les expressions suivantes ?
 - ``Just 5 >> Just 6`` et ``Nothing >> Just 6``
 - ``[2,5,0] >> "bc"`` et ``"bc" >> [2,5,0]``
   
-Lois monadiques
-------------------------------------
-
-La sémantique des opérateurs ``>>=`` et ``return`` doit
-respecter les lois suivantes : 
-
-.. code-block:: none
-
-   return a >>= k           = k a
-   m >>= return             = m
-   xs >>= return . f        = fmap f xs
-   m >>= (\x -> k x >>= h)  = (m >>= k) >>= h
 
 Sucre syntaxique : notation ``do``
 ------------------------------------
@@ -268,14 +295,14 @@ Par exemple :
    
 .. code-block:: none
 
-   *Main> safeHead [5,2,4] >>= (\x -> return (x*2))
-   Just 10
-   *Main> do x <- safeHead [5,2,4] ; return (x*2)
-   Just 10
+   *Main> Just [1,3,-2,5] >>= minimum' >>= (\x -> return (x-10))
+   Just (-12)
+   *Main> do lst<- (Just [1,3,-2,5]); min<- minimum' lst; return (min-10)
+   Just (-12)
 
-(Notez qu'en général on passe à la ligne plutôt qu'utiliser un point-virgule).  
+Notez qu'en général on passe à la ligne plutôt qu'utiliser un point-virgule.  
    
-Défi 3 : notation ``do``
+défi 2 : notation ``do``
 ----------------------------
 
 Que donnent les expressions suivantes ?
@@ -335,6 +362,8 @@ Par exemple, ``putStrLn`` prend une chaîne pour l'afficher mais ne retourne rie
 
    putStrLn :: String -> IO ()
 
+Remarque : ``print = putStrLn . show``. 
+   
 bind
 -------------------------------
 
@@ -366,6 +395,40 @@ Ce programme est l'équivalent du précédent :
 .. literalinclude:: code/getput2.hs
    :language: Haskell
 
+Autre exemple
+---------------------------
+
+.. literalinclude:: code/main2.hs
+   :language: Haskell
+
+.. literalinclude:: code/main.hs
+   :language: Haskell
+
+Autre exemple avec ``let``
+----------------------------
+
+.. literalinclude:: code/main4.hs
+   :language: Haskell
+
+.. literalinclude:: code/main3.hs
+   :language: Haskell
+
+Autre exemple avec ``return``
+--------------------------------
+
+.. literalinclude:: code/getName.hs
+   :language: Haskell
+   :lines: 1-8
+	   
+.. literalinclude:: code/getNameDo.hs
+   :language: Haskell
+   :lines: 1-6
+ 
+.. literalinclude:: code/getNameDo.hs
+   :language: Haskell
+   :lines: 8-9
+  
+      
 Rappel de compilation
 ---------------------------
 
@@ -377,44 +440,45 @@ Rappel de compilation
   pour mettre les fichiers intermédiaires dans un répertoire séparé ``build``
   (voir ``man ghc`` ou ``ghc --help``). 
 	      
-return
--------------------------------
-
-La fonction ``return`` crée une action, qui ne fait rien d'autre
-que d'encapsuler une valeur dans une action : 
-
-.. code-block:: Haskell
-
-   return :: a -> IO a
-
-Cette fonction lit un caractère et retourne ``IO True`` si le caractère
-est un ``y``.  Une erreur classique est d'oublier le ``return``. 
-   
-.. literalinclude:: code/ready.hs
-   :language: Haskell
-
-(Notez que le type est connu grâce à la signature de la fonction). 
-
-
-Défi 4 : jeu
--------------------------------
-
 ..
-   A partir du type :ref:`Carte <carte-label>`,
-   définissez la fonction :
+   return
+   -------------------------------
+
+   La fonction ``return`` crée une action, qui ne fait rien d'autre
+   que d'encapsuler une valeur dans une action : 
+
+   .. code-block:: Haskell
+
+      return :: a -> IO a
+
+   Cette fonction lit un caractère et retourne ``IO True`` si le caractère
+   est un ``y``.  Une erreur classique est d'oublier le ``return``. 
+
+   .. literalinclude:: code/ready.hs
+      :language: Haskell
+
+   (Notez que le type est connu grâce à la signature de la fonction). 
+
+
+défi 3 : jeu de devinette
+-------------------------------
+
+A partir d'un type ``Carte`` modélisant une carte à jouer, 
+définissez la fonction :
 
 .. literalinclude:: code/io.hs
    :language: Haskell
    :lines: 11
 
-appelée ci-dessous. L'utilisateur tape le nom d'une carte.
-Si c'est celle choisie par le programme, il a gagné, sinon
-il a le droit de proposer une nouvelle carte. 
+appelée ci-dessous : 
 	   
 .. literalinclude:: code/io.hs
    :language: Haskell
    :lines: 21-26
 
+L'utilisateur tape le nom d'une carte.
+Si c'est celle mémorisée dans le programme, il a gagné, sinon
+il a le droit de proposer une nouvelle carte. 
 
 
 Conclusion
@@ -432,15 +496,8 @@ Capacités/Connaissances
 - Ecrire un petit programme en définissant la fonction ``main``
 
   
-Défi 1 : ``safeHead``
-----------------------------------------------
 
-
-.. literalinclude:: code/safeHead.hs
-   :language: Haskell
-
-
-Défi 2 : Opérations habituelles
+défi 1 : Opérations habituelles
 ----------------------------------------------
 	      
 .. code-block:: none
@@ -457,7 +514,7 @@ Défi 2 : Opérations habituelles
 		(\(nb,elt) -> take nb (repeat elt))
    "aaaabba"
 
-Défi 2 : Opérations habituelles (suite)
+défi 1 : Opérations habituelles (suite)
 ----------------------------------------------
 	      
 .. code-block:: none
@@ -479,7 +536,7 @@ Défi 2 : Opérations habituelles (suite)
    Prelude> "bc" >> [2,5,0]
    [2,5,0,2,5,0]
    
-Défi 3 : Notation ``do``
+défi 2 : Notation ``do``
 ----------------------------------------------
 
 .. code-block:: none
@@ -500,9 +557,16 @@ Défi 3 : Notation ``do``
    "bcbcbc"
    Prelude> do [2,5,0]; "bc"; [0]
    [0,0,0,0,0,0]
-		
-Défi 4 : Jeu
--------------------------------
+
+défi 3 : Jeu de devinette (types)
+-----------------------------------
+
+.. literalinclude:: code/io.hs
+   :language: Haskell
+   :lines: 1-8
+
+défi 3 : Jeu de devinette (suite)
+-----------------------------------
 
 .. literalinclude:: code/io.hs
    :language: Haskell

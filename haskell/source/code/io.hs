@@ -21,6 +21,6 @@ jeu carteATrouver =
 main = do
     let laCarte = Carte As Trefle
     putStr "indice: "
-    putStrLn (show laCarte)
+    print laCarte
     -- jeu de devinette
     jeu laCarte
