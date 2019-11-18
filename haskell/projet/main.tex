@@ -31,18 +31,14 @@
 
 Le but de ce projet est de développer en Haskell un outil qui transforme un programme écrit dans un langage inspiré des langages \href{https://fr.wikipedia.org/wiki/Logo_(langage)}{Logo} et Haskell en un programme écrit en \href{https://fr.wikipedia.org/wiki/Scalable_Vector_Graphics}{SVG}. 
 
-Il doit être réalisé en binôme et à rendre au plus tard le 29 Novembre 2019, 23h55, sur \href{https://moodle.insa-lyon.fr/}{Moodle}. 
+Il doit être réalisé en binôme et à rendre sous la forme d'un simple fichier haskell commenté (explications nécessaires à la bonne compréhension du code, à la compilation et à l'utilisation correcte de l'exécutable). Le nom du fichier doit composé du nom des deux étudiants et être déposé sur \href{https://moodle.insa-lyon.fr/}{Moodle} au plus tard le 29 Novembre 2019, 23h55. 
 
 \section{Le langage {\tclogo}}
-Le langage {\tclogo} (version 1.0) sert à exprimer le chemin que va suivre un crayon pour dessiner un graphique. Il comporte 4 instructions, toutes avec paramètres: {\tt Forward}, {\tt Left}, {\tt Right} et {\tt Repeat}. L'instruction {\tt Forward x} fait avancer le crayon de x points dans la direction courante. L'instruction {\tt Right x} (respectivement {\tt Left x}) fait tourner la direction courante de x degrés à droite (respectivement à gauche), dans le sens des aiguilles d'une montre (respectivement dans le sens inverse). L'instruction {\tt Repeat x [ yyy ]} répète x fois la suite d'instructions entre crochets. Les instructions sont séparées par des virgules et le programme entier se trouve entre crochets.
+Le langage {\tclogo} (version 1.0) sert à exprimer le chemin que va suivre un crayon pour dessiner un graphique. Il comporte 4 instructions, toutes avec paramètres: {\tt Forward}, {\tt Left}, {\tt Right} et {\tt Repeat}. L'instruction {\tt Forward x} fait avancer le crayon de x points dans la direction courante. L'instruction {\tt Right x} (respectivement {\tt Left x}) fait tourner la direction courante de x degrés à droite (respectivement à gauche), dans le sens des aiguilles d'une montre (respectivement dans le sens inverse). L'instruction {\tt Repeat x [ yyy ]} répète x fois la suite d'instructions entre crochets. Les instructions sont séparées par des virgules et le programme entier se trouve entre crochets et sur une seule ligne de texte. 
 
 Le programme suivant décrit la \textsc{Figure}~\ref{fig} :
 \begin{verbatim}
-[ 
-Forward 100, 
-Repeat  4 [Forward 50, Left 90], 
-Forward 100 
-]
+[Forward 100, Repeat  4 [Forward 50, Left 90], Forward 100]
 \end{verbatim}
 
 \begin{figure}
@@ -51,26 +47,9 @@ Forward 100
 \label{fig}
 \end{figure}
 
-\section{Méthodologie}
-Le projet peut être décomposé en deux étapes : 
-\begin{itemize}
-\item Développement d'une structure de données représentant un programme {\tclogo}, 
-\item Traitement de cette représentation intermédiaire pour produire un programme écrit en SVG. 
-\end{itemize}
+\newpage
 
-\subsection{Étape 1: Représentation intermédiaire}
-
-Vous devez proposer une structure de données pour stocker votre programme {\tclogo} en mémoire, puis pouvoir produire du code à partir de cette représentation intermédiaire. Pour commencer, vérifiez que : 
-\begin{itemize}
-\item Un programme {\tclogo} est une liste d'instructions.
-\item Chaque instruction possède un ou plusieurs paramètres.
-\item Ces paramètres peuvent être des entiers ou des programmes (voir {\tt Repeat}). 
-\end{itemize}
-
-\section{Étape 2: génération d'un fichier SVG}
-
-Vous devez écrire une fonction qui prend en entrée une représentation intermédiaire (ainsi qu'un crayon caractérisé par une position et une direction) et retourne un programme écrit en SVG.
-Ceci est un exemple de code SVG pouvant correspondre au programme {\tclogo} de la \textsc{Figure}~\ref{fig} :
+La même \textsc{Figure}~\ref{fig} est décrite par le programme SVG suivant, interprétable dans n'importe quel navigateur :
 {\scriptsize
 \begin{verbatim}
 <?xml version="1.0" encoding="utf-8"?>
@@ -85,5 +64,62 @@ Ceci est un exemple de code SVG pouvant correspondre au programme {\tclogo} de l
 </svg>
 \end{verbatim}
 }
+
+Votre objectif est d'écrire en Haskell un programme capable de lire en entrée un programme {\tclogo}, comme celui donné plus haut, et d'écrire en sortie un programme SVG représentant la même figure.
+
+\section{Méthodologie}
+Le projet peut être décomposé en deux étapes : 
+\begin{itemize}
+\item Développement d'une structure de données représentant un programme {\tclogo}, 
+\item Traitement de cette représentation intermédiaire pour produire un programme SVG. 
+\end{itemize}
+
+\subsection{Étape 1: Représentation intermédiaire}
+
+Vous devez proposer une structure de données pour stocker votre programme {\tclogo} en mémoire, puis pouvoir produire du code à partir de cette représentation intermédiaire. Pour commencer, vérifiez que : 
+\begin{itemize}
+\item Un programme {\tclogo} est une liste d'instructions.
+\item Chaque instruction possède un ou plusieurs paramètres.
+\item Ces paramètres peuvent être des entiers ou des programmes (voir {\tt Repeat}). 
+\end{itemize}
+
+Le programme {\tclogo} précédent peut être considéré comme un programme haskell valide à partir du moment où il existe des constructeurs de valeur correspondant aux 4 instructions {\tt Forward}, {\tt Left}, {\tt Right} et {\tt Repeat}. Cela fait partie de votre travail de définir les constructeurs et types correspondant. Par exemple, vous pouvez définir le type \verb!Instruction! ainsi :
+\begin{verbatim}
+data Instruction = Forward Int
+\end{verbatim}
+et alors traiter dans un programme haskell n'importe quelles valeurs du type \verb!Instruction! comme \verb!Forward 100! ou d'un type paramétré par \verb!Instruction!, comme \verb![Forward 50, Forward 50]! qui est de type \verb![Instruction]!. Nous ne sommes déjà pas très loin des spécifications du {\tclogo}. 
+
+De plus, nous ne voulons pas écrire un programme {\tclogo} dans le code du compilateur, mais plutôt lire ce programme à l'exécution. Dans ce cas, il est représenté dans le code par une chaîne de caractère. A l'échelle, d'une instruction, la question qui se pose est comment passer d'une chaîne de caractère représentant l'instruction en une valeur de type \verb!Instruction! ? ou concrètement, comment passer de la chaîne de caractère \verb!"Forward 100"! à la valeur \verb!Forward 100! (attention à la présence ou absence des guillemets) ? Il existe une fonction, appelée \verb!read!, qui fait cette transformation si le type en question (\verb!Instruction! dans cet exemple) appartient à la classe \verb!Read!, ce qu'on indique en ajoutant la clause \verb!deriving! à la définition du type :
+\begin{verbatim}
+  data Instruction = Forward Int deriving (Show, Read)
+  uneInstruction = (read "Forward 100" :: Instruction)
+\end{verbatim}
+
+Enfin, il est nécessaire pour la seconde étape de pouvoir extraire les paramètres d'une instruction. Autrement dit, comment, étant donnée une variable de type \verb!Instruction!, accéder à l'entier caractérisant l'instruction ? Simplement par \emph{pattern matching} dans une équation ou une \emph{case-expression}. Par exemple :
+\begin{verbatim}
+obtenirDescription :: Instruction -> String
+obtenirDescription (Forward x) = 
+  "Deplace le crayon de " ++ (show x) ++ " unites"  
+\end{verbatim}
+ce qui est équivalent à 
+\begin{verbatim}
+obtenirDescription :: Instruction -> String
+obtenirDescription inst = case inst of 
+  (Forward x) -> "Deplace le crayon de " ++ (show x) ++ " unites"
+\end{verbatim}
+
+\section{Étape 2: génération d'un fichier SVG}
+
+Vous devez écrire une fonction qui prend en entrée une représentation intermédiaire, ainsi qu'un crayon caractérisé par une position et une direction, et retourne un programme SVG. Il y a de nombreuses possibilités et vous êtes libres de choisir celle qui vous semble pertinente.
+
+L'une d'elle consiste à séparer la tâche de traduction des tâches d'entrée-sortie et d'écrire une fonction qui utilise un accumulateur, à la fois passé en paramètre et retourné, pour stocker les lignes du programme SVG calculé. Il suffit alors d'écrire une seconde fonction qui affiche la liste des lignes SVG sur la sortie standard. 
+\begin{verbatim}
+logoskell2svg :: Programme -> Crayon -> [String] 
+  -> (Crayon, [String])
+outputStrLst :: [String] -> IO() 
+\end{verbatim}
+où je suppose que les types \verb!Programme! et \verb!Crayon! ont été correctement définis. 
+
+
 
 \end{document}
