@@ -31,7 +31,7 @@
 
 Le but de ce projet est de développer en Haskell un outil qui transforme un programme écrit dans un langage inspiré des langages \href{https://fr.wikipedia.org/wiki/Logo_(langage)}{Logo} et Haskell en un programme écrit en \href{https://fr.wikipedia.org/wiki/Scalable_Vector_Graphics}{SVG}. 
 
-Il doit être réalisé en binôme et à rendre sous la forme d'une archive au format \verb!zip! contenant un fichier haskell commenté (explications nécessaires à la bonne compréhension du code, à la compilation et à l'utilisation correcte de l'exécutable). Le nom de l'archive doit être composé du nom et prénom des deux étudiants et être déposé sur \href{https://moodle.insa-lyon.fr/}{Moodle} au plus tard le 29 Novembre 2019, 23h55. 
+Il doit être réalisé en binôme et à rendre sous la forme d'une archive au format \verb!zip! contenant un fichier haskell commenté (explications nécessaires à la bonne compréhension du code, à la compilation et à l'utilisation correcte de l'exécutable). Le nom de l'archive doit être composé du nom et prénom des deux étudiants et être déposé sur \href{https://moodle.insa-lyon.fr/}{Moodle} au plus tard le 29 Novembre 2019, 23h55 pour les 3TC, le 6 Décembre 2019, 23h55 pour les 3TCA. 
 
 \section{Le langage {\tclogo}}
 Le langage {\tclogo} (version 1.0) sert à exprimer le chemin que va suivre un crayon pour dessiner un graphique. Il comporte 4 instructions, toutes avec paramètres : {\tt Forward}, {\tt Left}, {\tt Right} et {\tt Repeat}. L'instruction {\tt Forward x} fait avancer le crayon de x points dans la direction courante. L'instruction {\tt Right x} (respectivement {\tt Left x}) fait tourner la direction courante de x degrés à droite (respectivement à gauche), dans le sens des aiguilles d'une montre (respectivement dans le sens inverse). L'instruction {\tt Repeat x [ yyy ]} répète x fois la suite d'instructions entre crochets. Les instructions sont séparées par des virgules et le programme entier se trouve entre crochets et sur une seule ligne de texte. 
@@ -119,10 +119,19 @@ logoskell2svg :: Programme -> Crayon -> [String]
 \end{verbatim}
 où je suppose que les types \verb!Programme! et \verb!Crayon! ont été correctement définis. Remarquez que le crayon et la liste des lignes SVG déjà connues est un contexte de calcul dont on voudrait habituellement modifier l'état au cours de l'exécution. Comme Haskell est un langage pur n'autorisant pas de mise à jour, la stratégie courante consiste à passer en paramètre et retourner le contexte de calcul. 
 
-Il reste alors à écrire une seconde fonction qui affiche la liste des lignes SVG sur la sortie standard. 
+Il reste alors à écrire une seconde fonction qui affiche la liste des lignes SVG sur la sortie standard\footnote{Si vous ne savez pas ce que sont l'entrée et la sortie standards, les redirections de flux, consultez la page suivante : \url{https://www.tuteurs.ens.fr/unix/shell/entreesortie.html}}. 
 \begin{verbatim}
 outputStrLst :: [String] -> IO() 
 \end{verbatim}
+
+Plutôt que stocker les lignes du programme SVG calculé, vous pouvez aussi ne stocker que les extrémités des segments de droite. Dans ce cas, la signature des fonctions ressemblera à :  
+\begin{verbatim}
+logoskell2svg :: Programme -> Crayon -> [Point] 
+  -> (Crayon, [Point])
+outputPtLst :: [Point] -> IO() 
+\end{verbatim}
+
+Tout ce que vous lisez dans cette section ne sont que des indications et votre solution peut tout à fait être différente.
 
 \newpage
 
