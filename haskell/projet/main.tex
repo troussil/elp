@@ -31,7 +31,7 @@
 
 Le but de ce projet est de développer en Haskell un outil qui transforme un programme écrit dans un langage inspiré des langages \href{https://fr.wikipedia.org/wiki/Logo_(langage)}{Logo} et Haskell en un programme écrit en \href{https://fr.wikipedia.org/wiki/Scalable_Vector_Graphics}{SVG}. 
 
-Il doit être réalisé en binôme et à rendre sous la forme d'une archive au format \verb!zip! contenant un fichier haskell commenté (explications nécessaires à la bonne compréhension du code, à la compilation et à l'utilisation correcte de l'exécutable). Le nom de l'archive doit être composé du nom et prénom des deux étudiants et être déposé sur \href{https://moodle.insa-lyon.fr/}{Moodle} au plus tard le 29 Novembre 2019, 23h55 pour les 3TC, le 6 Décembre 2019, 23h55 pour les 3TCA. 
+Il doit être réalisé en binôme et à rendre sous la forme d'une archive au format \verb!zip! contenant un fichier haskell commenté (explications nécessaires à la bonne compréhension du code, à la compilation et à l'utilisation correcte de l'exécutable). Le nom de l'archive doit être composé du nom et prénom des deux étudiants et être déposé sur \href{https://moodle.insa-lyon.fr/}{Moodle} au plus tard le 18 Décembre 2020, 23h55.  
 
 \section{Le langage {\tclogo}}
 Le langage {\tclogo} (version 1.0) sert à exprimer le chemin que va suivre un crayon pour dessiner un graphique. Il comporte 4 instructions, toutes avec paramètres : {\tt Forward}, {\tt Left}, {\tt Right} et {\tt Repeat}. L'instruction {\tt Forward x} fait avancer le crayon de x points dans la direction courante. L'instruction {\tt Right x} (respectivement {\tt Left x}) fait tourner la direction courante de x degrés à droite (respectivement à gauche), dans le sens des aiguilles d'une montre (respectivement dans le sens inverse). L'instruction {\tt Repeat x [ yyy ]} répète x fois la suite d'instructions entre crochets. Les instructions sont séparées par des virgules et le programme entier se trouve entre crochets et sur une seule ligne de texte. 
@@ -95,17 +95,10 @@ De plus, nous ne voulons pas écrire un programme {\tclogo} dans le code du compi
   uneInstruction = (read "Forward 100" :: Instruction)
 \end{verbatim}
 
-Enfin, il est nécessaire pour la seconde étape de pouvoir extraire les paramètres d'une instruction. Autrement dit, comment, étant donnée une variable de type \verb!Instruction!, accéder à l'entier caractérisant l'instruction ? Simplement par \emph{pattern matching} dans une équation ou une \emph{case-expression}. Par exemple :
+Enfin, il est nécessaire pour la seconde étape de pouvoir extraire les paramètres d'une instruction. Autrement dit, comment, étant donnée une variable de type \verb!Instruction!, accéder à l'entier caractérisant l'instruction ? Simplement par \emph{pattern matching}. Par exemple :
 \begin{verbatim}
-obtenirDescription :: Instruction -> String
-obtenirDescription (Forward x) = 
-  "Deplace le crayon de " ++ (show x) ++ " unites"  
-\end{verbatim}
-ce qui est équivalent à 
-\begin{verbatim}
-obtenirDescription :: Instruction -> String
-obtenirDescription inst = case inst of 
-  (Forward x) -> "Deplace le crayon de " ++ (show x) ++ " unites"
+Forward x = uneInstruction 
+-- x vaut 100 
 \end{verbatim}
 
 \section{Étape 2: génération d'un fichier SVG}
