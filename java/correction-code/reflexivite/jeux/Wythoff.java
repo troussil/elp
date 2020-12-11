@@ -42,7 +42,7 @@ public class Wythoff implements JeuCombinatoire {
             if ( ( (i >= 0) && (j >= 0) ) &&         //dans le damier
                  ( ( (i == x) && (j < y) ) ||           //horizontale
                    ( (j == y) && (i < x) ) ||           //verticale
-                   ( (i == j) && (i < x) && (j < y) ) ) //diagonale
+                   ( ((x-i) == (y-j)) && (i < x) && (j < y) ) ) //diagonale
                  ) { //valide
                 x = i;
                 y = j;
