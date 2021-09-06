@@ -6,10 +6,34 @@ https://elm-lang.org/
 Guide
 https://guide.elm-lang.org/
 
+Elm architecture: 
+
+    Model — the state of your application, it's a type (ex. type alias Model = Int), initialized with the 'init' function
+    View — a way to turn your state into HTML, it's a view function that takes in the Model as an argument and outputs HTML
+    Update — a way to update your state based on messages, it's a function that takes in the Model and a message as arguments and output the new Model. It describes how our Model will change over time.
+
+The main value is special in Elm. 
+ex. main =
+  Browser.sandbox { init = init, update = update, view = view }
+It describes what gets shown on screen. In this case, we are going to initialize our application with the init value, the view function is going to show everything on screen, and user input is going to be fed into the update function. Think of this as the high-level description of our program.
+
+Elm starts by rendering the initial value on screen. From there you enter into this loop:
+
+    Wait for user input.
+    Send a message to update
+    Produce a new Model
+    Call view to get new HTML
+    Show the new HTML on screen
+    Repeat!
+
 ---
 Documentation
 https://package.elm-lang.org/packages/elm/core/latest/Basics
 https://package.elm-lang.org/packages/elm/core/latest/List
+https://package.elm-lang.org/packages/elm/core/latest/String
+
+HTML: 
+'input' and 'div' are just normal functions. They take (1) a list of attributes and (2) a list of child nodes. 
 
 ---
 install: 
