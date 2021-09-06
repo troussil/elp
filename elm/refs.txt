@@ -1,0 +1,17 @@
+https://fr.wikipedia.org/wiki/Elm_(langage)
+
+https://elm-lang.org/
+
+---
+Guide
+https://guide.elm-lang.org/
+
+---
+Documentation
+https://package.elm-lang.org/packages/elm/core/latest/Basics
+https://package.elm-lang.org/packages/elm/core/latest/List
+
+---
+install: 
+https://guide.elm-lang.org/install/elm.html
+https://github.com/elm/compiler/blob/master/installers/linux/README.md
