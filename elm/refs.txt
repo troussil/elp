@@ -26,6 +26,22 @@ Elm starts by rendering the initial value on screen. From there you enter into t
     Show the new HTML on screen
     Repeat!
 
+Types: 
+
+- there are types, type variables, constrained type variables
+
+The full list of constrained type variables is:
+
+    number permits Int and Float
+    appendable permits String and List a
+    comparable permits Int, Float, Char, String, and lists/tuples of comparable values
+    compappend permits String and List comparable
+
+- there are type alias, ex. "type alias MyNameForThisType = ThisType"
+
+- there are ways to create new types: 
+ - 
+
 ---
 Documentation
 https://package.elm-lang.org/packages/elm/core/latest/Basics
