@@ -52,7 +52,25 @@ ex. type User
 Commands and subscriptions:
 
 Instead of using Browser.sandbox, we can use Browser.element to create programs. 
-In that case, we get the ability to issue commands from init and update. We also get the ability to subscribe to interesting information. 
+ex. main =
+  Browser.element
+    { init = init
+    , view = view
+    , update = update
+    , subscriptions = subscriptions
+    }
+In that case, we get the ability to issue commands from init and update (we commanded Elm to do specific work immediately). We also get the ability to subscribe to interesting information (We always want to know a piece of information). 
+
+The type annotations for init and update are:
+init : () -> (Model, Cmd Msg)
+update : Msg -> Model -> (Model, Cmd Msg)
+
+The type annotation for subscription is: 
+subscriptions : Model -> Sub Msg
+
+and for view: 
+view : Model -> Html Msg
+
 
 ---
 Background
@@ -90,10 +108,20 @@ install:
 https://guide.elm-lang.org/install/elm.html
 https://github.com/elm/compiler/blob/master/installers/linux/README.md
 
-when you are making your own Elm programs locally, it will probably involve running some commands like this in the terminal:
-
 elm init
+elm reactor
+
+# Create an index.html file that you can open in your browser.
+elm make src/Main.elm
+
+# Create an optimized JS file to embed in a custom HTML document.
+elm make src/Main.elm --optimize --output=elm.js
+
+When you are making your own Elm programs locally, it will probably involve running some commands like this in the terminal:
+
 elm install elm/http
 elm install elm/random
 
 That would set up an elm.json file with elm/http and elm/random as dependencies.
+
+elm --help
