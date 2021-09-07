@@ -17,7 +17,7 @@ ex. main =
   Browser.sandbox { init = init, update = update, view = view }
 It describes what gets shown on screen. In this case, we are going to initialize our application with the init value, the view function is going to show everything on screen, and user input is going to be fed into the update function. Think of this as the high-level description of our program.
 
-Elm starts by rendering the initial value on screen. From there you enter into this loop:
+All of our programs were created with Browser.sandbox. We gave an initial Model and describe how to update and view it.
 
     Wait for user input.
     Send a message to update
@@ -25,6 +25,8 @@ Elm starts by rendering the initial value on screen. From there you enter into t
     Call view to get new HTML
     Show the new HTML on screen
     Repeat!
+
+https://guide.elm-lang.org/effects/diagrams/sandbox.svg
 
 Types: 
 
@@ -39,8 +41,40 @@ The full list of constrained type variables is:
 
 - there are type alias, ex. "type alias MyNameForThisType = ThisType"
 
-- there are ways to create new types: 
- - 
+- there are ways to create new types, custom types (aka algebraic data types)
+ex. type User
+  = Regular String Int Location
+  | Visitor String
+  | Anonymous
+  
+  Note: Custom types are the most important feature in Elm.
+
+Commands and subscriptions:
+
+Instead of using Browser.sandbox, we can use Browser.element to create programs. 
+In that case, we get the ability to issue commands from init and update. We also get the ability to subscribe to interesting information. 
+
+---
+Background
+
+https://elm-lang.org/assets/papers/concurrent-frp.pdf
+
+The Elm compiler itself is written entirely in Haskell. Haskell provides many
+useful libraries that make this a good choice. Many parsing libraries exist, making
+it relatively pleasant to create a lexer and parser. The current version of the compiler
+does some mild optimizations – such as constant propagation – before generating
+JavaScript. The runtime system for the generated JavaScript is a combination of
+HTML, CSS, and JavaScript that handles events and screen updates.
+Elm’s website is written primarily in Elm and served using Haskell. Excluding
+the code editor, the entire website is written in Elm. Haskell was chosen as the
+server framework because it was already the language used to write the compiler.
+This allows the server and compiler to interact very cleanly. Although this choice
+was initially made for convenience, it has become an important part of writing
+code in Elm. Rather than compile an Elm project and serve that code with some
+separate framework, the combination compiler/server can compile and serve Elm
+files automatically. When an Elm file is changed, the compiler/server automatically
+starts serving the new version, making the changes immediately viewable in a web
+browser
 
 ---
 Documentation
@@ -55,3 +89,11 @@ HTML:
 install: 
 https://guide.elm-lang.org/install/elm.html
 https://github.com/elm/compiler/blob/master/installers/linux/README.md
+
+when you are making your own Elm programs locally, it will probably involve running some commands like this in the terminal:
+
+elm init
+elm install elm/http
+elm install elm/random
+
+That would set up an elm.json file with elm/http and elm/random as dependencies.
