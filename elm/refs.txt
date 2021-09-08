@@ -96,12 +96,19 @@ browser
 
 ---
 Documentation
+https://elm-lang.org/docs/syntax
+
 https://package.elm-lang.org/packages/elm/core/latest/Basics
 https://package.elm-lang.org/packages/elm/core/latest/List
 https://package.elm-lang.org/packages/elm/core/latest/String
 
 HTML: 
 'input' and 'div' are just normal functions. They take (1) a list of attributes and (2) a list of child nodes. 
+
+https://package.elm-lang.org/packages/elm/html/latest/
+https://package.elm-lang.org/packages/elm/svg/latest/
+
+https://faq.elm-community.org/
 
 ---
 install: 
