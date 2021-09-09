@@ -108,6 +108,9 @@ HTML:
 https://package.elm-lang.org/packages/elm/html/latest/
 https://package.elm-lang.org/packages/elm/svg/latest/
 
+https://package.elm-lang.org/packages/elm/parser/latest
+https://korban.net/posts/elm/2018-09-07-introduction-elm-parser/
+
 https://faq.elm-community.org/
 
 ---
@@ -132,3 +135,43 @@ elm install elm/random
 That would set up an elm.json file with elm/http and elm/random as dependencies.
 
 elm --help
+
+---
+parser
+
+type Inst = Forward Int
+ex = Forward 100
+write (Forward val) = "Forward " ++ (String.fromInt val)
+
+import Parser exposing (Parser, (|.), (|=), succeed, token, int, spaces)
+forward 
+  = succeed Forward
+    |. token "Forward"
+    |. spaces
+    |= int
+forward = succeed Forward |. token "Forward" |. spaces |= int
+
+> Parser.run forward "Forward  50"
+Ok (Forward 50) : Result (List Parser.DeadEnd) Inst
+> Parser.run forward " Forward  50"
+Err [{ col = 1, problem = Expecting "Forward", row = 1 }]
+    : Result (List Parser.DeadEnd) Inst
+> Parser.run forward "Forward  50.123"
+Err [{ col = 10, problem = ExpectingInt, row = 1 }]
+    : Result (List Parser.DeadEnd) Inst
+
+
+> type Inst = Forward Int | Left Int
+> ex = Forward 100
+> import Parser exposing (Parser, (|.), (|=), succeed, token, int, spaces)
+> forward = succeed Forward |. token "Forward" |. spaces |= int
+> left = succeed Left |. token "Left" |. spaces |= int
+> inst = Parser.oneOf [forward, left]
+> Parser.run inst "Forward  50"
+Ok (Forward 50) : Result (List Parser.DeadEnd) Inst
+> Parser.run inst "Left 90"
+Ok (Left 90) : Result (List Parser.DeadEnd) Inst
+
+see sequence for parsing a list,
+see lazy to define recursive parsers (an inst may contain a list of insts in the repeat case) 
+
