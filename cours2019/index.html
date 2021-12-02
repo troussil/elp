@@ -50,9 +50,8 @@
 	    <li>PIT</li>
 	    <li>ALG</li>
 	    <li>CRO</li>
-	    <li>WEB</li>
-	    <li>PTIR</li>
-	    <li>P5I</li>
+	    <li>IAT</li>
+	    <li>PIR</li>
 	  </ul>
 	</section>
 	<section>
@@ -62,13 +61,16 @@
 	    <img src="img/snow-curvature.png" class="stretch" /> 
 	  </section>
 	  <section>
-	    <h2>Discovering research (PTIR)</h2>
+	    <h2>Discovering research (PIR)</h2>
 	    <img src="img/caserne.png" height="200" /> <img src="img/mojette.png" height="200"/>  <br />
 	    <img src="img/tel.png" height="150"/> 
 	  </section>
 	</section>
+	<!--<section>
+	  <h1>What is a programming language? </h1>
+	</section>
 	<section>
-	  <h2>Programming languages</h2>
+	  <h2>What I've learned</h2>
 	  <ul>
 	    <li>web languages...</li>
 	    <li>Pascal</li>
@@ -79,9 +81,7 @@
 	    <li>Haskell</li>
 	  </ul>
 	</section>
-	<section>
-	  <h1>What is a programming language? </h1>
-	</section>
+	-->
 	<section id="cs">
 	  <h2>Computer science</h2>
 	  <ul>
@@ -152,29 +152,11 @@
 	    </ul>
 	  </section>
 	  <section>
-	    <h2>Plan</h2>
-	    <ul>
-	      <li>Introduction (1 today) </li>
-	      <li>Go (4) - PFR - project </li>
-	      <li>Haskell (4) - TRO - project </li>
-	      <li>Javascript (4) - SFR </li>
-	      <li>Java prerequisites - warning: Moodle quiz</li>
-	      <li>Java (3) - RPU/TRO </li>
-	    </ul>
-	  </section>
-	  <section>
-	    <h2>Assessment</h2>
-	    <ul>
-	      <li> practical activities (projects, quiz) : 40% </li>
-	      <li> final test : 60% </li>
-	    </ul>
-	  </section>
-	  <section>
 	    <h2>Main concepts</h2>
 	    <ul>
-	      <li><strong>value, variable, data type...</strong></li>
-	      <li><strong>function (evaluation strategy, function vs method...)</strong>,</li>
-	      <li><strong>polymorphism</strong>,</li>
+	      <li>value, variable, data type...</li>
+	      <li>function (evaluation strategy, function vs method...),</li>
+	      <li>polymorphism,</li>
 	      <li>package/module,</li>
 	      <li>error/exception,</li>
 	      <li>concurrency vs parallelism</li>
@@ -189,8 +171,28 @@
 	      <li>PPC</li>
 	    </ul>
 	  </section>
+	  <section>
+	    <h2>Plan</h2>
+	    <ul>
+	      <li>Introduction (1 today) </li>
+	      <li>Go (4) - PFR - project </li>
+	      <li>Haskell (4) - TRO - project </li>
+	      <li>Javascript (4) - SFR </li>
+	      <li>Java prerequisites - warning: Moodle quiz</li>
+	      <li>Java (3) - JDI/RPU/TRO </li>
+	    </ul>
+	  </section>
+	  <section>
+	    <h2>Assessment</h2>
+	    <ul>
+	      <li> practical activities (projects, quiz) : 40% </li>
+	      <li> final test : 60% </li>
+	    </ul>
+	  </section>
 	</section>
-
+	<section>
+	  <h1>Basic concepts</h1>
+	</section>
 	<section>
 	  <section>
 	    <h2>Data</h2>
@@ -239,16 +241,11 @@
 	    </ul>
 	  </section>
 	  <section>
-	    <h2>Pointers</h2>
-	    <img src="img/pointeur.svg" class="stretch" style="background-color:#222;border:0px" />
-	    <p>Used in many language implementations!</p>
-	  </section>
-	  <section>
-	    <h2>Array (hidden pointer?)</h2>
+	    <h2>Array</h2>
 	    <img src="img/array.jpg" class="stretch"  />
 	  </section>
 	  <section>
-	    <h2>List (hidden pointers/records?)</h2>
+	    <h2>List</h2>
 	    <img src="img/train.jpg" />
 	  </section>
 	  <section>
@@ -278,8 +275,12 @@
 		s = new Person("Sean", 50);
 	    </code></pre>
 	  </section>
+	  <section>
+	    <h2>Pointers</h2>
+	    <img src="img/pointeur.svg" class="stretch" style="background-color:#222;border:0px" />
+	    <p>Used in many language implementations!</p>
+	  </section>
 	</section>
-
 	<section>
 	  <section>
 	    <h2>Function</h2>
@@ -310,17 +311,17 @@
 	    </ul>
 	  </section>
 
-	  <section>
-	    <h2>Expression</h2>
-	    <p>An <strong>expression</strong> is a syntactically correct sequence of signs (literals, variables, operators, functions)
-	      <ul>
-		<li>that products an <strong>effect</strong></li>
-		<li>that is evaluated into a value</li>
-	      </ul>
-	    </p>
-	    <p><pre><code>5 + 2 * add(a,b)</code></pre></p>
-	    <p><pre><code>c = add(a,b)</code></pre></p>
-	  </section>
+	  <!-- <section> -->
+	  <!--   <h2>Expression</h2> -->
+	  <!--   <p>An <strong>expression</strong> is a syntactically correct sequence of signs (literals, variables, operators, functions) -->
+	  <!--     <ul> -->
+	  <!-- 	<li>that products an <strong>effect</strong></li> -->
+	  <!-- 	<li>that is evaluated into a value</li> -->
+	  <!--     </ul> -->
+	  <!--   </p> -->
+	  <!--   <p><pre><code>5 + 2 * add(a,b)</code></pre></p> -->
+	  <!--   <p><pre><code>c = add(a,b)</code></pre></p> -->
+	  <!-- </section> -->
 	  
 	  <!-- <section> -->
 	  <!--   <h2>Evaluation strategy</h2> -->
@@ -381,14 +382,14 @@
 	  </section>
 
 	  <!-- <section> -->
-	  <!--   <h2>NB: Strictness implies specific statements</h2> -->
-	  <!--   <p>Control flow -->
-	  <!--   <ul> -->
-	  <!--     <li>choice: if / then / else / elif, switch / case / break</li> -->
-	  <!--     <li>loop: for / break / continue, while, do while</li>  -->
-	  <!--   </ul> -->
-	  <!--   </p> -->
-	  <!-- </section> -->
+	    <!--   <h2>NB: Strictness implies specific statements</h2> -->
+	    <!--   <p>Control flow -->
+	      <!--   <ul> -->
+		<!--     <li>choice: if / then / else / elif, switch / case / break</li> -->
+		<!--     <li>loop: for / break / continue, while, do while</li>  -->
+		<!--   </ul> -->
+	      <!--   </p> -->
+	    <!-- </section> -->
 	</section>
 
 	<section>
@@ -404,10 +405,10 @@
 	    </code></pre>
 	    <pre><code data-trim data-noescape>
 		struct Stack {
-		  ...
-		  void push(Value aValue){} 
-		  Value pop(){} 
-		  Value top(){}
+		...
+		void push(Value aValue){} 
+		Value pop(){} 
+		Value top(){}
 		};
 		...
 		s.push(v); 
@@ -441,34 +442,34 @@
 	  	aDentist.removes("tooth #42") #Fred removes tooth #42
 	    </code></pre>
 	    <pre><code data-trim data-noescape>
-	    me.removes("tooth #42")
-	    Traceback (most recent call last):
-	    File "<stdin>", line 1, in <module>
-	    AttributeError: 'Human' object has no attribute 'removes'
+		me.removes("tooth #42")
+		Traceback (most recent call last):
+		File "<stdin>", line 1, in <module>
+		    AttributeError: 'Human' object has no attribute 'removes'
 	    </code></pre>
 	  </section>
 
-	<section>
-	  <h2>Class inheritance in Java</h2>
-	  <pre><code data-trim data-noescape>
-	  abstract class Animal { abstract String talk(); }
-	  class Cat extends Animal {
-	    String talk() { return "Meow!"; }
-	  }
-	  class Dog extends Animal {
-	    String talk() { return "Woof!"; }
-	  }
-	  </code></pre>
-	  <pre><code data-trim data-noescape>
-	  static void letsHear(final Animal a) {
-	    System.out.println(a.talk());
-	  }	  
-	  static void main(String[] args) {
-	    letsHear(new Cat());
-	    letsHear(new Dog());
-	  }
-	  </code></pre>
-	</section>
+	  <section>
+	    <h2>Class inheritance in Java</h2>
+	    <pre><code data-trim data-noescape>
+		abstract class Animal { abstract String talk(); }
+		class Cat extends Animal {
+		  String talk() { return "Meow!"; }
+		}
+		class Dog extends Animal {
+		  String talk() { return "Woof!"; }
+		}
+	    </code></pre>
+	    <pre><code data-trim data-noescape>
+		static void letsHear(final Animal a) {
+		  System.out.println(a.talk());
+		}	  
+		static void main(String[] args) {
+		  letsHear(new Cat());
+		  letsHear(new Dog());
+		}
+	    </code></pre>
+	  </section>
 	  
 	</section>
 

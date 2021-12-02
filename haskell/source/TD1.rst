@@ -110,8 +110,7 @@ Par exemple `diagrams <https://hackage.haskell.org/package/diagrams>`_
 un `langage déclaratif <http://ozark.hendrix.edu/~yorgey/pub/diagrams-FARM.pdf>`_
 en Haskell pour les graphiques vectoriels.
 
-Le :download:`projet <download/enonce-projet.pdf>` que vous avez à réaliser
-est un autre exemple. 
+Le :download:`projet <download/enonce-projet.pdf>` de l'an passé est un autre exemple. 
 
 Développement Web
 -----------------------------------
@@ -175,19 +174,34 @@ nous allons d'abord surtout utiliser ce mode interactif en tapant ``ghci``.
 Pratique
 --------------------------
 
-- Téléchargez cette :download:`calculatrice <download/chapitre_4_calculator_calculator.hs>` en notation préfixée.
-- Compilez avec GHC, lancez l'exécutable, puis tapez l'expression : `+ * 2 3 11`.
+- Téléchargez ce :download:`programme <download/logo.hs>`.
+- Compilez avec GHC, lancez l'exécutable en redirigeant la sortie vers `fig.svg`,
+  puis tapez l'instruction: `[Forward 50]`.
 - Chargez le fichier avec GHCi, puis tapez
   
-  - `words "* 2 3"`
-  - `parse $ words "* 2 3"`   
-  - `eval $ fst $ parse $ words "* 2 3"`   
-  - `eval (fst (parse (words "* 2 3")))`   
+  - `printSvgTail`, `printSvgHead`
+  - `printSvgLine (Cursor 0 0 0) (Cursor 50 50 0)`
+  - `changeCursor (Cursor 50 50 0) (Forward 100)`
+  - `changeCursor (Cursor 50 50 0) (Left 90)`
+
+- Est-ce que vous comprenez ce que fait le programme ?
+    
+Dessin
+--------------------------
+
+Relancez plusieurs fois le programme précédent avec les instrutions suivantes:
+
+- `[Repeat 4 [Forward 50, Left 90]]`
+- `[Repeat 360 [Forward 1, Left 1]]`
+- `[Repeat 36 [Right 10, Repeat 8 [Forward 25, Left 45]]]`
+- `[Repeat 8 [Left 45, Repeat 6 [Repeat 90 [Forward 1, Left 2], Left 90]]]`
+
+Vous avez en main le compilateur d'un langage dédié pour réaliser des traces
+en SVG. 
 
 
 Conclusion
 ===================
-
 
 Capacités/Connaissances
 --------------------------

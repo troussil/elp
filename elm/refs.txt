@@ -175,3 +175,57 @@ Ok (Left 90) : Result (List Parser.DeadEnd) Inst
 see sequence for parsing a list,
 see lazy to define recursive parsers (an inst may contain a list of insts in the repeat case) 
 
+
+---
+
+laziness: 
+
+In elm, a function's value is computed when the last argument is applied. In the example below, the diagnostic from log will be printed when f is invoked with 3 arguments or a curried form of f is applied with the last argument.
+
+import String
+import Debug exposing (log)
+
+f a b c = String.join "," (log "Diagnostic" [a,b,c]) -- <function> : String -> String -> String -> String
+
+f2 = f "a1" "b2" -- <function> : String -> String
+
+f "A" "B" "C"
+-- Diagnostic: ["A","B","C"]
+"A,B,C" : String
+
+f2 "c3"
+-- Diagnostic: ["a1","b2","c3"]
+"a1,b2,c3" : String
+
+At times you'll want to prevent a function from being applied right away. A typical use in elm is Lazy.lazy which provides an abstraction for controlling when functions are applied.
+
+lazy : (() -> a) -> Lazy a
+
+Lazy computations take a function of one () or Unit type argument. The unit type is conventionally the type of a placeholder argument. In an argument list, the corresponding argument is specified as _, indicating that the value isn't used. The unit value in elm is specified by the special symbol () which can conceptually represent an empty tuple, or a hole. It resembles the empty argument list in C, Javascript and other languages that use parenthesis for function calls, but it's an ordinary value.
+
+In our example, f can be protected from being evaluated immediately with a lambda:
+
+doit f = f () -- <function> : (() -> a) -> a
+whatToDo = \_ -> f "a" "b" "c" -- <function> : a -> String
+-- f is not evaluated yet
+
+doit whatToDo
+-- Diagnostic: ["a","b","c"]
+"a,b,c" : String
+
+Function evaluation is delayed any time a function is partially applied.
+
+defer a f = \_ -> f a -- <function> : a -> (a -> b) -> c -> b
+
+delayF = f "a" "b" |> defer "c" -- <function> : a -> String
+
+doit delayF
+-- Diagnostic: ["a","b","c"]
+"a,b,c" : String
+
+Elm has an always function, which cannot be used to delay evaluation. Because elm evaluates all function arguments regardless of whether and when the result of the function application is used, wrapping a function application in always won't cause a delay, because f is fully applied as a parameter to always.
+
+alwaysF = always (f "a" "b" "c") -- <function> : a -> String
+-- Diagnostic: ["a","b","c"] -- Evaluation wasn't delayed.
+
+
