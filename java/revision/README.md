@@ -99,6 +99,16 @@ Questions subsidiaires : que veut dire le mot-clé `final` ? pourquoi avoir rajo
 
 ### Sujet 3
 
+Pour faire fonctionner la [solution du sujet 3](CopierFichier.java), vous devez compiler avec `javac CopierFichier.java` et exécutez avec
+
+- `java CopierFichier java.util.ArrayList` pour avoir une copie conforme du fichier d'origine,
+- `java CopierFichier java.util.HashSet` pour supprimer les doublons sans tenir compte de l'ordre des lignes,
+- `java CopierFichier java.util.TreeSet` pour supprimer les doublons et trier les lignes.
+
+Si vous ne comprenez pas pourquoi le comportement diffère en fonction du conteneur utilisé, revoyez la partie du cours consacrée aux collections. Si vous ne comprenez pas comment instancier une classe dont l'utilisateur donne le nom, revoyez la partie du cours consacrée à la réflexion. 
+
+Remarque : il y a un avertissement à la compilation. Selon vous, d'où vient-il ? Vous pouvez lire [cette référence](http://www.angelikalanger.com/GenericsFAQ/FAQSections/TechnicalDetails.html#FAQ001) pour comprendre plus précisément ce qu'il se passe.
+
 ### Sujet 4
 
 Pour tester la solution, rassemblez en un répertoire :
