@@ -1,0 +1,3 @@
+TRO;tristan.roussillon@insa-lyon.fr
+SFR;stephane.frenot@insa-lyon.fr
+PFR;pierre.francois@insa-lyon.fr
