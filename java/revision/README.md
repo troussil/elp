@@ -91,9 +91,10 @@ Questions subsidiaires : à quoi sert la méthode `toString`, présente dans la 
 Pour faire fonctionner la solution du sujet 2, rassemblez en un répertoire : 
 
 - le [fichier des paires clés-valeurs](source.txt), 
-- le [fichier Annuaire.java](Annuaire.java). 
+- le [fichier Annuaire.java](Annuaire.java),
+- le [fichier AnnuaireServeur.java](AnnuaireServeur.java) 
 
-Pour compiler, vous devez être positionné dans le répertoire contenant les trois éléments précédents et taper `javac Annuaire.java`. Pour exécutez, tapez `java AnnuaireServeur`. Votre programme serveur est alors en attente de connection. Vous pouvez le tester avec `telnet` : tapez `telnet localhost 8080`, puis, par exemple, les chaines `essai` (vous recevrez la réponse `null`) et `TRO` (vous recevrez la réponse `tristan.roussillon@insa-lyon.fr`).
+Pour compiler, vous devez être positionné dans le répertoire contenant les trois éléments précédents et taper `javac AnnuaireServeur.java`. Pour exécutez, tapez `java AnnuaireServeur`. Votre programme serveur est alors en attente de connection. Vous pouvez le tester avec `telnet` : tapez `telnet localhost 8080`, puis, par exemple, les chaines `essai` (vous recevrez la réponse `null`) et `TRO` (vous recevrez la réponse `tristan.roussillon@insa-lyon.fr`).
 
 Questions subsidiaires : que veut dire le mot-clé `final` ? pourquoi avoir rajouté `true` en second argument lors de la création d'un objet de type `PrintWriter` (ligne 55) ?
 
