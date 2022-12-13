@@ -36,7 +36,8 @@ main = Slides.app
     --     ]
     -- ]
 
-    [ md
+    [
+     md
  """
   # (H).E.L.P: Haskell, ELM
   
@@ -246,5 +247,49 @@ main = Slides.app
   [GHCJS](https://github.com/ghcjs/ghcjs>), [Haste](https://haste-lang.org/)
     - langages dérivés pour le web : 
   [Purescript](http://www.purescript.org/), [Elm](https://elm-lang.org/)
+  """
+     , md
+ """
+  ![Logo ELM](../static/images/elm-logo.svg)
+  
+  - Elm a été créé par Evan Czaplicki en 2012.
+  - Il est officiellement documenté : 
+  [guide](https://guide.elm-lang.org/), 
+  [syntaxe](https://elm-lang.org/docs/syntax), 
+  [packages](https://package.elm-lang.org/). 
+  - C'est un langage fonctionnel, inspiré de Haskell, 
+  dédié à la création d'applications web.  
+
+  """
+    , md
+ """ 
+    # Les caractéristiques d'ELM
+  
+  - pureté, mais évaluation stricte, 
+  - typage statique fort, 
+  - interopabilité avec javascript, 
+  - architecture model/view/update.
+
+  """
+    , md
+ """
+  ## Pureté
+
+  - Une expression est toujours évaluée en la même valeur.
+  - Aucune valeur ne peut pas changer après avoir été créée (immutabilité). 
+  - Si on veut, par exemple, ne garder que certains éléments d'une liste,
+  on va créer une *nouvelle* liste contenant les éléments à conserver. 
+  """
+    , md
+ """
+  ## Evaluation strictes TODO a l'air faux
+
+  Les expressions sont évaluées tout de suite; en particulier, 
+  les arguments sont évalués au moment de l'appel. 
+
+
+  `f x y = x`:
+  `f 2 35^532` et `f 2 (1/0)` sont toutes deux évaluées à `2` sans erreur.  
+
   """
    ]         
