@@ -266,8 +266,8 @@ main = Slides.app
   - pureté,
   - évaluation stricte, 
   - typage statique fort, 
-  - interopabilité avec javascript, 
-  - architecture model/view/update.
+  - architecture model/view/update,
+  - interopabilité avec javascript. 
 
   """
     , md
@@ -335,7 +335,7 @@ main = Slides.app
  """
   ### Types personnalisés 
 
-  - alias
+  - synonymes de types existant
 
   ```elm
   type alias PhoneBook =
@@ -349,9 +349,89 @@ main = Slides.app
     Empty | Node Int IntTree IntTree
   ```
   """
+  , md
+ """
+  ## Architecture ELM
+"""
+ , md
+ """
+  ### Aspects structurels
+  
+  La structure de l'application repose sur deux types : 
+
+    - `Model` *modélise* l'état de l'application,
+    - `Msg` représente le *message* envoyé par l'interface 
+  suite à un événement pour mettre à jour le modèle.  
+
+  => il faut savoir définir des types!
+  """
+ , md
+ """
+  ### Aspects fonctionnels
+  
+  Le modèle est déterminé par deux fonctions : 
+  - `init : Model` 
+  - `update : Msg -> Model -> Model`
+  
+  Une troisième fonction traduit le modèle en HTML : 
+  - `view : Model -> Html Msg`   
+
+  => il faut savoir définir des fonctions!
+  """
+ , md
+ """
+  ### Point d'entrée
+  
+  C'est la fonction `main` 
+  à laquelle on *attache* les trois autres fonctions
+  (qu'on peut appeler comme on veut, seul leur signature compte). 
+      
+  ```elm
+  main = Browser.sandbox 
+    { init = init
+    , update = update
+    , view = view
+    }
+  ```
+  """
+ , md
+ """
+  ### Boucle d'événement
+ 
+  - Attend un événement, 
+  - Envoie un message, 
+  - Produit un nouveau modèle (update), 
+  - Traduit le modèle en HTML (view), 
+  - Affiche le nouveau document HTML, 
+  - Recommence. 
+
+ """
+ , md
+ """
+  ### Résumé
+
+  TODO IMG
+  """
+ , md
+ """
+  ### Pour aller plus loin
+
+  Il est possible non seulement de manipuler le DOM, 
+  mais aussi d'interagir avec l'extérieur via 
+  - les *commandes*, pour demander l'exécution de tâches, 
+  - les *souscriptions*, pour écouter des événements.
+  
+  """ 
  , md
  """ 
   ## Interopabilité avec javascript
+
   """
  -- compilation en js et ports
+     , md
+ """ 
+  # Travail à faire
+
+  """
+
    ]         
