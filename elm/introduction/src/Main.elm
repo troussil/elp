@@ -195,8 +195,6 @@ main = Slides.app
   - Les types sont vérifiés à la compilation, ce qui révèle de nombreuses erreurs.
 
   """
-    -- types prédéfinis (atomiques, function mapping, structurés), types algébriques ?
-    -- point fort, point faible, dev web, entreprises
     , md
  """
   # Point fort
@@ -250,7 +248,7 @@ main = Slides.app
   """
      , md
  """
-  ![Logo ELM](../static/images/elm-logo.svg)
+  ![Logo ELM](../static/images/elm-logo-bande.svg)
   
   - Elm a été créé par Evan Czaplicki en 2012.
   - Il est officiellement documenté : 
@@ -265,7 +263,8 @@ main = Slides.app
  """ 
     # Les caractéristiques d'ELM
   
-  - pureté, mais évaluation stricte, 
+  - pureté,
+  - évaluation stricte, 
   - typage statique fort, 
   - interopabilité avec javascript, 
   - architecture model/view/update.
@@ -276,20 +275,83 @@ main = Slides.app
   ## Pureté
 
   - Une expression est toujours évaluée en la même valeur.
-  - Aucune valeur ne peut pas changer après avoir été créée (immutabilité). 
+  - Aucune valeur ne peut changer après avoir été créée (immutabilité). 
   - Si on veut, par exemple, ne garder que certains éléments d'une liste,
   on va créer une *nouvelle* liste contenant les éléments à conserver. 
   """
     , md
  """
-  ## Evaluation strictes TODO a l'air faux
+  ## Evaluation stricte 
 
   Les expressions sont évaluées tout de suite; en particulier, 
   les arguments sont évalués au moment de l'appel. 
 
+  ```elm
+  numbersFrom x = x :: (numbersFrom (x+1))
+  ```
 
-  `f x y = x`:
-  `f 2 35^532` et `f 2 (1/0)` sont toutes deux évaluées à `2` sans erreur.  
+  Les deux appels suivant provoquent une erreur : 
+
+  ```elm
+  numbersFrom 1
+  ``` 
+
+  ```elm
+  List.head (numbersFrom 1)
+  ``` 
 
   """
+    , md
+ """
+  ## Typage statique fort
+
+  - Un type représente un ensemble de valeurs. 
+  - Chaque valeur a un type.
+
+  ```elm
+  x = 5 -- déduit automatiquement
+  ```
+
+  ```elm
+  x : Int -- donné explicitement
+  x = 5
+  ```
+
+  - Il existe des types prédéfinis, mais on peut aussi définir ses propres types.  
+  """
+    , md
+ """
+  ### Types prédéfinis
+
+  - types atomiques
+    - `Int`, `Float`, `String`, `Bool`...
+    - `Integer -> Bool`, `Int -> Int -> Int`...
+  - types structurés 
+    - tuples/records comme `(Int, Bool)`... 
+    - listes comme `List Int`, `List (List Int)`... 
+  """
+ -- 3 classes de type particulieres: number, appendable, comparable
+    , md
+ """
+  ### Types personnalisés 
+
+  - alias
+
+  ```elm
+  type alias PhoneBook =
+    List { name: String, phone: String }
+  ```
+
+  - types algébriques
+
+  ```elm
+  type IntTree = 
+    Empty | Node Int IntTree IntTree
+  ```
+  """
+ , md
+ """ 
+  ## Interopabilité avec javascript
+  """
+ -- compilation en js et ports
    ]         
