@@ -396,6 +396,12 @@ main = Slides.app
   """
  , md
  """
+  ### Schématiquement
+
+  ![ELM architecture](../static/images/elm-archi.svg)
+  """
+ , md
+ """
   ### Boucle d'événement
  
   - Attend un événement, 
@@ -408,12 +414,6 @@ main = Slides.app
  """
  , md
  """
-  ### Résumé
-
-  TODO IMG
-  """
- , md
- """
   ### Pour aller plus loin
 
   Il est possible non seulement de manipuler le DOM, 
@@ -421,13 +421,19 @@ main = Slides.app
   - les *commandes*, pour demander l'exécution de tâches, 
   - les *souscriptions*, pour écouter des événements.
   
+  Voire `browser.element`, `browser.document`. 
   """ 
  , md
  """ 
   ## Interopabilité avec javascript
 
+  - ELM peut communiquer avec javascript
+    - par les *flags* au lancement du programme, 
+    - par les *ports* en cours d'exécution. 
+
+  - ELM se compile en javascript.
   """
- -- compilation en js et ports
+ -- a detailler ?
      , md
  """ 
   # Travail à faire
