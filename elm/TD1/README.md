@@ -158,7 +158,7 @@ Si tu es bloqué ici, passe à la suite. Tu demanderas de l'aide quand l'enseign
 
 ### Package List
 
-Le package [List](https://package.elm-lang.org/packages/elm/core/latest/List) est disponible par défaut et contient un grand nombre de fonctions très utiles. Très souvent les appeler nous dispensent d'écrire une fonction récursive. `List.map`, `List.filter`, `List.foldr`, `List.foldl` sont typiques des langages fonctionnels. 
+Le package [List](https://package.elm-lang.org/packages/elm/core/latest/List) est disponible par défaut et contient un grand nombre de fonctions très utiles. Très souvent les appeler nous dispensent d'écrire une fonction récursive. `List.map`, `List.filter`, `List.foldr`, `List.foldl` sont typiques des langages fonctionnels. Lis la documentation de ces fonctions pour comprendre à quoi elles servent et comment les utiliser. 
 
 1. Ecris des variantes non récursives pour `addElemInList` et `dupli`. Tu devras utiliser l'opérateur `++` de concaténation, les fonctions `List.repeat` et `List.concatMap`.
 
@@ -175,7 +175,7 @@ compressHelper x partialRes = case partialRes of
 
 ## Pour terminer, un petit effort de rappel
 
-Le plus efficace pour garder en mémoire quelque chose s'est d'essayer de s'en rappeler. C'est pourquoi je te propose de répondre aux questions suivantes : 
+Le plus efficace pour garder en mémoire quelque chose c'est d'essayer de s'en rappeler. C'est pourquoi je te propose de répondre aux questions suivantes : 
 
 - Quelle est la différence entre un tuple, un enregistrement, une liste ?
 - Que font `List.map`, `List.filter`, `List.foldr`, `List.foldl` ?
@@ -224,4 +224,4 @@ Tu peux regarder la correction et comparer avec ton propre code.
 
 ### Fonctions récursives et package List
 
-Voir le fichier [Test.elm]()
+Voir le fichier [Test.elm](src/Test.elm)
