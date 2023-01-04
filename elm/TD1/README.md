@@ -2,12 +2,11 @@
 
 L'objectif de cette première séance est de se familiariser avec les types structurées existants (tuples/enregistrements et listes) et d'écrire des fonctions.
 
-## Installation
+## Installation et prise en main
 
-Une première chose à faire est d'installer [elm](https://guide.elm-lang.org/install/elm.html). 
-Tu n'utiliseras qu'un REPL (read-eval-print-loop) aujourd'hui. Pour cela, il suffit de taper 
-`elm repl` dans un shell. Tu peux alors écrire des expressions elm qui seront lues (read), puis évaluées (eval). 
-Le résultat sera affiché (print) et tu pourras recommencer (loop). 
+Une première chose à faire est d'installer [elm](https://guide.elm-lang.org/install/elm.html). Si tu travailles sur une machine du département, sache que l'exécutable `elm` pèse environ 28 Mo. Si tu n'as pas beaucoup de place dans ton répertoire personnel, déplace-le dans le répertoire `/tmp` pour éviter de dépasser ton quota. 
+
+Tu n'utiliseras qu'un REPL (read-eval-print-loop) aujourd'hui. Pour cela, il suffit de taper `elm repl` dans un shell. Tu peux alors écrire des expressions elm qui seront lues (read), puis évaluées (eval). Le résultat sera affiché (print) et tu pourras recommencer (loop). 
 
 Voici deux références utiles pour écrire des expressions syntaxiquement correctes : 
 - [https://elm-lang.org/docs/syntax](https://elm-lang.org/docs/syntax)
