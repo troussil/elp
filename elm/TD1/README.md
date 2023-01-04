@@ -8,7 +8,8 @@ Une première chose à faire est d'installer [elm](https://guide.elm-lang.org/in
 
 Tu n'utiliseras qu'un REPL (read-eval-print-loop) aujourd'hui. Pour cela, il suffit de taper `elm repl` dans un shell. Tu peux alors écrire des expressions elm qui seront lues (read), puis évaluées (eval). Le résultat sera affiché (print) et tu pourras recommencer (loop). 
 
-Voici deux références utiles pour écrire des expressions syntaxiquement correctes : 
+Voici trois références utiles pour faire connaissance avec elm et écrire des expressions syntaxiquement correctes : 
+- [https://guide.elm-lang.org/core_language.html](https://guide.elm-lang.org/core_language.html)
 - [https://elm-lang.org/docs/syntax](https://elm-lang.org/docs/syntax)
 - [https://learnxinyminutes.com/docs/elm/](https://learnxinyminutes.com/docs/elm/) 
 
