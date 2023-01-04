@@ -187,7 +187,7 @@ Le plus efficace pour garder en mémoire quelque chose c'est d'essayer de s'en r
 - Comment appelle-t-on le fait qu'une expression soit toujours évaluée en un même résultat ?
 - Quelle est la différence entre évaluation stricte et paresseuse ?
 
-Compare tes réponses avec ce document, les ressources que tu as consulté et le [cours](). 
+Compare tes réponses avec ce document, les ressources que tu as consulté et le [cours](https://perso.liris.cnrs.fr/tristan.roussillon/ens/elm/). 
 
 ## Pour aller plus loin, exercices facultatifs sans correction. 
 
