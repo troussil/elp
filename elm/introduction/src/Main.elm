@@ -29,17 +29,10 @@ main = Slides.app
         | slideAnimator = Slides.SlideAnimation.scroll
     }
 
-    -- , mdFragments
-    --     [ "Another slide with three fragments"
-    --     , "This appears later"
-    --     , "And this even later"
-    --     ]
-    -- ]
-
     [
      md
  """
-  # (H).E.L.P: Haskell, ELM
+  # (H).E.L.P: Haskell, elm
   
   """
     , md
@@ -52,11 +45,11 @@ main = Slides.app
   """
     , md
  """
-  # Pourquoi Haskell et ELM ?
+  # Pourquoi Haskell et elm ?
 
   - Haskell a des caractéristiques peu communes. 
   - Les connaitre permet de mieux saisir les autres langages.
-  - ELM est inspiré de Haskell, mais plus simple. 
+  - elm est inspiré de Haskell, mais plus simple. 
   - On fait une appli web monopage très rapidemment.  
   - Tous deux sont formateurs, car on ne peut faire autrement que coder dans un style fonctionnel. 
   
@@ -66,7 +59,7 @@ main = Slides.app
  # Plan
   
   1. Haskell
-  2. ELM
+  2. elm
   3. Travail à faire
   
   """
@@ -119,7 +112,7 @@ main = Slides.app
 
   - pureté (ou encore transparence)
   - évaluation paresseuse
-  - typage statique
+  - typage statique fort
 
   """
     , md
@@ -129,9 +122,8 @@ main = Slides.app
   - Une expression est toujours évaluée en la même valeur.
   - Permet de raisonner sur les programmes comme en algèbre : 
   ex. `inc 3` sera toujours évalué en `3+1`. 
-
   - Les *effets de bord* (modification d'une variable globale, entrées-sorties, etc.) 
-  sont explicitement encapsulés dans les arguments et/ou la valeur de retour.  
+  sont absents (ou si nécessaires, explicitement encapsulés).  
   
 
   """
@@ -154,13 +146,12 @@ main = Slides.app
 
   Il est possible de définir ses propres structures de contrôle. 
 
-  Définition : 
+  Exemple : 
   ```haskell
   si True valSiVrai valSiFaux = valSiVrai
   si False valSiVrai valSiFaux = valSiFaux
   ```
 
-  Appel : 
   ```haskell
   si (x >= 18) (print "yes") (print "no")
   ```
@@ -174,7 +165,7 @@ main = Slides.app
 
   Il est possible de manipuler des structures de données infinies. 
 
-  Definition : 
+  Exemple : 
 
   ```haskell
   numbersFrom x = x : (numbersFrom (x+1)) 
@@ -193,6 +184,12 @@ main = Slides.app
   - Chaque valeur a un type (donné explicitement ou déduit automatiquement).
   - Aucune conversion implicite. 
   - Les types sont vérifiés à la compilation, ce qui révèle de nombreuses erreurs.
+
+  """
+    , md
+
+ """
+  # Haskell dans la vraie vie
 
   """
     , md
@@ -219,10 +216,9 @@ main = Slides.app
  """
   # En entreprise
 
-  Haskell est utilisé en production dans des grandes entreprises :
+  Haskell est utilisé en production par des entreprises. 
  
-  - Microsoft : [Bond](https://github.com/Microsoft/bond>)
-  - Facebook : [Haxl](https://github.com/facebook/Haxl>) 
+  Exemple : [Haxl](https://github.com/facebook/Haxl>) de Facebook. 
 
   Consultez par exemple cette [liste](<https://github.com/erkmos/haskell-companies>)
   qui répertorie des entreprises qui utilisent Haskell. 
@@ -244,30 +240,28 @@ main = Slides.app
     - compilateurs Haskell vers Javascript : 
   [GHCJS](https://github.com/ghcjs/ghcjs>), [Haste](https://haste-lang.org/)
     - langages dérivés pour le web : 
-  [Purescript](http://www.purescript.org/), [Elm](https://elm-lang.org/)
+  [Purescript](http://www.purescript.org/), [elm](https://elm-lang.org/)
   """
      , md
  """
-  ![Logo ELM](../static/images/elm-logo-bande.svg)
+  ![Logo elm](../static/images/elm-logo-bande.svg)
   
-  - Elm a été créé par Evan Czaplicki en 2012.
+  - elm a été créé par Evan Czaplicki en 2012.
   - Il est officiellement documenté : 
   [guide](https://guide.elm-lang.org/), 
   [syntaxe](https://elm-lang.org/docs/syntax), 
   [packages](https://package.elm-lang.org/). 
-  - C'est un langage fonctionnel, inspiré de Haskell, 
-  dédié à la création d'applications web.  
-
+  - C'est un langage fonctionnel, inspiré de Haskell.  
   """
     , md
  """ 
-    # Les caractéristiques d'ELM
+    # Les caractéristiques d'elm
   
   - pureté,
-  - évaluation stricte, 
+  - évaluation *stricte*, 
   - typage statique fort, 
-  - architecture model/view/update,
-  - interopabilité avec javascript. 
+  - dédié à la création d'applications web, 
+  - interopable avec javascript. 
 
   """
     , md
@@ -324,34 +318,36 @@ main = Slides.app
   ### Types prédéfinis
 
   - types atomiques
-    - `Int`, `Float`, `String`, `Bool`...
+    - `Bool`, `Int`, `Float`, `Char`, `String`...
     - `Integer -> Bool`, `Int -> Int -> Int`...
   - types structurés 
-    - tuples/records comme `(Int, Bool)`... 
+    - tuples comme `(Int, Bool)`...
+    - records comme `{age:Int, name:String}`... 
     - listes comme `List Int`, `List (List Int)`... 
   """
- -- 3 classes de type particulieres: number, appendable, comparable
     , md
  """
   ### Types personnalisés 
 
-  - synonymes de types existant
-
-  ```elm
-  type alias PhoneBook =
-    List { name: String, phone: String }
-  ```
-
-  - types algébriques
+  On peut aussi créer des types *algébriques* :
 
   ```elm
   type IntTree = 
     Empty | Node Int IntTree IntTree
   ```
+
+  On peut également créer des synonymes de types existants
+  en introduisant le mot-clé `alias` : 
+
+  ```elm
+  type alias PhoneBook =
+    List {name:String, phone:String}
+  ```
+
   """
   , md
  """
-  ## Architecture ELM
+  ## Appli web élémentaire
 """
  , md
  """
@@ -396,13 +392,13 @@ main = Slides.app
   """
  , md
  """
-  ### Schématiquement
+  ### Schéma de l'architecture
 
-  ![ELM architecture](../static/images/elm-archi.svg)
+  ![elm architecture](../static/images/elm-archi.svg)
   """
  , md
  """
-  ### Boucle d'événement
+  ### Runtime system et boucle d'événement
  
   - Attend un événement, 
   - Envoie un message, 
@@ -422,22 +418,105 @@ main = Slides.app
   - les *souscriptions*, pour écouter des événements.
   
   Voire `browser.element`, `browser.document`. 
-  """ 
+  """
  , md
  """ 
   ## Interopabilité avec javascript
 
-  - ELM peut communiquer avec javascript
-    - par les *flags* au lancement du programme, 
-    - par les *ports* en cours d'exécution. 
-
-  - ELM se compile en javascript.
+  Un programme elm peut communiquer avec javascript
+    - par les [flags](https://guide.elm-lang.org/interop/flags.html) au lancement du programme, 
+    - par les [ports](https://guide.elm-lang.org/interop/ports.html) en cours d'exécution, 
+    - quand il est [compilé en javascript](https://guide.elm-lang.org/interop/).
   """
- -- a detailler ?
-     , md
- """ 
+ , md
+ """
+  ### Compilation 
+      
+  ```
+  elm make src/Main.elm --output=Main.js
+  ```
+  Crée un fichier javascript `Main.js` qui expose une fonction `Elm.Main.init()` 
+  qui prend en entrée un dictionnaire dont le champs `node` pourra être associé à un noeud du DOM. 
+
+  """
+ , md
+ """
+  ### Intégration (1/2)
+      
+  Dans l'en-tête du document HTML, il faut intégrer le fichier `Main.js` : 
+
+  ```html
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Main</title>
+  <script src="Main.js"></script>
+</head>
+...
+```
+"""
+ , md
+ """
+  ### Intégration (2/2)
+
+  Dans le corps du document HTML, il faut créer un noeud et initialiser le programme elm à partir de ce noeud : 
+ 
+ ```html
+...
+<body>
+  <div id="myapp"></div>
+  <script>
+  var app = Elm.Main.init({
+   node:document.getElementById('myapp')
+  });
+  </script>
+</body>
+</html>
+```
+"""
+    , md
+  """ 
+  # Eco-système elm 
+
+  - compilateur : Haskell, 
+  - runtime system : HTML, CSS, javascript, 
+  - site web officiel : 
+    - serveur : Haskell, 
+    - pages : elm (sauf éditeur de code). 
+
+  [source](https://elm-lang.org/assets/papers/concurrent-frp.pdf)
+
+  """
+    , md
+  """ 
   # Travail à faire
 
   """
+    , md
+  """ 
+  ## Organisation
 
+  - 1 CM d'introduction (aujourd'hui)
+  - prise en main en autonomie 3x2h
+    - [TD1](https://github.com/troussil/elp/blob/master/elm/TD1/README.md) : types existants et fonctions,
+    - [TD2](https://github.com/troussil/elp/blob/master/elm/TD2/README.md) : types personnalisés et architecture elm,
+    - parfaire ses connaissances et préparer le mini-projet à suivre.
+  - réalisation d'un [mini-projet](https://github.com/troussil/elp/blob/master/elm/projet/README.md), 4h.
+
+  """
+    , md
+  """ 
+  ## Mini-projet
+
+  - A réaliser par deux (inscription sur un document partagé).  
+  - Donnez vos noms et l'adresse d'un repository github public. 
+  - Date limite 05/02/2023, 8h. 
+  - Barème sur [Moodle](https://moodle.insa-lyon.fr/course/view.php?id=7725). 
+  - [Enoncé](https://github.com/troussil/elp/blob/master/elm/projet/README.md) et [exemple](https://perso.liris.cnrs.fr/tristan.roussillon/GuessIt/). 
+
+  """
+     , md
+  """
+      Ce document a été écrit en elm avec le package [elm-slides](https://package.elm-lang.org/packages/xarvh/elm-slides/latest/).
+  """
    ]         
