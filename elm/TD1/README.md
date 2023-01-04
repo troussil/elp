@@ -172,16 +172,19 @@ compressHelper x partialRes = case partialRes of
 
 3. Même question pour `encode`, mais je te laisse le soin d'écrire toi-même la fonction auxiliaire.
 
+Si tu es arrivé à cette question à la fin de la séance et même si tu n'as pas terminé d'y répondre, c'est déjà bien. Tu peux te féliciter. 
+
 ## Pour terminer, un petit effort de rappel
 
 Le plus efficace pour garder en mémoire quelque chose c'est d'essayer de s'en rappeler. C'est pourquoi je te propose de répondre aux questions suivantes : 
 
 - Quelle est la différence entre un tuple, un enregistrement, une liste ?
+- Qu'est-ce que le pattern matching ?
 - Que font `List.map`, `List.filter`, `List.foldr`, `List.foldl` ?
 - Explique en quoi ELM est un langage fonctionnel.
-- Comment appelle-t-on le fait qu'une expression soit toujours évaluée en un même résultat ?
-- Explique ce que sont l'évaluation stricte et paresseuse.
 - Explique en quoi ELM est un langage fortement typé.
+- Comment appelle-t-on le fait qu'une expression soit toujours évaluée en un même résultat ?
+- Quelle est la différence entre évaluation stricte et paresseuse ?
 
 Compare tes réponses avec ce document, les ressources que tu as consulté et le [cours](). 
 
