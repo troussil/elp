@@ -2,20 +2,20 @@
 
 L'objectif de cette première séance est de se familiariser avec les types structurées existants (tuples/enregistrements et listes) et d'écrire des fonctions.
 
-## Installation
+## Installation et prise en main
 
-Une première chose à faire est d'installer [elm](https://guide.elm-lang.org/install/elm.html). 
-Tu n'utiliseras qu'un REPL (read-eval-print-loop) aujourd'hui. Pour cela, il suffit de taper 
-`elm repl` dans un shell. Tu peux alors écrire des expressions elm qui seront lues (read), puis évaluées (eval). 
-Le résultat sera affiché (print) et tu pourras recommencer (loop). 
+Une première chose à faire est d'installer [elm](https://guide.elm-lang.org/install/elm.html). Si tu travailles sur une machine du département, sache que l'exécutable `elm` pèse environ 28 Mo. Si tu n'as pas beaucoup de place dans ton répertoire personnel, déplace-le dans le répertoire `/tmp` pour éviter de dépasser ton quota. 
 
-Voici deux références utiles pour écrire des expressions syntaxiquement correctes : 
+Tu n'utiliseras qu'un REPL (read-eval-print-loop) aujourd'hui. Pour cela, il suffit de taper `elm repl` dans un shell. Tu peux alors écrire des expressions elm qui seront lues (read), puis évaluées (eval). Le résultat sera affiché (print) et tu pourras recommencer (loop). 
+
+Voici trois références utiles pour faire connaissance avec elm et écrire des expressions syntaxiquement correctes : 
+- [https://guide.elm-lang.org/core_language.html](https://guide.elm-lang.org/core_language.html)
 - [https://elm-lang.org/docs/syntax](https://elm-lang.org/docs/syntax)
 - [https://learnxinyminutes.com/docs/elm/](https://learnxinyminutes.com/docs/elm/) 
 
 ## Types structurés
 
-Outre les types de base comme `Bool`, `Int`, `Float`, il est utile de savoir qu'il existe aussi trois classes de types - `number`, `appendable`, `concatenable` - que le système de type utilise pour assigner un type quand il n'est pas donné explicitement. Quand tu tapes `42`, tu obtiens `42 : number`. Explication : le système de type refuse de choisir entre `Int` et `Float` en optant pour `number` qui regroupe les deux. 
+Outre les types de base comme `Bool`, `Int`, `Float`, `Char`, `String`, il est utile de savoir qu'il existe aussi trois classes de types - `number`, `appendable`, `concatenable` - que le système de type utilise pour assigner un type quand il n'est pas donné explicitement. Quand tu tapes `42`, tu obtiens `42 : number`. Explication : le système de type refuse de choisir entre `Int` et `Float` en optant pour `number` qui regroupe les deux. 
 
 Par ailleurs, il est fondamental de savoir manipuler les types structurés prédéfinis : les tuples, les enregistrements et les listes. 
 
@@ -173,16 +173,19 @@ compressHelper x partialRes = case partialRes of
 
 3. Même question pour `encode`, mais je te laisse le soin d'écrire toi-même la fonction auxiliaire.
 
+Si tu es arrivé à cette question à la fin de la séance et même si tu n'as pas terminé d'y répondre, c'est déjà bien. Tu peux te féliciter. 
+
 ## Pour terminer, un petit effort de rappel
 
 Le plus efficace pour garder en mémoire quelque chose c'est d'essayer de s'en rappeler. C'est pourquoi je te propose de répondre aux questions suivantes : 
 
 - Quelle est la différence entre un tuple, un enregistrement, une liste ?
+- Qu'est-ce que le pattern matching ?
 - Que font `List.map`, `List.filter`, `List.foldr`, `List.foldl` ?
 - Explique en quoi ELM est un langage fonctionnel.
-- Comment appelle-t-on le fait qu'une expression soit toujours évaluée en un même résultat ?
-- Explique ce que sont l'évaluation stricte et paresseuse.
 - Explique en quoi ELM est un langage fortement typé.
+- Comment appelle-t-on le fait qu'une expression soit toujours évaluée en un même résultat ?
+- Quelle est la différence entre évaluation stricte et paresseuse ?
 
 Compare tes réponses avec ce document, les ressources que tu as consulté et le [cours](). 
 
