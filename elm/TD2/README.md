@@ -79,6 +79,15 @@ Push 3 (Push 5 Empty) : StackInt
 Maintenant, je t'invite à lire attentivement la [section du guide consacré à l'architecture elm](https://guide.elm-lang.org/architecture/)
 et à faire les exercices associés. Ces exercices ne sont pas corrigés, mais pas trop difficiles. Si tu es bloqué, demande conseil à quelqu'un ou contacte l'enseignant. 
 
+## Pour terminer, un petit effort de rappel
+
+- Qu'est-ce que le pattern matching ?
+- Quelle est la différence entre un tuple, un enregistrement, une liste ?
+- Qu'est-ce qu'un type algébrique ?
+- Quels sont les types et fonctions nécessaires pour `browser.sandbox` ?
+
+Compare tes réponses avec ce document et celui de la [séance précédente](../TD1/). 
+
 ## Pour aller plus loin. 
 
 Si tu as déjà fini et qu'il reste du temps, tu peux regarder les [exemples](https://elm-lang.org/examples), lire les sections [error handling](https://guide.elm-lang.org/error_handling/) et [commands and subscriptions](https://guide.elm-lang.org/effects/).
