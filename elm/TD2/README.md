@@ -71,8 +71,9 @@ Push 3 (Push 5 Empty) : StackInt
 - Propose un type `ValeurCarte` pour modéliser la valeur d'une carte à jouer. 
 - Propose un type `Carte` pour modéliser une carte à jouer. 
 - Crée la carte correspondant à l'as de Trèfle, puis crée la liste des quatre as. 
-- Le type `StackInt` ne peut traiter que des `Int`. Pour lever cette contrainte, proppose un type paramétré `Stack`. Puis, crée une valeur de type `Stack Char` et contenant au moins deux caractères. 
-- Propose un type paramétré `Tree` pour modéliser un arbre binaire. Puis, crée un arbre vide, ainsi qu'un arbre contenant au moins trois nombres flottants. 
+- Le type `StackInt` ne peut traiter que des `Int`. Pour lever cette contrainte, propose un type paramétré `type Stack a = ...`. Puis, crée une valeur de type `Stack Char` et contenant au moins deux caractères. 
+- En utilisant un `case` et le pattern matching, écris une fonction qui retourne le nombre de valeurs de type `a` stockées dans une valeur de type `Stack a`. Tu peux t'inspirer de la fonction `len` qui retourne la longueur d'une liste et qui est donné dans le document de la [séance précédente](../TD1). 
+- Propose un type paramétré `Tree` pour modéliser un arbre binaire. Puis, crée un arbre vide, ainsi qu'un arbre contenant au moins trois nombres flottants. Enfin, écris une fonction qui retourne la hauteur d'une arbre. 
 
 ## Architecture elm
 
@@ -86,7 +87,7 @@ et à faire les exercices associés. Ces exercices ne sont pas corrigés, mais p
 - Qu'est-ce qu'un type algébrique ?
 - Quels sont les types et fonctions nécessaires pour `browser.sandbox` ?
 
-Compare tes réponses avec ce document et celui de la [séance précédente](../TD1/). 
+Compare tes réponses avec ce document, celui de la [séance précédente](../TD1/) et le [guide](https://guide.elm-lang.org/).
 
 ## Pour aller plus loin. 
 
