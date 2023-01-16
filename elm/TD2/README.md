@@ -95,7 +95,7 @@ Si tu as déjà fini et qu'il reste du temps, tu peux regarder les [exemples](ht
 
 ## Correction de la première partie
 
-Premier item. 
+### Premier item 
 
 ```elm
 type Couleur = Rouge | Noir
@@ -135,4 +135,8 @@ type StackInt = Empty | Push Int StackInt
   - `Empty` est sans paramètre, 
   - `Push` prend deux paramètres, un de type `Int` et un de type `StackInt`.
 
-Le type `StackInt` ne peut traiter que des `Int`. On peut lever cette contrainte à l'aide d'un type paramétré `type Stack a = Empty | Push a (Stack a)`. C'est la réponse à l'une des questions suivantes.
+Le type `StackInt` ne peut traiter que des `Int`. On peut lever cette contrainte à l'aide d'un type paramétré `type Stack a = Empty | Push a (Stack a)`. On remplace `Int` par un type variable appelé `a` et `StackInt` par `Stack a`. C'est d'ailleurs la réponse à l'une des questions suivantes.
+
+### Items suivants
+
+Voir le fichier [Test.elm](src/Test.elm)
