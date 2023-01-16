@@ -10,7 +10,7 @@ Je te propose ci-dessous rappel et une série d'exercices pour que tu t'entraine
 
 ### Rappel
 
-Les types algébriques, appelés `custom types` dans le guide, sont une combinaison de : 
+Les types algébriques, appelés *custom types* dans le guide, sont une combinaison de : 
 - type somme (ou encore union, enum, etc.), comme `type Couleur = Rouge | Noir`, 
 - type produit (qui ne sont rien d'autres que des tuples personnalisés), comme `type Point = DonnePoint Float Float`,  
 - et récursivité. 
@@ -95,4 +95,44 @@ Si tu as déjà fini et qu'il reste du temps, tu peux regarder les [exemples](ht
 
 ## Correction de la première partie
 
-Bientôt. 
+Premier item. 
+
+```elm
+type Couleur = Rouge | Noir
+```
+- un constructeur de type sans paramètre `Couleur`
+- deux constructeurs de valeur sans paramètre : `Rouge` et `Noir`
+
+```elm
+type Point = Point Float Float
+```
+- un constructeur de type sans paramètre `Point` (celui de gauche)
+- un constructeur de valeur `Point` (celui de droite) prenant deux paramètres de type `Float` en entrée. 
+
+```elm
+type Maybe a = Just a | Nothing
+```
+- un constructeur de type `Maybe` prenant en paramètre un type `a`, généralement appelé *type variable*. 
+- deux constructeurs de valeur : 
+  - un sans paramètre : `Nothing`, 
+  - et `Just` prenant un paramètre de type `a`
+
+On peut rapprocher `Maybe` de `List` : tous deux représentent des conteneurs paramétrés par un autre type.  
+
+```elm
+type Result error value = Ok value | Err error
+```
+- un constructeur de type `Result` prenant deux types en paramètre `error` et `value`
+- deux constructeurs de valeur : 
+  - `Ok` prend en paramètre `value`,  
+  - `Err` prend en paramètre `error`. 
+
+```elm
+type StackInt = Empty | Push Int StackInt 
+```
+- un constructeur de type sans paramètre `StackInt` (celui de gauche)
+- deux constructeurs de valeurs : 
+  - `Empty` est sans paramètre, 
+  - `Push` prend deux paramètres, un de type `Int` et un de type `StackInt`.
+
+Le type `StackInt` ne peut traiter que des `Int`. On peut lever cette contrainte à l'aide d'un type paramétré `type Stack a = Empty | Push a (Stack a)`. C'est la réponse à l'une des questions suivantes.
