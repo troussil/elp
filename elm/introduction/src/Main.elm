@@ -1,24 +1,3 @@
--- import Slides exposing (md, mdFragments, slidesDefaultOptions)
--- import Slides.Styles
--- import Slides.SlideAnimation
--- import List
-
--- import Css exposing (..)
--- import Css.Global exposing (img)
-
-
--- main = Slides.app
-
---     { slidesDefaultOptions
---         | style = List.append
---              [ img [ maxWidth (px 500) ]
---              ]
---              <| Slides.Styles.elmMinimalist (hex "#fff") (hex "#ccc") (px 16) (hex "#000")
---         , slideAnimator = Slides.SlideAnimation.scroll
---     }
-
--- script ! src "/assets/highlight/highlight.pack.js" $ ""
-
 module Main exposing (..)
 import Slides exposing (..)
 import Slides.SlideAnimation
@@ -319,7 +298,7 @@ main = Slides.app
 
   - types atomiques
     - `Bool`, `Int`, `Float`, `Char`, `String`...
-    - `Integer -> Bool`, `Int -> Int -> Int`...
+    - `Int -> Bool`, `Int -> Int -> Int`...
   - types structurés 
     - tuples comme `(Int, Bool)`...
     - records comme `{age:Int, name:String}`... 
@@ -417,11 +396,11 @@ main = Slides.app
   - les *commandes*, pour demander l'exécution de tâches, 
   - les *souscriptions*, pour écouter des événements.
   
-  Voire `browser.element`, `browser.document`. 
+  Voir `browser.element`, `browser.document`. 
   """
  , md
  """ 
-  ## Interopabilité avec javascript
+  ## Interopérabilité avec javascript
 
   Un programme elm peut communiquer avec javascript
     - par les [flags](https://guide.elm-lang.org/interop/flags.html) au lancement du programme, 
@@ -501,7 +480,7 @@ main = Slides.app
     - [TD1](https://github.com/troussil/elp/blob/master/elm/TD1/README.md) : types existants et fonctions,
     - [TD2](https://github.com/troussil/elp/blob/master/elm/TD2/README.md) : types personnalisés et architecture elm,
     - parfaire ses connaissances et préparer le mini-projet à suivre.
-  - réalisation d'un [mini-projet](https://github.com/troussil/elp/blob/master/elm/projet/README.md), 4h.
+  - réalisation d'un [mini-projet](https://github.com/troussil/elp/blob/master/elm/projet/README.md), 2h+4h.
 
   """
     , md
@@ -511,7 +490,7 @@ main = Slides.app
   - A réaliser par deux (inscription sur un document partagé).  
   - Donnez vos noms et l'adresse d'un repository github public. 
   - Date limite 05/02/2023, 8h. 
-  - Barème sur [Moodle](https://moodle.insa-lyon.fr/course/view.php?id=7725). 
+  - Critères d'évaluation sur [Moodle](https://moodle.insa-lyon.fr/course/view.php?id=7725). 
   - [Enoncé](https://github.com/troussil/elp/blob/master/elm/projet/README.md) et [exemple](https://perso.liris.cnrs.fr/tristan.roussillon/GuessIt/). 
 
   """
