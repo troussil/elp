@@ -44,7 +44,7 @@ main = Slides.app
   """
     , md
  """
-  ![Logo Haskell](../static/images/haskell-logo.svg)
+  ![Logo Haskell](static/images/haskell-logo.svg)
   
   - Haskell a été créé en 1990 par un ensemble d'universitaires.
   - Il est défini dans un document appelé *Haskell Report*, dont la dernière révision date de 2010.
@@ -223,7 +223,7 @@ main = Slides.app
   """
      , md
  """
-  ![Logo elm](../static/images/elm-logo-bande.svg)
+  ![Logo elm](static/images/elm-logo-bande.svg)
   
   - elm a été créé par Evan Czaplicki en 2012.
   - Il est officiellement documenté : 
@@ -373,7 +373,7 @@ main = Slides.app
  """
   ### Schéma de l'architecture
 
-  ![elm architecture](../static/images/elm-archi.svg)
+  ![elm architecture](static/images/elm-archi.svg)
   """
  , md
  """
