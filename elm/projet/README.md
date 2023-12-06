@@ -11,11 +11,13 @@ L'objectif de ce projet est d'écrire le programme elm d'une application web per
 [du package HTML](https://package.elm-lang.org/packages/elm/html/latest/)
 les éléments suivants :
   - les fonctions `div`, `span`, `h1`, `ul`, `ol`, `li`, `input`, `label`, `text` de `Html`.
-  Excepté `text`, toutes correpondent à une balise HTML du même nom. 
+  Excepté `text`, toutes correpondent à un élément HTML du même nom. 
   - les fonctions `value`, `type_`, `checked`, `for`, `id`, `class` de `Html.Attributes`
-  qui correspondent à des attributs de certaines des balises précédentes.
+  qui correspondent à des attributs de certains des éléments précédents.
   - les fonctions `onClick` et `onInput` de `Html.Events`
-  qui correspondent à des événements associés à certaines des balises précédentes.  
+  qui correspondent à des événements associés à certains des éléments précédente.  
+
+Si vous ne savez pas ce que c'est qu'une page web, un élément ou un attribut HTML, il est sans doute utile de survoler les pages [HTML](https://en.wikipedia.org/wiki/HTML), [HTML element](https://en.wikipedia.org/wiki/HTML_element) et [HTML attribute](https://en.wikipedia.org/wiki/HTML_attribute). 
 
 ## Données
 
@@ -40,3 +42,9 @@ Je vous suggère d'avancer pas à pas. Par exemple, d'abord afficher tous les mo
 
 Il y a de nombreuses façons d'améliorer cet [exemple](https://perso.liris.cnrs.fr/tristan.roussillon/GuessIt/), notamment concernant l'aspect général de la page et la façon dont les informations sont affichées. Le jeu lui-même pourrait être décliné en un mode débutant où toutes les définitions sont affichées et un mode expert où une seule définition, prise au hasard, est affichée. On peut aussi imaginé donner la possibilité à l'utilisateur de cliquer sur n'importe quel mot affiché sur la page pour obtenir sa prononciation (phonétique ou orale) ainsi que sa définition en utilisant la même API. Vous avez certainement vous-mêmes d'autres idées.   
  
+## Problèmes
+
+Si vous obtenez une page blanche ou n'obtenez tout simplement pas ce que vous voulez, ouvrez la console du navigateur pour savoir quelle erreur s'est produite. 
+
+Si vous récupérez la liste de mots par une requête HTTP, vous obtiendrez certainement une erreur provenant du mécanisme [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). Vous devez plutôt télécharger le fichier contenant la liste de mots, le déplacer dans un répertoire `static`, positionné à côté du répertoire `src`, et utiliser une url locale comme `../static/monFichier.txt`. Notez que dans ce cas, vous devez utiliser `elm reactor` pour visualiser votre page. Si vous êtes bloqués par ce problème, soyez débrouillard : vous pouvez aussi créer la liste `[a, anywhere, below, ...]` directement dans votre code elm même si je ne recommande pas cette solution. 
+
