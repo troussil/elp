@@ -402,10 +402,22 @@ main = Slides.app
  """ 
   ## Interopérabilité avec javascript
 
-  Un programme elm peut communiquer avec javascript
+  Un programme elm est [compilé en javascript](https://guide.elm-lang.org/interop/)
+  et peut communiquer avec javascript de deux manières : 
     - par les [flags](https://guide.elm-lang.org/interop/flags.html) au lancement du programme, 
-    - par les [ports](https://guide.elm-lang.org/interop/ports.html) en cours d'exécution, 
-    - quand il est [compilé en javascript](https://guide.elm-lang.org/interop/).
+    - par les [ports](https://guide.elm-lang.org/interop/ports.html) en cours d'exécution.
+  """
+ , md
+ """ 
+  ## elm vs javascript
+
+  Puisque elm est compilé en javascript, 
+pourquoi ne pas écrire directement en javascript ?
+
+Essentiellement pour écrire avec un langage fonctionnel pur, 
+fortement typé et compilé. Un grand nombre d'erreurs seront
+révélées et donc corrigées à la compilation, ce qui augmente
+la fiabilité de l'application finale.   
   """
  , md
  """
@@ -479,8 +491,8 @@ main = Slides.app
   - prise en main en autonomie 3x2h
     - [TD1](https://github.com/troussil/elp/blob/master/elm/TD1/README.md) : types existants et fonctions,
     - [TD2](https://github.com/troussil/elp/blob/master/elm/TD2/README.md) : types personnalisés et architecture elm,
-    - parfaire ses connaissances et préparer le mini-projet à suivre.
-  - réalisation d'un [mini-projet](https://github.com/troussil/elp/blob/master/elm/projet/README.md), 2h+4h.
+    - finir les TDs ou parfaire ses connaissances et préparer le mini-projet à suivre.
+  - réalisation d'un [mini-projet](https://github.com/troussil/elp/blob/master/elm/projet/README.md), 4h.
 
   """
     , md
@@ -489,7 +501,7 @@ main = Slides.app
 
   - A réaliser par deux (inscription sur un document partagé).  
   - Donnez vos noms et l'adresse d'un repository github public. 
-  - Date limite 05/02/2023, 8h. 
+  - Date limite 05/02/2024, 8h. 
   - Critères d'évaluation sur [Moodle](https://moodle.insa-lyon.fr/course/view.php?id=7725). 
   - [Enoncé](https://github.com/troussil/elp/blob/master/elm/projet/README.md) et [exemple](https://perso.liris.cnrs.fr/tristan.roussillon/GuessIt/). 
 
