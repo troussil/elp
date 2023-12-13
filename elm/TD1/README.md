@@ -1,6 +1,6 @@
 # Première séance en autonomie (1h50)
 
-L'objectif de cette première séance est de se familiariser avec les types structurées existants (tuples/enregistrements et listes) et d'écrire des fonctions.
+L'objectif de cette première séance est de se familiariser avec les types structurés existants (tuples/enregistrements et listes) et d'écrire des fonctions.
 
 ## Installation et prise en main
 
