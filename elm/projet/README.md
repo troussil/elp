@@ -15,9 +15,9 @@ les éléments suivants :
   - les fonctions `value`, `type_`, `checked`, `for`, `id`, `class` de `Html.Attributes`
   qui correspondent à des attributs de certains des éléments précédents.
   - les fonctions `onClick` et `onInput` de `Html.Events`
-  qui correspondent à des événements associés à certains des éléments précédente.  
+  qui correspondent à des événements associés à certains des éléments précédents.  
 
-Si vous ne savez pas ce que c'est qu'une page web, un élément ou un attribut HTML, il est sans doute utile de survoler les pages [HTML](https://en.wikipedia.org/wiki/HTML), [HTML element](https://en.wikipedia.org/wiki/HTML_element) et [HTML attribute](https://en.wikipedia.org/wiki/HTML_attribute). 
+Si vous ne savez pas ce qu'est une page web, un élément ou un attribut HTML, il est sans doute utile de survoler les pages [HTML](https://en.wikipedia.org/wiki/HTML), [HTML element](https://en.wikipedia.org/wiki/HTML_element) et [HTML attribute](https://en.wikipedia.org/wiki/HTML_attribute). 
 
 ## Données
 
