@@ -23,7 +23,7 @@ Si vous ne savez pas ce qu'est une page web, un élément ou un attribut HTML, i
 
 Les mots se trouve dans ce [fichier](https://perso.liris.cnrs.fr/tristan.roussillon/GuessIt/thousand_words_things_explainer.txt). Ce sont les 1000 mots les plus courants utilisés dans le livre *Thing Explainer: Complicated Stuff in Simple Words* de Randall Munroe. 
 
-Les définitions d'un mot au format JSON peuvent être obtenus en utilisant [Free Dictionary API](https://dictionaryapi.dev/).  
+Les définitions d'un mot au format JSON peuvent être obtenus en utilisant [Free Dictionary API](https://dictionaryapi.dev/). 
 
 ## Description fonctionnelle et technique
 
@@ -40,7 +40,7 @@ Je vous suggère d'avancer pas à pas. Par exemple, d'abord afficher tous les mo
 
 ## Améliorations possibles
 
-Il y a de nombreuses façons d'améliorer cet [exemple](https://perso.liris.cnrs.fr/tristan.roussillon/GuessIt/), notamment concernant l'aspect général de la page et la façon dont les informations sont affichées. Le jeu lui-même pourrait être décliné en un mode débutant où toutes les définitions sont affichées et un mode expert où une seule définition, prise au hasard, est affichée. On peut aussi imaginé donner la possibilité à l'utilisateur de cliquer sur n'importe quel mot affiché sur la page pour obtenir sa prononciation (phonétique ou orale) ainsi que sa définition en utilisant la même API. Vous avez certainement vous-mêmes d'autres idées.   
+Il y a de nombreuses façons d'améliorer cet [exemple](https://perso.liris.cnrs.fr/tristan.roussillon/GuessIt/), notamment concernant l'aspect général de la page et la façon dont les informations sont affichées. Le jeu lui-même pourrait être décliné en un mode débutant où toutes les définitions sont affichées et un mode expert où une seule définition, prise au hasard, est affichée. Le joueur pourrait être chronométré et avoir une durée limitée pour donner la bonne réponse. On peut aussi imaginer donner la possibilité à l'utilisateur de cliquer sur n'importe quel mot affiché sur la page pour obtenir sa prononciation (phonétique ou orale) ainsi que sa définition en utilisant la même API. Vous avez certainement vous-mêmes d'autres idées.   
  
 ## Problèmes
 
@@ -48,3 +48,4 @@ Si vous obtenez une page blanche ou n'obtenez tout simplement pas ce que vous vo
 
 Si vous récupérez la liste de mots par une requête HTTP, vous obtiendrez certainement une erreur provenant du mécanisme [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). Vous devez plutôt télécharger le fichier contenant la liste de mots, le déplacer dans un répertoire `static`, positionné à côté du répertoire `src`, et utiliser une url locale comme `../static/monFichier.txt`. Notez que dans ce cas, vous devez utiliser `elm reactor` pour visualiser votre page. Si vous êtes bloqués par ce problème, soyez débrouillard : vous pouvez aussi créer la liste `[a, anywhere, below, ...]` directement dans votre code elm même si je ne recommande pas cette solution. 
 
+Si [Free Dictionary API](https://dictionaryapi.dev/) ne répond pas, patientez un peu... Si j'ai le temps, je préparerai une solution de repli...
