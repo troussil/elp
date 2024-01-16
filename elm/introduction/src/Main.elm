@@ -240,7 +240,7 @@ main = Slides.app
   - évaluation *stricte*, 
   - typage statique fort, 
   - dédié à la création d'applications web, 
-  - interopable avec javascript. 
+  - interopérable avec javascript. 
 
   """
     , md
