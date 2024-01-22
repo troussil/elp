@@ -46,6 +46,27 @@ Il y a de nombreuses façons d'améliorer cet [exemple](https://perso.liris.cnrs
 
 Si vous obtenez une page blanche ou n'obtenez tout simplement pas ce que vous voulez, ouvrez la console du navigateur pour savoir quelle erreur s'est produite. 
 
+Je vous invite également à afficher les valeurs d'erreur. Par exemple, 
+```
+errorToString : Http.Error -> String
+errorToString error =
+    case error of
+        Http.BadUrl url ->
+            "The URL " ++ url ++ " was invalid"
+        Http.Timeout ->
+            "Unable to reach the server, try again"
+        Http.NetworkError ->
+            "Unable to reach the server, check your network connection"
+        Http.BadStatus 500 ->
+            "The server had a problem, try again later"
+        Http.BadStatus 400 ->
+            "Verify your information and try again"
+        Http.BadStatus x ->
+            "Unknown error with status " ++ (String.fromInt x)
+        Http.BadBody errorMessage ->
+            errorMessage
+```
+
 Si vous récupérez la liste de mots par une requête HTTP, vous obtiendrez certainement une erreur provenant du mécanisme [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). Vous devez plutôt télécharger le fichier contenant la liste de mots, le déplacer dans un répertoire `static`, positionné à côté du répertoire `src`, et utiliser une url locale comme `../static/monFichier.txt`. Notez que dans ce cas, vous devez utiliser `elm reactor` pour visualiser votre page. Si vous êtes bloqués par ce problème, soyez débrouillard : vous pouvez aussi créer la liste `[a, anywhere, below, ...]` directement dans votre code elm même si je ne recommande pas cette solution. 
 
-Si [Free Dictionary API](https://dictionaryapi.dev/) ne répond pas, patientez un peu... Si j'ai le temps, je préparerai une solution de repli...
+Si [Free Dictionary API](https://dictionaryapi.dev/) ne répond pas, patientez un peu... Je n'ai pas eu le temps de préparer une solution de repli...
