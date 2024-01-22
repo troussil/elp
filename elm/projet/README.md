@@ -67,6 +67,6 @@ errorToString error =
             errorMessage
 ```
 
-Si vous récupérez la liste de mots par une requête HTTP, vous obtiendrez certainement une erreur provenant du mécanisme [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). Vous devez plutôt télécharger le fichier contenant la liste de mots, le déplacer dans un répertoire `static`, positionné à côté du répertoire `src`, et utiliser une url locale comme `../static/monFichier.txt`. Notez que dans ce cas, vous devez utiliser `elm reactor` pour visualiser votre page. Si vous êtes bloqués par ce problème, soyez débrouillard : vous pouvez aussi créer la liste `[a, anywhere, below, ...]` directement dans votre code elm même si je ne recommande pas cette solution. 
+Si vous récupérez la liste de mots par une requête HTTP, vous obtiendrez peut-être une erreur provenant du mécanisme [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). Dans ce cas, utilisez `elm reactor` pour visualiser votre page (si vous avez une explication précise, envoyez-moi un message ou faites une pull-request). Si vous restez bloqués par ce problème, soyez débrouillard : vous pouvez aussi créer la liste `[a, anywhere, below, ...]` directement dans votre code elm même si je ne recommande pas cette solution. 
 
 Si [Free Dictionary API](https://dictionaryapi.dev/) ne répond pas, patientez un peu... Je n'ai pas eu le temps de préparer une solution de repli...
