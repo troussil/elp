@@ -6,12 +6,11 @@ L'objectif de cette première séance est de se familiariser avec les types stru
 
 Une première chose à faire est d'installer [elm](https://guide.elm-lang.org/install/elm.html). Si tu travailles sur une machine du département, sache que l'exécutable `elm` pèse environ 28 Mo. Si tu n'as pas beaucoup de place dans ton répertoire personnel, déplace-le dans le répertoire `/tmp` pour éviter de dépasser ton quota. 
 
-Tu n'utiliseras qu'un REPL (read-eval-print-loop) aujourd'hui. Pour cela, il suffit de taper `elm repl` dans un shell. Tu peux alors écrire des expressions elm qui seront lues (read), puis évaluées (eval). Le résultat sera affiché (print) et tu pourras recommencer (loop). 
+Tu n'utiliseras qu'un REPL (read-eval-print-loop) pour cette première séance. Pour cela, il suffit de taper `elm repl` dans un shell. Tu peux alors écrire des expressions elm qui seront lues (read), puis évaluées (eval). Le résultat sera affiché (print) et tu pourras recommencer (loop). 
 
 Voici trois références utiles pour faire connaissance avec elm et écrire des expressions syntaxiquement correctes : 
 - [https://guide.elm-lang.org/core_language.html](https://guide.elm-lang.org/core_language.html)
 - [https://elm-lang.org/docs/syntax](https://elm-lang.org/docs/syntax)
-- [https://learnxinyminutes.com/docs/elm/](https://learnxinyminutes.com/docs/elm/) 
 
 ## Types structurés
 
@@ -19,36 +18,38 @@ Outre les types de base comme `Bool`, `Int`, `Float`, `Char`, `String`, il est u
 
 Par ailleurs, il est fondamental de savoir manipuler les types structurés prédéfinis : les tuples, les enregistrements et les listes. 
 
-- un tuple contient un nombre fixe de champs pouvant être de type distinct. Les tuples sont bridés à au plus trois champs pour nous obliger à structurer le code. 
-- un enregistrement ressemble à un tuple dont les champs sont nommés. Les noms de champs ajoutent de la sémantique et sont utilisés comme accesseurs. Il n'y a pas de contrainte sur le nombre de champs. 
-- une liste contient zéro, une ou plusieurs valeurs toutes de même type. 
+- un tuple contient un nombre fixe de champs pouvant être de type distinct. Les tuples sont bridés à au plus trois champs pour nous obliger à structurer le code. Par exemple, `reponse = (False, "un message d'erreur")`. 
+- un enregistrement ressemble à un tuple dont les champs sont nommés. Les noms de champs ajoutent de la sémantique et sont utilisés comme accesseurs. Il n'y a pas de contrainte sur le nombre de champs. Par exemple, `person = { name="me", age="22" }`.
+- une liste contient zéro, une ou plusieurs valeurs toutes de même type. Par exemple, `names = ["Alice", "Bob", "Chuck"]` ou `numbers = [1,2,3,4]` ou `[]` (liste vide). 
 
-En parcourant les références fournies plus haut, assure-toi que tu puisse définir un tuple, un enregistrement, une liste. 
+Assure-toi que tu sache définir un tuple, un enregistrement, une liste. Aide-toi du [guide](https://guide.elm-lang.org/core_language.html) si besoin. 
 
 ## Pattern matching
 
 *Pattern matching* désigne le mécanisme par lequel les types structurés peuvent être *déstructurés* dans trois cas : 
 - `let ... in ...`, qui sert à poser des définitions comme en math, 
-- `case ... of ...`, qui sert habituellement à distinguer des cas, 
+- `case ... of ... -> ...`, qui sert habituellement à distinguer des cas, 
 - la définition de fonctions.
 
-Voici des exemples de pattern matching pour un tuple : 
-
+Imaginons qu'on ait définit un tuple `couleur = (128, 255, 0)`. Voici deux exemples de pattern matching dans lesquels on extrait les valeurs des trois champs en les associant à `r,v,b`, puis on n'utilise que le premier `r` : 
 ```
-> couleur = (128, 255, 0)
-(128,255,0) : ( number, number1, number2 )
 > let (r,v,b) = couleur in r
 128 : number
 > case couleur of (r,v,b) -> r
 128 : number
+```
+
+Voici un troisième exemple dans lequel on définit une fonction retournant la valeur du premier champs et on l'appelle avec 'couleur' en entrée : 
+```
 > getRedChannel (r,v,b) = r
 <function> : ( a, b, c ) -> a
 > getRedChannel couleur
 128 : number
 ```
 
-Après avoir lu le paragraphe sur le [pattern matching](https://elm-lang.org/docs/records#pattern-matching)
-et en s'inspirant de l'exemple précédent, trouve trois façons d'extraire la valeur du champs `name` de l'enregistrement suivant : 
+Assure-toi que tu comprends les exemples précédents. Si besoin, consulte les références mentionnées plus haut, lis le paragraphe sur le [pattern matching](https://elm-lang.org/docs/records#pattern-matching), demande à un ami ou à l'enseignant.
+
+En s'inspirant du guide et de l'exemple précédent, trouve cinq façons d'extraire la valeur du champs `name` de l'enregistrement suivant : 
 
 ```
 > person = { name="me", age="22" }
@@ -145,17 +146,6 @@ Remarque 1: en réalité on ne supprime rien, on recrée une liste dans laquelle
 
 Remarque 2: on peut imbriquer les `case` et `if`. 
 
-4. Définis la fonction `encode` qui encode une liste donnée de façon à ce que toute suite
-de `n` éléments égaux à `x` soit remplaçée par le tuple `(n,x)`.
-	   
-```
-> encode [2,2,2,3,4,4,2,2,5,6,6,6]
-[(3,2),(1,3),(2,4),(2,2),(1,5),(3,6)]
-    : List ( Int, number )
-```
-
-Si tu es bloqué ici, passe à la suite. Tu demanderas de l'aide quand l'enseignant sera disponible. 
-
 ### Package List
 
 Le package [List](https://package.elm-lang.org/packages/elm/core/latest/List) est disponible par défaut et contient un grand nombre de fonctions très utiles. Très souvent les appeler nous dispensent d'écrire une fonction récursive. `List.map`, `List.filter`, `List.foldr`, `List.foldl` sont typiques des langages fonctionnels. Lis la documentation de ces fonctions pour comprendre à quoi elles servent et comment les utiliser. 
@@ -171,8 +161,6 @@ compressHelper x partialRes = case partialRes of
                else x :: partialRes 
 ```
 
-3. Même question pour `encode`, mais je te laisse le soin d'écrire toi-même la fonction auxiliaire.
-
 Si tu es arrivé à cette question à la fin de la séance et même si tu n'as pas terminé d'y répondre, c'est déjà bien. Tu peux te féliciter. 
 
 ## Pour terminer, un petit effort de rappel
@@ -182,31 +170,10 @@ Le plus efficace pour garder en mémoire quelque chose c'est d'essayer de s'en r
 - Quelle est la différence entre un tuple, un enregistrement, une liste ?
 - Qu'est-ce que le pattern matching ?
 - Que font `List.map`, `List.filter`, `List.foldr`, `List.foldl` ?
-- Explique en quoi ELM est un langage fonctionnel.
-- Explique en quoi ELM est un langage fortement typé.
-- Comment appelle-t-on le fait qu'une expression soit toujours évaluée en un même résultat ?
-- Quelle est la différence entre évaluation stricte et paresseuse ?
+- Explique en quoi elm est un langage fonctionnel.
+- Explique en quoi elm est un langage fortement typé.
 
 Compare tes réponses avec ce document, les ressources que tu as consulté et le [cours](https://perso.liris.cnrs.fr/tristan.roussillon/ens/elm/). 
-
-## Pour aller plus loin, exercices facultatifs sans correction. 
-
-1. A l'aide de `List.repeat` et `List.ConcatMap`, définis une fonction `decode : List (Int,a) -> List a` telle que :
-
-```
-> decode [(3,2),(1,3),(2,4),(2,2),(1,5),(3,6)]
-[2,2,2,3,4,4,2,2,5,6,6,6]
-    : List number
-```
-
-2. Définis une fonction récursive `power` telle que `power 2 3` renvoie `8` et `power 2 (-3)` renvoie `-8`.
-   
-3. Définis une fonction récursive qui supprime le dernier élément d'une liste, puis une fonction qui supprime le premier et le dernier éléments d'une liste. Par exemple, `supprimeDernier [1,2,3]` retourne `[1,2]` et `supprimeExtremites [1,2,3]` retourne `[2]`.
-
-4. Définis une fonction qui prend en entrée une fonction de combinaison binaire et une liste, puis retourne une nouvelle liste. Elle a pour effet d'intercaler le résultat de la combinaison de chaque paire d'éléments consécutifs entre eux. Par exemple, `intercale (++) ["insa","lyon"]` retourne `["insa","insalyon","lyon"]` et `intercale (+) [1,2,3]` retourne `[1,3,2,5,3]`.
-
-5. Définis une fonction récursive `getLast : (List a) -> (Maybe a)` qui prend en entrée une liste et retourne son dernier élément. L'appel `getLast [1,2,3]` retourne `Just 3`, tandis que l'appel `getLast []` retourne `Nothing`. En savoir plus sur [Maybe](https://package.elm-lang.org/packages/elm/core/latest/Maybe).
-
 
 ## Correction
 
@@ -215,6 +182,11 @@ Tu peux regarder la correction et comparer avec ton propre code.
 ### Pattern matching
 
 ```
+> person = { name="me", age="22" }
+> person.name  --nom du champs comme accesseur, style objet
+"me" : String
+> .name person --nom du champs comme accesseur, style fonctionnel
+"me" : String
 > let { name } = person in name
 "me" : String
 > case person of { name } -> name
@@ -228,3 +200,32 @@ Tu peux regarder la correction et comparer avec ton propre code.
 ### Fonctions récursives et package List
 
 Voir le fichier [Test.elm](src/Test.elm)
+
+## Pour aller plus loin, exercices facultatifs sans correction. 
+
+1. Définis la fonction `encode` qui encode une liste donnée de façon à ce que toute suite
+de `n` éléments égaux à `x` soit remplaçée par le tuple `(n,x)`.
+	   
+```
+> encode [2,2,2,3,4,4,2,2,5,6,6,6]
+[(3,2),(1,3),(2,4),(2,2),(1,5),(3,6)]
+    : List ( Int, number )
+```
+
+2. Définis une variante non récursive de `encode` qui utilise `List.foldr` et une fonction auxiliaire.
+
+3. A l'aide de `List.repeat` et `List.ConcatMap`, définis une fonction `decode : List (Int,a) -> List a` telle que :
+
+```
+> decode [(3,2),(1,3),(2,4),(2,2),(1,5),(3,6)]
+[2,2,2,3,4,4,2,2,5,6,6,6]
+    : List number
+```
+
+4. Définis une fonction récursive `power` telle que `power 2 3` renvoie `8` et `power 2 (-3)` renvoie `-8`.
+   
+5. Définis une fonction récursive qui supprime le dernier élément d'une liste, puis une fonction qui supprime le premier et le dernier éléments d'une liste. Par exemple, `supprimeDernier [1,2,3]` retourne `[1,2]` et `supprimeExtremites [1,2,3]` retourne `[2]`.
+
+6. Définis une fonction qui prend en entrée une fonction de combinaison binaire et une liste, puis retourne une nouvelle liste. Elle a pour effet d'intercaler le résultat de la combinaison de chaque paire d'éléments consécutifs entre eux. Par exemple, `intercale (++) ["insa","lyon"]` retourne `["insa","insalyon","lyon"]` et `intercale (+) [1,2,3]` retourne `[1,3,2,5,3]`.
+
+7. Définis une fonction récursive `getLast : (List a) -> (Maybe a)` qui prend en entrée une liste et retourne son dernier élément. L'appel `getLast [1,2,3]` retourne `Just 3`, tandis que l'appel `getLast []` retourne `Nothing`. En savoir plus sur [Maybe](https://package.elm-lang.org/packages/elm/core/latest/Maybe).
