@@ -1,6 +1,6 @@
 # Parseur
 
-## Introduction aux parseurs en Elm
+## Introduction aux parseurs en elm
 
 Un parseur prend une chaîne de caractères en entrée et retourne soit un succès (avec un résultat), soit une erreur. Par exemple, un parseur d'entier peut prendre "123" comme entrée et retourner le nombre 123.
 
@@ -44,9 +44,9 @@ extraitPoint =
     |. symbol ")"
 ```
 
-Le parseur `spaces` ignore les espaces blancs (" ", tabulations, sauts de ligne, etc.), tandis que le parseur `symbol` est utilisé pour vérifier qu'une chaîne de caractères commence par une chaîne de caractère littérale spécifique. 
+Le parseur `spaces` ignore les espaces blancs (" ", tabulations, sauts de ligne, etc.), tandis que le parseur `symbol` est utilisé pour vérifier qu'une chaîne de caractères commence par une chaîne de caractères littérale spécifique. 
 Le premier argument de `succeed` est `Point`, c'est-à-dire le constructeur de valeur pour le type `Point`. 
-L'opérateur `|.` est utilisé pour écarter le résultat du parseur qui suit, tandis que `\=` est utilisé pour conserver le résultat du parseur qui suit. Ainsi, on détecte "(", on ignore les espaces suivants, on détecte un flottant qu'on passe en premier argument au constructeur `Point`, on détecte ",", on ignore les espaces suivants, on détecte un flottant qu'on passe en second argument au constructeur `Point`, on détecte ")". Si tout s'est bien passé le résultat contient une valeur de type 'Point'.
+L'opérateur `|.` est utilisé pour écarter le résultat du parseur qui suit, tandis que `|=` est utilisé pour conserver le résultat du parseur qui suit. Ainsi, on détecte "(", on ignore les espaces suivants, on détecte un flottant qu'on passe en premier argument au constructeur `Point`, on détecte ",", on ignore les espaces suivants, on détecte un flottant qu'on passe en second argument au constructeur `Point`, on détecte ")". Si tout s'est bien passé le résultat contient une valeur de type 'Point'.
 
 ```
 > run extraitPoint "(2.5, 6.2)"
