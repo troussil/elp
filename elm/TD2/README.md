@@ -32,14 +32,14 @@ Tous les constructeurs commencent par une majuscule. Comme il y a des espaces de
 Point 3.2 5.4 : Point
 ```
 
-Par ailleurs, les types algébriques peuvent être paramétrés par des types variables, toujours notés en minuscules. Le constructeur de type peut avoir zéro paramètre (comme pour `Couleur`, `Point`), ou plusieurs comme ci-dessous : 
+Par ailleurs, les types algébriques peuvent être paramétrés par des types variables, toujours notés en minuscules. Le constructeur de type peut avoir zéro paramètre (comme pour `Couleur`, `Point`), ou plusieurs, comme pour ces types, déjà définis dans elm et fondamentaux pour la [gestion des erreurs](https://guide.elm-lang.org/error_handling/): 
 ```elm
 type Maybe a = Just a | Nothing
 ```
 ```elm
 type Result error value = Ok value | Err error
 ```
-Ces types sont déjà définis dans elm et sont fondamentaux pour la [gestion des erreurs](https://guide.elm-lang.org/error_handling/). Dans le premier cas, il n'y a qu'un seul type variable, noté `a` (on choisit souvent `a` pour un type variable), dans le second, il y en deux, nommés `error` et `value`. Pour construire des valeurs pour ces types, il suffit d'appeler les constructeurs de valeurs : 
+ Dans le premier cas, il n'y a qu'un seul type variable, noté `a` (on choisit souvent `a` pour un type variable), dans le second, il y en deux, nommés `error` et `value`. Pour construire des valeurs pour ces types, il suffit d'appeler les constructeurs de valeurs : 
 
 ```elm
 > Just 'c'
@@ -64,6 +64,23 @@ Push 5 Empty : StackInt
 Push 3 (Push 5 Empty) : StackInt
 ```
 
+Le type `StackInt` ne peut traiter que des `Int`. Pour lever cette contrainte, il suffit d'opter pour un type paramétré : 
+```elm
+type Stack a = Empty | Push a (Stack a)
+```
+
+On peut ainsi créé une valeur de type `Stack Char` ou une valeur de type `Stack Int` :
+```
+> aStack = Push 'b' (Push 'a' Empty)
+Push 'b' (Push 'a' Empty)
+    : Stack Char
+> aStack = Push 2 (Push 1 Empty)
+Push 2 (Push 1 Empty)
+    : Stack number
+```
+
+N'est-ce pas grisant de définir en une ligne une structure de données représentant des piles d'éléments de type arbitraire ?
+
 ### Exercices
 
 - Donne, pour chacun des cinq types précédents (`Couleur`, `Point`, `Maybe`, `Result`, `StackInt`), le constructeur de type, ses paramètres, la liste des constructeurs de valeurs et leurs paramètres. 
@@ -71,8 +88,6 @@ Push 3 (Push 5 Empty) : StackInt
 - Propose un type `ValeurCarte` pour modéliser la valeur d'une carte à jouer. 
 - Propose un type `Carte` pour modéliser une carte à jouer. 
 - Crée la carte correspondant à l'as de Trèfle, puis crée la liste des quatre as. 
-- Le type `StackInt` ne peut traiter que des `Int`. Pour lever cette contrainte, propose un type paramétré `type Stack a = ...`. Puis, crée une valeur de type `Stack Char` et contenant au moins deux caractères. 
-- En utilisant un `case` et le pattern matching, écris une fonction qui retourne le nombre de valeurs de type `a` stockées dans une valeur de type `Stack a`. Tu peux t'inspirer de la fonction `len` qui retourne la longueur d'une liste et qui est donné dans le document de la [séance précédente](../TD1). 
 - Propose un type paramétré `Tree` pour modéliser un arbre binaire. Puis, crée un arbre vide, ainsi qu'un arbre contenant au moins trois nombres flottants. Enfin, écris une fonction qui retourne la hauteur d'une arbre. 
 
 ## Architecture elm
