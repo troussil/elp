@@ -106,7 +106,7 @@ Compare tes réponses avec ce document, celui de la [séance précédente](../TD
 
 ## Pour aller plus loin. 
 
-Si tu as déjà fini et qu'il reste du temps, tu peux regarder les [exemples](https://elm-lang.org/examples), lire les sections [error handling](https://guide.elm-lang.org/error_handling/) et [commands and subscriptions](https://guide.elm-lang.org/effects/).
+Si tu as déjà fini et qu'il reste du temps, tu peux regarder les [exemples](https://elm-lang.org/examples), lire la section [error handling](https://guide.elm-lang.org/error_handling/) et te pencher sur les [parseurs](../parser/README.md). S'il te reste encore du temps après ça, tu peux regarder la section [commands and subscriptions](https://guide.elm-lang.org/effects/) et commencer à réfléchir au [projet](../projet/README.md).
 
 ## Correction de la première partie
 
