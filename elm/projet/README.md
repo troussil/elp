@@ -1,72 +1,70 @@
 # Mini-Projet
 
-L'objectif de ce projet est d'écrire le programme elm d'une application web permettant à un joueur de deviner un mot dont les définitions sont affichées. Voici un [exemple](https://perso.liris.cnrs.fr/tristan.roussillon/GuessIt/) de ce qui est attendu. 
+L'objectif de ce projet est d'écrire le programme elm d'une application web permettant de visualiser le dessin produit par des commandes de tracé données par l'utilisateur. Cet [exemple](https://perso.liris.cnrs.fr/tristan.roussillon/TcTurtle) peut être considéré comme un modèle à reproduire, voire à améliorer. 
 
-## Pré-requis
+# Prérequis
 
-- Si besoin, revoir les quatre premières sections du [guide officiel](https://guide.elm-lang.org/) (Introduction, Core Language, The Elm Architecture, Types).
-- Lire attentivement les cinquième et sixième sections. Concernant la sixième section, tu peux te focaliser sur les *commandes*, car ce projet ne nécessite pas de faire des *souscriptions*. Les sous-sections HTTP, JSON, Random sont par contre toutes les trois importantes pour le projet. 
-- Note qu'il est fortement recommandé de commenter et structurer son code en [modules](https://guide.elm-lang.org/webapps/modules.html).
-- Enfin, puisque l'affichage se fait en HTML, il sera utile de connaître 
-[du package HTML](https://package.elm-lang.org/packages/elm/html/latest/)
-les éléments suivants :
-  - les fonctions `div`, `span`, `h1`, `ul`, `ol`, `li`, `input`, `label`, `text` de `Html`.
-  Excepté `text`, toutes correpondent à un élément HTML du même nom. 
-  - les fonctions `value`, `type_`, `checked`, `for`, `id`, `class` de `Html.Attributes`
-  qui correspondent à des attributs de certains des éléments précédents.
-  - les fonctions `onClick` et `onInput` de `Html.Events`
-  qui correspondent à des événements associés à certains des éléments précédents.  
+## elm
 
-Si vous ne savez pas ce qu'est une page web, un élément ou un attribut HTML, il est sans doute utile de survoler les pages [HTML](https://en.wikipedia.org/wiki/HTML), [HTML element](https://en.wikipedia.org/wiki/HTML_element) et [HTML attribute](https://en.wikipedia.org/wiki/HTML_attribute). 
+- Si besoin, relisez les quatre premières sections du [guide officiel](https://guide.elm-lang.org/) (Introduction, Core Language, The Elm Architecture, Types).
+- Au fur et à mesure de votre progression, vous aurez aussi besoin des références suivantes : 
+  - https://package.elm-lang.org/packages/elm/core/latest/Basics
+  - https://package.elm-lang.org/packages/elm/core/latest/List
+  - https://package.elm-lang.org/packages/elm/core/latest/String
+  - https://package.elm-lang.org/packages/elm/parser/latest
+- Notez qu'il est fortement recommandé de commenter et structurer son code en [modules](https://guide.elm-lang.org/webapps/modules.html).
 
-## Données
+## HTML, CSS, SVG
 
-Les mots se trouve dans ce [fichier](https://perso.liris.cnrs.fr/tristan.roussillon/GuessIt/thousand_words_things_explainer.txt). Ce sont les 1000 mots les plus courants utilisés dans le livre *Thing Explainer: Complicated Stuff in Simple Words* de Randall Munroe. 
+HTML décrit le contenu d'une page web, tandis que CSS décrit son apparence. SVG décrit des dessins vectoriels, pouvant être directement inclus à une page web. Vous n'aurez pas à programmer vous-même directement dans l'un de ces langages. Il vous suffit de reprendre le code source de [l'exemple](https://perso.liris.cnrs.fr/tristan.roussillon/TcTurtle/index.html) et sa feuille de [style](https://perso.liris.cnrs.fr/tristan.roussillon/TcTurtle/style.css). En revanche, vous devrez appeler certaines fonctions elm qui auront pour effet de créer dynamiquement les éléments correspondant dans la page. La connaissance de HTML et SVG est donc un plus. Au minimum, assurez-vous que vous sachiez utiliser les fonctions suivantes dans de petits programmes :
 
-Les définitions d'un mot au format JSON peuvent être obtenus en utilisant [Free Dictionary API](https://dictionaryapi.dev/). 
+- `div`, `input`, `button`, `text` du package [Html](https://package.elm-lang.org/packages/elm/html/latest/),
+- `svg`, `line` du package [Svg](https://package.elm-lang.org/packages/elm/svg/latest/).
 
-## Description fonctionnelle et technique
+## TcTurtle
 
-Au chargement de la page, votre programme doit sélectionner au hasard un mot parmi ceux de la liste. Puis, il doit obtenir et afficher ces définitions à partir d'une requête HTTP adressée à [Free Dictionary API](https://dictionaryapi.dev/). L'utilisateur doit deviner et écrire le mot qu'il croit correspondre aux définitions. Il peut continuer tant qu'il n'a pas la réponse correcte. Quand il a écrit la réponse correcte, un message le lui confirme.
+Enfin, vous devez comprendre le langage que doit interpréter votre application. C'est un langage inventé dans notre cher département et inspiré des [Turtle graphics](https://en.wikipedia.org/wiki/Turtle_graphics). Il s'appelle donc naturellement *TcTurtle*. Il permet d'exprimer le chemin que suit un crayon pour dessiner. Il comporte 4 instructions, toutes avec paramètres : **Forward**, **Left**, **Right** et **Repeat**. L'instruction `Forward x` fait avancer le crayon de `x` unités dans la direction courante. L'instruction `Right x` (respectivement `Left x`) fait tourner la direction courante de `x` degrés à droite (respectivement à gauche). L'instruction `Repeat x [ yyy ]` répète `x` fois la suite d'instructions entre crochets. Les instructions sont séparées par des virgules et le programme entier se trouve entre crochets et sur une seule ligne de texte. Voici quelques exemples de programme :
 
-D'un point de vue technique, vous devez
-- utiliser `Browser.element`; `Browser.sandbox` ne suffira pas car vous devrez effectuer des commandes.
-- définir les types `Model` et `Msg` pour modéliser l'état de l'application et la façon de le faire évoluer.
-- définir les fonctions `init`, `update`, `view`.
+- `[Repeat 360 [ Right 1, Forward 1]]`
+- `[Forward 100, Repeat 4 [Forward 50, Left 90], Forward 100]`
+- `[Repeat 36 [Right 10, Repeat 8 [Forward 25, Left 45]]]`
+- `[Repeat 8 [Left 45, Repeat 6 [Repeat 90 [Forward 1, Left 2], Left 90]]]`
+
+Utilisez cette [application](https://perso.liris.cnrs.fr/tristan.roussillon/TcTurtle/index.html) pour visualiser les dessins qu'ils encodent. 
+
+# Travail à faire
+
+Voici quelques indications pour vous permettre de mener à bien ce projet.
+
+## Coeur du projet
+
+Votre programme doit être réparti en trois modules :
+
+- le programme principal qui décrit votre modèle de page et implémente les fonctions `init`, `update` et `view` de l'architecture elm,
+- le module de parsing qui fournit une fonction `read` prenant en entrée une chaîne de caractères et retournant une structure de données que vous aurez définie pour représenter les programmes *TcTurtle*. Vous aurez besoin des fonctions `succeed`, `token`, `int`, `spaces`, `lazy`, `run` du package [Parser](https://package.elm-lang.org/packages/elm/parser/latest/),
+- le module de dessin qui fournit une fonction `display` traduisant votre stucture de données en un élément svg.
 
 Bien sûr, vous êtes également encouragé à décomposer vos fonctions principales en fonctions élémentaires. Si vous avez une fonction qui fait plus de 25 lignes, il est certainement judicieux de la décomposer.
 
-Je vous suggère d'avancer pas à pas. Par exemple, d'abord afficher tous les mots, puis afficher un seul mot choisi au hasard, puis afficher non pas le mot, mais ses définitions et enfin ajouter l'interaction avec l'utilisateur. En faisant ça, vous allez sans cesse complexifier vos types et fonctions, mais vous aurez en contre-partie toujours un programme fonctionnel. Vous allez peut-être aussi apprendre à écrire vos types et fonctions de façon à facilement les faire évoluer. 
+Je vous suggère de prendre le temps de réfléchir aux types que vous avez besoin pour représenter une instruction *TcTurtle* et un programme *TcTurtle*. Ensuite, vous pourrez en parallèle implémenter la fonction `read` qui construit un programme à partir d'une chaine de caractère et implémenter la fonction `display` qui convertit ce programme en un élément svg. 
 
-## Améliorations possibles
+## Améliorations
 
-Il y a de nombreuses façons d'améliorer cet [exemple](https://perso.liris.cnrs.fr/tristan.roussillon/GuessIt/), notamment concernant l'aspect général de la page et la façon dont les informations sont affichées. Le jeu lui-même pourrait être décliné en un mode débutant où toutes les définitions sont affichées et un mode expert où une seule définition, prise au hasard, est affichée. Le joueur pourrait être chronométré et avoir une durée limitée pour donner la bonne réponse. On peut aussi imaginer donner la possibilité à l'utilisateur de cliquer sur n'importe quel mot affiché sur la page pour obtenir sa prononciation (phonétique ou orale) ainsi que sa définition en utilisant la même API. Vous avez certainement vous-mêmes d'autres idées.   
+Si vous êtes arrivé à une application fonctionnelle sans difficulté, voici quelques pistes d'améliorations possibles :
+
+- permettre un tracé pas à pas, via un timer qui fait un trait toutes les demi-secondes ou via un bouton. 
+- traiter les exceptions liées à la position et à la taille du dessin par rapport à la feuille : calculer la position de départ et l'unité en fonction de l'étendue ou donner la possibilité de déplacer, agrandir, rétrécir le dessin par rapport à la feuille.
+- offrir à l'utilisateur la possibilité de maîtriser son crayon : couleur, largeur, état (levé ou abaissé).
+- fournir des indications détaillées permettant à l'utilisateur de corriger son programme quand il n'est pas syntaxiquement correct.
+- ...
+
+Vous avez certainement vous-mêmes d'autres idées.   
  
-## Problèmes
+## Astuce
 
 Si vous obtenez une page blanche ou n'obtenez tout simplement pas ce que vous voulez, ouvrez la console du navigateur pour savoir quelle erreur s'est produite. 
 
-Je vous invite également à afficher les valeurs d'erreur. Par exemple, 
-```
-errorToString : Http.Error -> String
-errorToString error =
-    case error of
-        Http.BadUrl url ->
-            "The URL " ++ url ++ " was invalid"
-        Http.Timeout ->
-            "Unable to reach the server, try again"
-        Http.NetworkError ->
-            "Unable to reach the server, check your network connection"
-        Http.BadStatus 500 ->
-            "The server had a problem, try again later"
-        Http.BadStatus 400 ->
-            "Verify your information and try again"
-        Http.BadStatus x ->
-            "Unknown error with status " ++ (String.fromInt x)
-        Http.BadBody errorMessage ->
-            errorMessage
-```
+## Rendu
 
-Si vous récupérez la liste de mots par une requête HTTP, vous obtiendrez peut-être une erreur provenant du mécanisme [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing). Dans ce cas, utilisez `elm reactor` pour visualiser votre page (si vous avez une explication précise, envoyez-moi un message ou faites une pull-request). Si vous restez bloqués par ce problème, soyez débrouillard : vous pouvez aussi créer la liste `[a, anywhere, below, ...]` directement dans votre code elm même si je ne recommande pas cette solution. 
-
-Si [Free Dictionary API](https://dictionaryapi.dev/) ne répond pas, patientez un peu... Je n'ai pas eu le temps de préparer une solution de repli...
+Votre code devra être disponible sur un repository github dont vous aurez fourni l'adresse. Vous devez également accompagner votre code d'un document d'au maximum une page comparant elm et javascript dans le contexte de ce projet.  
+ 
