@@ -11,7 +11,7 @@ L'objectif de ce projet est d'écrire le programme elm d'une application web per
   - https://package.elm-lang.org/packages/elm/core/latest/Basics
   - https://package.elm-lang.org/packages/elm/core/latest/List
   - https://package.elm-lang.org/packages/elm/core/latest/String
-  - https://package.elm-lang.org/packages/elm/parser/latest
+  - https://package.elm-lang.org/packages/elm/parser/latest (voir également cette introduction aux [parseurs](../parser/README.md) en elm)
 - Notez qu'il est fortement recommandé de commenter et structurer son code en [modules](https://guide.elm-lang.org/webapps/modules.html).
 
 ## HTML, CSS, SVG
