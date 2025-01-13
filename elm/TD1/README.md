@@ -161,8 +161,6 @@ compressHelper x partialRes = case partialRes of
                else x :: partialRes 
 ```
 
-Si tu es arrivé à cette question à la fin de la séance et même si tu n'as pas terminé d'y répondre, c'est déjà bien. Tu peux te féliciter. 
-
 ## Pour terminer, un petit effort de rappel
 
 Le plus efficace pour garder en mémoire quelque chose c'est d'essayer de s'en rappeler. C'est pourquoi je te propose de répondre aux questions suivantes : 
@@ -201,31 +199,3 @@ Tu peux regarder la correction et comparer avec ton propre code.
 
 Voir le fichier [Test.elm](src/Test.elm)
 
-## Pour aller plus loin, exercices facultatifs sans correction. 
-
-1. Définis la fonction `encode` qui encode une liste donnée de façon à ce que toute suite
-de `n` éléments égaux à `x` soit remplaçée par le tuple `(n,x)`.
-	   
-```
-> encode [2,2,2,3,4,4,2,2,5,6,6,6]
-[(3,2),(1,3),(2,4),(2,2),(1,5),(3,6)]
-    : List ( Int, number )
-```
-
-2. Définis une variante non récursive de `encode` qui utilise `List.foldr` et une fonction auxiliaire.
-
-3. A l'aide de `List.repeat` et `List.ConcatMap`, définis une fonction `decode : List (Int,a) -> List a` telle que :
-
-```
-> decode [(3,2),(1,3),(2,4),(2,2),(1,5),(3,6)]
-[2,2,2,3,4,4,2,2,5,6,6,6]
-    : List number
-```
-
-4. Définis une fonction récursive `power` telle que `power 2 3` renvoie `8` et `power 2 (-3)` renvoie `-8`.
-   
-5. Définis une fonction récursive qui supprime le dernier élément d'une liste, puis une fonction qui supprime le premier et le dernier éléments d'une liste. Par exemple, `supprimeDernier [1,2,3]` retourne `[1,2]` et `supprimeExtremites [1,2,3]` retourne `[2]`.
-
-6. Définis une fonction qui prend en entrée une fonction de combinaison binaire et une liste, puis retourne une nouvelle liste. Elle a pour effet d'intercaler le résultat de la combinaison de chaque paire d'éléments consécutifs entre eux. Par exemple, `intercale (++) ["insa","lyon"]` retourne `["insa","insalyon","lyon"]` et `intercale (+) [1,2,3]` retourne `[1,3,2,5,3]`.
-
-7. Définis une fonction récursive `getLast : (List a) -> (Maybe a)` qui prend en entrée une liste et retourne son dernier élément. L'appel `getLast [1,2,3]` retourne `Just 3`, tandis que l'appel `getLast []` retourne `Nothing`. En savoir plus sur [Maybe](https://package.elm-lang.org/packages/elm/core/latest/Maybe).

@@ -22,15 +22,6 @@ compress lst = case lst of
                  then compress xs
                  else x :: (compress xs)
 
-encode : List comparable -> List (Int,comparable)
-encode lst = case lst of
-  [] -> []
-  (x :: xs) -> case (encode xs) of 
-    [] -> [(1,x)]
-    ((nb,elem) :: ys) -> if x == elem
-                         then (nb+1,elem) :: ys
-                         else (1,x) :: (nb,elem) :: ys 
-
 --- fonctions du package List
 
 addElemInList2 : a -> Int -> List a -> List a
@@ -49,13 +40,4 @@ compressHelper x partialRes = case partialRes of
 compress2 : List comparable -> List comparable
 compress2 lst = List.foldr compressHelper [] lst
 
-encodeHelper : comparable -> List (Int,comparable) -> List (Int,comparable)
-encodeHelper x partialRes = case partialRes of 
-    [] -> [(1,x)]
-    ((nb,elem) :: ys) -> if x == elem
-                         then (nb+1,elem) :: ys
-                         else (1,x) :: (nb,elem) :: ys 
-
-encode2 : List comparable -> List (Int,comparable)
-encode2 lst = List.foldr encodeHelper [] lst
 
