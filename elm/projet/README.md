@@ -68,3 +68,18 @@ Si vous obtenez une page blanche ou n'obtenez tout simplement pas ce que vous vo
 
 Votre code devra être disponible sur un repository github dont vous aurez fourni l'adresse. Vous devez également accompagner votre code d'un document d'au maximum une page comparant elm et javascript dans le contexte de ce projet.  
  
+## Sur l'utilisation de packages externes
+
+Il y a (au moins) deux packages elm sur le thème 'turtle graphics': 
+
+1. https://package.elm-lang.org/packages/mrdimosthenis/turtle-graphics/latest/TurtleGraphics
+2. https://package.elm-lang.org/packages/mgold/elm-turtle-graphics/1.0.2/Turtle 
+
+Vous pouvez regarder le code, vous en inspirer, mais attention : 
+- dans les deux cas, le programme est donné par une liste de valeurs elm; aucun des deux packages ne donne la possibilité de parser une chaîne de caractère écrite dans le langage spécifié.  
+- le deuxième package n'est pas compatible avec elm 0.19.1 et ne produit pas de svg; il utilise un autre moyen pour réaliser le dessin. 
+- parce qu'ils offrent plus de fonctionnalités que celles exigées dans le sujet, les deux packages sont plus compliqués que nécessaires; il pourrait être plus laborieux d'utiliser ces packages, que de programmer le projet intégralement par vous-mêmes. 
+
+En conclusion, 
+- si vous êtes en général bon programmeur et déjà à l'aise avec elm, vous pouvez utiliser le premier package, qui facilitera certainement l'ajout des extensions mentionnées ci-dessus et que j'attendrai alors nombreuses,  
+- sinon, je vous déconseille de les utiliser. 
