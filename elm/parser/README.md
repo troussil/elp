@@ -68,14 +68,12 @@ le parseur `oneOf` qui permet d'essayer plusieurs parseurs dans l'ordre jusqu'à
 ```elm
 type CouleurCarte = Trefle | Carreau | Coeur | Pique
 extraitCouleur : Parseur CouleurCarte
-extraitCouleur = oneOf [ succeed (\_ -> Trefle) |= symbol "Trefle"
-                       , succeed (\_ -> Carreau) |= symbol "Carreau"
-                       , succeed (\_ -> Coeur) |= symbol "Coeur"
-                       , succeed (\_ -> Pique) |= symbol "Pique"
+extraitCouleur = oneOf [ succeed Trefle |. symbol "Trefle"
+                       , succeed Carreau |. symbol "Carreau"
+                       , succeed Coeur |. symbol "Coeur"
+                       , succeed Pique |. symbol "Pique"
                        ]
 ```
-
-Notez l'utilisation des lambdas comme `(\_ -> Trefle)` quand les constructeurs de valeurs n'ont aucun paramètre comme `Trefle`. 
 
 ```
 > run extraitCouleur "Trefle"
