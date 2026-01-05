@@ -39,7 +39,7 @@ Imaginons qu'on ait définit un tuple `couleur = (128, 255, 0)`. Voici deux exem
 128 : number
 ```
 
-Voici un troisième exemple dans lequel on définit une fonction retournant la valeur du premier champs et on l'appelle avec `couleur en entrée : 
+Voici un troisième exemple dans lequel on définit une fonction retournant la valeur du premier champs et on l'appelle avec `couleur` en entrée : 
 ```
 > getRedChannel (r,v,b) = r
 <function> : ( a, b, c ) -> a
