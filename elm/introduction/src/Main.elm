@@ -420,6 +420,80 @@ la fiabilité de l'application finale.
   qui répertorie des entreprises qui utilisent elm.   
   """
     , md
+ """
+  ## Faut-il continuer à apprendre à programmer en 2026 ?
+
+  """
+    , md
+ """
+  ### 1. Les programmes restent la réalité numérique 
+
+Même si l’IA génère du code, **quelqu’un doit comprendre ce que fait le programme**, poser les contraintes, juger la correction, la sécurité, la performance.
+
+Sans savoir coder, tu dépends entièrement d’outils que tu ne maîtrises pas.
+    
+  """     
+    , md
+  """ 
+  ### 2. L’IA augmente la valeur des gens qui comprennent le code
+
+* Une personne **qui ne code pas** utilise l’IA comme une boîte noire
+* Une personne **qui code** utilise l’IA comme un amplificateur. Elle
+    peut détecter une hallucination, un bug, refactoriser, auditer,
+    optimiser ce qui est généré, relier plusieurs systèmes réels, ...
+
+  """
+    , md
+  """ 
+ ### 3. Programmer est une compétence en mutation
+
+Ce qui est en train de mourir :
+
+* le dev purement répétitif
+* le copier-coller de tutos
+
+Ce qui devient plus précieux :
+
+* architecture
+* modélisation
+* fiabilité
+* sécurité
+* compréhension des systèmes complexes, ...
+
+  """
+    , md
+  """ 
+### 4. Programmer est une compétence transférable
+
+Apprendre à programmer c'est aussi apprendre à :
+
+* décomposer un problème
+* raisonner sur des invariants
+* comprendre les effets de bord
+* distinguer *spécification* et *implémentation*, ...
+
+Cette compétence se **transfère** à plein d’autres domaines.
+  """
+    , md
+  """ 
+### 5. Qu'est-ce qui vaut encore la peine d’être appris ?
+
+* les fondamentaux (expressions, effets, types)
+* les paradigmes (impératif, fonctionnel, objet)
+* la lecture et la compréhension d'un programme
+* la capacité à raisonner sur un programme, ...
+  """
+    , md
+  """ 
+  ### En résumé
+
+* Oui, apprendre à coder reste pertinent
+* C’est même plus stratégique qu’avant
+* À condition de viser la compréhension, pas la routine
+* Et d’utiliser l’IA comme un outil, pas comme un substitut
+
+  """
+    , md
   """ 
   # Travail à faire
 
