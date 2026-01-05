@@ -14,7 +14,7 @@ Voici trois références utiles pour faire connaissance avec elm et écrire des 
 
 ## Types structurés
 
-Outre les types de base comme `Bool`, `Int`, `Float`, `Char`, `String`, il est utile de savoir qu'il existe aussi trois classes de types - `number`, `appendable`, `concatenable` - que le système de type utilise pour assigner un type quand il n'est pas donné explicitement. Quand tu tapes `42`, tu obtiens `42 : number`. Explication : le système de type refuse de choisir entre `Int` et `Float` en optant pour `number` qui regroupe les deux. 
+Outre les types de base comme `Bool`, `Int`, `Float`, `Char`, `String`, il est utile de savoir qu'il existe aussi quatre classes de types - `number`, `appendable`, `comparable`, `compappend` - que le système de type utilise pour assigner un type quand il n'est pas donné explicitement. Quand tu tapes `42`, tu obtiens `42 : number`. Explication : le système de type refuse de choisir entre `Int` et `Float` en optant pour `number` qui regroupe les deux. 
 
 Par ailleurs, il est fondamental de savoir manipuler les types structurés prédéfinis : les tuples, les enregistrements et les listes. 
 
@@ -39,7 +39,7 @@ Imaginons qu'on ait définit un tuple `couleur = (128, 255, 0)`. Voici deux exem
 128 : number
 ```
 
-Voici un troisième exemple dans lequel on définit une fonction retournant la valeur du premier champs et on l'appelle avec `couleur en entrée : 
+Voici un troisième exemple dans lequel on définit une fonction retournant la valeur du premier champs et on l'appelle avec `couleur` en entrée : 
 ```
 > getRedChannel (r,v,b) = r
 <function> : ( a, b, c ) -> a
