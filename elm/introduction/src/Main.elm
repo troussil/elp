@@ -35,7 +35,7 @@ main = Slides.app
    ## Valeur
 
    - Une valeur est une entité abstraite comme 
-   `5, 'a', "abc", [1,2,3], ('b',4), x, inc, (+)` 
+   `5, 'a', "abc", [1,2,3], ('b',4), x, inc` 
    - Une fonction est une valeur. Elle est définie
      - par une fonction anonyme : 
    `inc = \\n -> n+1`
@@ -113,7 +113,7 @@ main = Slides.app
 - Développement web :
   - Javascript (nombreux frameworks et langages dérivés).
   - compilateurs Haskell vers Javascript : 
-  [GHCJS](https://github.com/ghcjs/ghcjs>), [Haste](https://haste-lang.org/)
+  [GHC](https://www.haskell.org/ghc/) (9.6, js backend)
   - langages dérivés d'Haskell : 
   [Purescript](http://www.purescript.org/), [elm](https://elm-lang.org/)
 """
@@ -137,7 +137,7 @@ main = Slides.app
  """
   # Retour sur elm
 
-  - typage statique fort
+  - Typage statique fort
   - Appli web monopage 
 """
    , md
@@ -183,11 +183,12 @@ main = Slides.app
      """
  ### Classes 
          
- Il existe 3 classes de types 
- - `number`, 
- - `appendable`, 
- - `concatenable`
- 
+ Il existe 4 classes de types :
+ - `number` (`Int` and `Float`)
+ - `appendable` (`String` et `List a`)
+ - `comparable` (`Int`, `Float`, `Char`, `String`, listes/tuples de valeurs comparables)
+ - `compappend` (`String` et `List comparable`)
+    
  utilisées pour la déduction automatique
  des types et la définition de fonctions 
  génériques, c-à-d. paramétrées par un type. 
@@ -307,6 +308,15 @@ ht tree = case tree of
   - Affiche le nouveau document HTML, 
   - Recommence. 
 
+ """
+ , md
+ """
+ ### Exemple
+
+     
+ [compteur](https://guide.elm-lang.org/architecture/buttons.html)
+
+     
  """
  , md
  """
@@ -430,10 +440,10 @@ la fiabilité de l'application finale.
   """ 
   ## Mini-projet
 
+  - Deux sujets au choix. 
   - A réaliser par deux/trois (inscription document partagé Moodle).  
-  - Date limite 10/02/2025, 8h. 
+  - Date limite 06/02/2025, 8h. 
   - Critères d'évaluation sur [Moodle](https://moodle.insa-lyon.fr/course/view.php?id=7725). 
-  - [Enoncé](https://github.com/troussil/elp/blob/master/elm/projet/README.md) et [exemple](https://perso.liris.cnrs.fr/tristan.roussillon/TcTurtle/). 
 
   """
      , md
